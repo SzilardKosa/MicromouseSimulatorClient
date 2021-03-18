@@ -3,6 +3,7 @@ import { Text, Button, HStack, VStack, Center, useBreakpointValue } from '@chakr
 import { Link as RouterLink } from 'react-router-dom'
 
 const WelcomePage = () => {
+  // https://github.com/chakra-ui/chakra-ui/issues/385
   const buttonSize = useBreakpointValue({ base: 'sm', sm: 'md', lg: 'lg' })
 
   return (
