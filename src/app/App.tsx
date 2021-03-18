@@ -1,14 +1,18 @@
 import React from 'react'
 import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import LogInPage from '../features/auth/LogInPage'
+import SignUpPage from '../features/auth/SignUpPage'
 import WelcomePage from '../features/welcome-page/WelcomePage'
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/welcome" component={WelcomePage} />
+        <Route exact path="/" component={WelcomePage} />
+        <Route exact path="/signup" component={SignUpPage} />
+        <Route exact path="/login" component={LogInPage} />
         <Route path="/">
-          <Redirect to="/welcome" />
+          <Redirect to="/" />
         </Route>
       </Switch>
     </Router>
