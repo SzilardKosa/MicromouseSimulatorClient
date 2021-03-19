@@ -1,5 +1,13 @@
 import React from 'react'
-import { Text, Button, HStack, VStack, Center, useBreakpointValue } from '@chakra-ui/react'
+import {
+  Text,
+  Button,
+  HStack,
+  VStack,
+  Center,
+  useBreakpointValue,
+  LightMode,
+} from '@chakra-ui/react'
 import { Link as RouterLink } from 'react-router-dom'
 
 const WelcomePage = () => {
@@ -20,26 +28,28 @@ const WelcomePage = () => {
           Micromouse Simulator
         </Text>
         <HStack spacing="2">
-          <Button
-            as={RouterLink}
-            to="/signup"
-            colorScheme="green"
-            variant="solid"
-            size={buttonSize}
-            transition="background 250ms" // to override the size transition, on responsive resizing
-          >
-            Sign Up
-          </Button>
-          <Button
-            as={RouterLink}
-            to="/login"
-            colorScheme="whiteAlpha"
-            variant="solid"
-            size={buttonSize}
-            transition="background 250ms"
-          >
-            Log In
-          </Button>
+          <LightMode>
+            <Button
+              as={RouterLink}
+              to="/signup"
+              colorScheme="green"
+              variant="solid"
+              size={buttonSize}
+              transition="background 250ms" // to override the size transition, on responsive resizing
+            >
+              Sign Up
+            </Button>
+            <Button
+              as={RouterLink}
+              to="/login"
+              colorScheme="whiteAlpha"
+              variant="solid"
+              size={buttonSize}
+              transition="background 250ms"
+            >
+              Log In
+            </Button>
+          </LightMode>
         </HStack>
       </VStack>
     </Center>
