@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import {
   Box,
@@ -19,6 +19,7 @@ import { EMAIL_REGEX } from './consts'
 
 const LogInPage = () => {
   const { register, handleSubmit, errors, formState } = useForm()
+  let history = useHistory()
 
   function validateEmail(value: any) {
     if (!value) {
@@ -38,6 +39,7 @@ const LogInPage = () => {
     return new Promise((resolve) => {
       setTimeout(() => {
         console.log(JSON.stringify(values, null, 2))
+        history.replace('/workspace')
         resolve()
       }, 3000)
     })
