@@ -27,7 +27,7 @@ const Navbar = () => {
 
   return (
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} shadow="base">
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}
@@ -37,7 +37,7 @@ const Navbar = () => {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box fontWeight="semibold">Micromouse Simulator</Box>
+            <Box fontWeight="bold">Micromouse Simulator</Box>
             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
               <NavLink to={`${url}/simulations`}>Simulations</NavLink>
               <NavLink to={`${url}/help`}>Help</NavLink>
@@ -75,8 +75,6 @@ const Navbar = () => {
           </Box>
         )}
       </Box>
-
-      <Box p={4}>Main Content Here</Box>
     </>
   )
 }
