@@ -7,8 +7,10 @@ import {
   SimpleGrid,
   IconButton,
   Icon,
+  Text,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { Link as RouterLink } from 'react-router-dom'
 import { MdDelete, MdCode } from 'react-icons/md'
 
 const Card = (props: BoxProps) => (
@@ -21,9 +23,11 @@ const Card = (props: BoxProps) => (
     bg={useColorModeValue('white', 'gray.900')}
     {...props}
   >
-    <text>Simulation 1</text>
+    <Text>Simulation 1</Text>
     <Flex paddingTop="4">
       <IconButton
+        as={RouterLink}
+        to={'/simulator/1234'}
         aria-label="Edit simulation"
         size="sm"
         variant="ghost"
