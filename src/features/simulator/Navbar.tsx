@@ -1,10 +1,22 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectCurrentTab, changeTab, SimulatorTabs } from './simulatorSlice'
 import { useHistory } from 'react-router-dom'
-import { Box, Flex, HStack, IconButton, useColorModeValue } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Flex,
+  HStack,
+  IconButton,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import DarkLightSwitch from '../../common/DarkLightSwitch'
 
 const Navbar = () => {
+  const currentTab = useSelector(selectCurrentTab)
+  const dispatch = useDispatch()
   let history = useHistory()
   return (
     <>
@@ -22,6 +34,22 @@ const Navbar = () => {
             />
             <Box fontWeight="bold">Simulator</Box>
           </HStack>
+          <Flex alignItems={'center'}>
+            <ButtonGroup isAttached>
+              <Button
+                variant={currentTab === SimulatorTabs.Editor ? 'solid' : 'outline'}
+                onClick={() => dispatch(changeTab(SimulatorTabs.Editor))}
+              >
+                Editor
+              </Button>
+              <Button
+                variant={currentTab === SimulatorTabs.Result ? 'solid' : 'outline'}
+                onClick={() => dispatch(changeTab(SimulatorTabs.Result))}
+              >
+                Result
+              </Button>
+            </ButtonGroup>
+          </Flex>
           <Flex alignItems={'center'}>
             <DarkLightSwitch
               variant="ghost"
