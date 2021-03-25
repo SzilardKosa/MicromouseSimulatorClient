@@ -8,26 +8,35 @@ import {
   ButtonGroup,
   Flex,
   HStack,
+  Icon,
   IconButton,
+  IconButtonProps,
   useColorModeValue,
 } from '@chakra-ui/react'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import DarkLightSwitch from '../../common/DarkLightSwitch'
+import { MdPlayArrow } from 'react-icons/md'
 
 const Navbar = () => {
   const currentTab = useSelector(selectCurrentTab)
   const dispatch = useDispatch()
   let history = useHistory()
+  const iconButtonColor = useColorModeValue('gray.800', 'white')
+
+  const iconButtonProps: Omit<IconButtonProps, 'aria-label'> = {
+    variant: 'ghost',
+    colorScheme: 'blackAlpha',
+    color: iconButtonColor,
+    size: 'md',
+  }
+
   return (
     <>
       <Box bg={useColorModeValue('green.400', 'green.800')} px={4} shadow="base">
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <HStack spacing={4} alignItems={'center'}>
             <IconButton
-              variant="ghost"
-              colorScheme="blackAlpha"
-              color={useColorModeValue('gray.800', 'white')}
-              size={'md'}
+              {...iconButtonProps}
               icon={<ArrowBackIcon w={5} h={5} />}
               aria-label={'Back to list'}
               onClick={() => history.push('/workspace/simulations')}
@@ -50,14 +59,15 @@ const Navbar = () => {
               </Button>
             </ButtonGroup>
           </Flex>
-          <Flex alignItems={'center'}>
-            <DarkLightSwitch
-              variant="ghost"
-              colorScheme="blackAlpha"
-              color={useColorModeValue('gray.800', 'white')}
-              size={'md'}
+          <HStack spacing={4} alignItems={'center'}>
+            <IconButton
+              {...iconButtonProps}
+              icon={<Icon w={5} h={5} as={MdPlayArrow} />}
+              aria-label={'Run simulation'}
+              onClick={() => console.log('simulation finished')}
             />
-          </Flex>
+            <DarkLightSwitch {...iconButtonProps} />
+          </HStack>
         </Flex>
       </Box>
     </>
