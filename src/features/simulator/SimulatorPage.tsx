@@ -20,7 +20,7 @@ const SimulatorPage = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar position="relative" zIndex={2} />
       <Box h="calc(100vh - 64px)" w="full" position="absolute">
         <Box display={currentTab === SimulatorTabs.Editor ? 'block' : 'none'}>
           <SplitterLayout percentage secondaryInitialSize={50}>

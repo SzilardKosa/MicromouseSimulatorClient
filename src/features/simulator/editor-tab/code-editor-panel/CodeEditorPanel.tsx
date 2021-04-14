@@ -5,7 +5,7 @@ import AceCodeEditor from './AceCodeEditor'
 const CodeEditorPanel = () => {
   return (
     <>
-      <PanelHeader />
+      <PanelHeader position="relative" zIndex={1} />
       <AceCodeEditor />
     </>
   )
