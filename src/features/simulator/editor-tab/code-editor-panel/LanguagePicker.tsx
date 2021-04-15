@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { ButtonGroup, Icon, useRadioGroup } from '@chakra-ui/react'
-import RadioIconButton from './RadioIconButton'
+import RadioIconButton from '../../common/RadioIconButton'
 import { SiC, SiCplusplus, SiPython } from 'react-icons/si'
 
 export type LanguageOptions = 'Python' | 'C' | 'C++'

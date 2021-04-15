@@ -1,11 +1,11 @@
 import React from 'react'
-import PanelHeader from './PanelHeader'
+import CodePanelHeader from './CodePanelHeader'
 import AceCodeEditor from './AceCodeEditor'
 
 const CodeEditorPanel = () => {
   return (
     <>
-      <PanelHeader position="relative" zIndex={1} />
+      <CodePanelHeader position="relative" zIndex={1} />
       <AceCodeEditor />
     </>
   )
