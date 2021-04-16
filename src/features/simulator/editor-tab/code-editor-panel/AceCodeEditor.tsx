@@ -47,7 +47,7 @@ const AceCodeEditor = () => {
       showGutter={true} // left side of the editor with the number
       highlightActiveLine={true}
       width={'100%'}
-      height={'calc(100vh - 112px)'}
+      height={'calc(100% - 48px)'}
       wrapEnabled={true} //wraping lines
       setOptions={{
         enableBasicAutocompletion: true,
