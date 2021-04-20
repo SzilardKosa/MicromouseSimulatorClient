@@ -1,14 +1,19 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { selectEditType } from './mazeEditorSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  selectCellSize,
+  selectCellWallRation,
+  selectCols,
+  selectEditType,
+  selectGoalArea,
+  selectRows,
+  selectWalls,
+  setBottomWall,
+  setGoalArea,
+  setLeftWall,
+  Cell,
+} from './mazeEditorSlice'
 
-const cellSize = 50 //[20 - 200] full cell size (half size - 9cm, full size - 18cm)
-const cellWallRation = 0.25 //[0.1 - 0.5]
-const wallWidth = Math.floor(cellSize * cellWallRation) // wall width (half size - .6cm, full size - 1.2cm)
-const rows = 10 // y0 - ymax
-const cols = 12 // x0 -xmax
-const mazeWidth = cols * cellSize + wallWidth
-const mazeHeight = rows * cellSize + wallWidth
 const wallColor = 'rgb(122, 0, 0)'
 const baseColor = 'rgb(0, 0, 0)'
 const startCell = {
@@ -16,14 +21,6 @@ const startCell = {
   y: 0,
 }
 
-interface CellWalls {
-  bottom: boolean
-  left: boolean
-}
-interface Cell {
-  x: number
-  y: number
-}
 type editGoalStates = 'done' | 'active'
 
 const MazeCanvas = () => {
@@ -32,19 +29,18 @@ const MazeCanvas = () => {
   const [editGoalState, setEditGoalState] = useState<editGoalStates>('done')
   const editType = useSelector(selectEditType)
 
-  const [walls, setWalls] = useState<CellWalls[][]>(
-    [...Array(rows)].map((e) => Array(cols).fill({ bottom: false, left: false })) // https://stackoverflow.com/questions/16512182/how-to-create-empty-2d-array-in-javascript
-  )
-  const [goalArea, setGoalArea] = useState<Cell[]>([
-    {
-      x: 4,
-      y: 4,
-    },
-    {
-      x: 6,
-      y: 5,
-    },
-  ])
+  const cellSize = useSelector(selectCellSize)
+  const cellWallRation = useSelector(selectCellWallRation)
+  const wallWidth = Math.floor(cellSize * cellWallRation)
+  const rows = useSelector(selectRows)
+  const cols = useSelector(selectCols)
+  const mazeWidth = cols * cellSize + wallWidth
+  const mazeHeight = rows * cellSize + wallWidth
+
+  const walls = useSelector(selectWalls)
+  const goalArea = useSelector(selectGoalArea)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -183,32 +179,12 @@ const MazeCanvas = () => {
 
     // Bottom wall
     if (wallWidth < relX && relY < wallWidth && walls[rowIndex][colIndex].bottom !== newState) {
-      setWalls((walls) =>
-        walls.map((row, r) =>
-          row.map((cell, c) => {
-            if (r === rowIndex && c === colIndex) {
-              return { ...cell, bottom: newState }
-            } else {
-              return cell
-            }
-          })
-        )
-      )
+      dispatch(setBottomWall({ r: rowIndex, c: colIndex, newState }))
     }
 
     // Left wall
     if (relX < wallWidth && wallWidth < relY && walls[rowIndex][colIndex].left !== newState) {
-      setWalls((walls) =>
-        walls.map((row, r) =>
-          row.map((cell, c) => {
-            if (r === rowIndex && c === colIndex) {
-              return { ...cell, left: newState }
-            } else {
-              return cell
-            }
-          })
-        )
-      )
+      dispatch(setLeftWall({ r: rowIndex, c: colIndex, newState }))
     }
   }
 
@@ -232,21 +208,21 @@ const MazeCanvas = () => {
   const startEditGoal = (event: React.MouseEvent<HTMLElement>) => {
     const cell = getCell(event)
     if (cell.x === -1) return
-    setGoalArea([cell, cell])
+    dispatch(setGoalArea([cell, cell]))
     setEditGoalState('active')
   }
 
   const endEditGoal = (event: React.MouseEvent<HTMLElement>) => {
     const cell = getCell(event)
     if (cell.x === -1) return
-    setGoalArea([goalArea[0], cell])
+    dispatch(setGoalArea([goalArea[0], cell]))
     setEditGoalState('done')
   }
 
   const editGoal = (event: React.MouseEvent<HTMLElement>) => {
     const cell = getCell(event)
     if (cell.x === -1) return
-    setGoalArea([goalArea[0], cell])
+    dispatch(setGoalArea([goalArea[0], cell]))
   }
 
   return (

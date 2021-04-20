@@ -49,11 +49,57 @@ const mazeEditorSlice = createSlice({
     changeEditType: (state, action: PayloadAction<EditType>) => {
       state.editType = action.payload
     },
+    setCellSize: (state, action: PayloadAction<number>) => {
+      state.cellSize = action.payload
+    },
+    setCellWallRation: (state, action: PayloadAction<number>) => {
+      state.cellWallRation = action.payload
+    },
+    setRows: (state, action: PayloadAction<number>) => {
+      const newRows = action.payload
+      if (newRows < 1 || 32 < newRows) return
+      state.rows = newRows
+      state.walls = [...Array(newRows)].map((e) =>
+        Array(state.cols).fill({ bottom: false, left: false })
+      )
+    },
+    setCols: (state, action: PayloadAction<number>) => {
+      const newCols = action.payload
+      if (newCols < 1 || 32 < newCols) return
+      state.cols = newCols
+      state.walls = [...Array(state.rows)].map((e) =>
+        Array(newCols).fill({ bottom: false, left: false })
+      )
+    },
+    setBottomWall: (state, action: PayloadAction<{ r: number; c: number; newState: boolean }>) => {
+      state.walls[action.payload.r][action.payload.c].bottom = action.payload.newState
+    },
+    setLeftWall: (state, action: PayloadAction<{ r: number; c: number; newState: boolean }>) => {
+      state.walls[action.payload.r][action.payload.c].left = action.payload.newState
+    },
+    setGoalArea: (state, action: PayloadAction<Cell[]>) => {
+      state.goalArea = action.payload
+    },
   },
 })
 
 export default mazeEditorSlice.reducer
 
-export const { changeEditType } = mazeEditorSlice.actions
+export const {
+  changeEditType,
+  setCellSize,
+  setCellWallRation,
+  setRows,
+  setCols,
+  setBottomWall,
+  setLeftWall,
+  setGoalArea,
+} = mazeEditorSlice.actions
 
 export const selectEditType = (state: RootState) => state.mazeEditor.editType
+export const selectCellSize = (state: RootState) => state.mazeEditor.cellSize
+export const selectCellWallRation = (state: RootState) => state.mazeEditor.cellWallRation
+export const selectRows = (state: RootState) => state.mazeEditor.rows
+export const selectCols = (state: RootState) => state.mazeEditor.cols
+export const selectWalls = (state: RootState) => state.mazeEditor.walls
+export const selectGoalArea = (state: RootState) => state.mazeEditor.goalArea

@@ -38,7 +38,7 @@ const AceCodeEditor = () => {
     <AceEditor
       placeholder="Placeholder Text"
       mode={'python'}
-      theme={'github'}
+      theme={'monokai'}
       name="ace-editor"
       onLoad={onLoad}
       onChange={onChange}
