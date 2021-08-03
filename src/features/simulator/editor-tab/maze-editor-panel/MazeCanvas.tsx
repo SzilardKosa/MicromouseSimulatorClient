@@ -134,7 +134,7 @@ const MazeCanvas = () => {
 
   const handleMouseDown = (event: React.MouseEvent<HTMLElement>) => {
     setIsMouseDown(true)
-    if (editType === 'insertWall' || editType == 'deleteWall') {
+    if (editType === 'insertWall' || editType === 'deleteWall') {
       editWalls(event, editType === 'insertWall')
     }
   }
@@ -146,7 +146,7 @@ const MazeCanvas = () => {
     if (!isMouseDown) {
       return
     }
-    if (editType === 'insertWall' || editType == 'deleteWall') {
+    if (editType === 'insertWall' || editType === 'deleteWall') {
       editWalls(event, editType === 'insertWall')
     }
   }

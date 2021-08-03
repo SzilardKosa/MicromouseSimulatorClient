@@ -10,7 +10,6 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  Box,
 } from '@chakra-ui/react'
 import SizeTypePicker, { SizeOptions } from './SizeTypePicker'
 import Settings from '../../common/Settings'
