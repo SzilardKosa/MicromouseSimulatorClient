@@ -20,6 +20,7 @@
     "@types/react-redux": "^7.1.7",
     "@types/react-splitter-layout": "^3.0.1",
     "ace-builds": "^1.4.12",
+    "axios": "^0.21.4",
     "framer-motion": "^3.10.4",
     "react": "^17.0.1",
     "react-ace": "^9.3.0",
@@ -36,7 +37,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "pregen-api": "if exist \"src/api/gen/\" rmdir /s /q \"src/api/gen\"",
+    "gen-api": "openapi-generator-cli generate -i src/api/swagger.json -o src/api/gen -g typescript-axios"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -54,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.4.4",
     "@types/react-router-dom": "^5.1.7"
   }
 }
