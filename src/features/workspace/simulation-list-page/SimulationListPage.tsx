@@ -1,5 +1,6 @@
 import React from 'react'
-import useSimulations from '../../../api/hooks/useSimulations'
+import { Box } from '@chakra-ui/react'
+import { useSimulations } from '../../../api/hooks/simulations'
 import SimulationList from './SimulationList'
 
 const SimulationListPage = () => {
@@ -13,7 +14,11 @@ const SimulationListPage = () => {
     return <div>Error: {error?.message}</div>
   }
 
-  return <SimulationList simulations={data ?? []} />
+  return (
+    <Box h="calc(100vh - 64px)" w="full" position="relative">
+      <SimulationList simulations={data ?? []} />
+    </Box>
+  )
 }
 
 export default SimulationListPage
