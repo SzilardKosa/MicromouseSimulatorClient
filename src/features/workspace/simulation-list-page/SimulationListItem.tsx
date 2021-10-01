@@ -33,7 +33,7 @@ const SimulationListItem = ({ simulation, ...boxProps }: SimulationListItemProps
       <Flex paddingTop="4">
         <IconButton
           as={RouterLink}
-          to={'/simulator/1234'}
+          to={`/simulator/${simulation.id}`}
           aria-label="Edit simulation"
           size="sm"
           variant="ghost"
