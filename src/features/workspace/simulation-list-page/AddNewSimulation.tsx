@@ -23,12 +23,6 @@ const AddNewSimulation = () => {
   const { register, handleSubmit, errors, formState } = useForm()
   const { mutateAsync: createSimulation } = useCreateSimulation()
 
-  function validateName(value: any) {
-    if (!value) {
-      return 'Simulation name is required'
-    } else return true
-  }
-
   async function onSubmit(values: any) {
     try {
       await createSimulation({ name: values.name })
@@ -64,11 +58,11 @@ const AddNewSimulation = () => {
             <form onSubmit={handleSubmit(onSubmit)} id="add-new-simulation">
               <FormControl isInvalid={errors.name}>
                 <Input
-                  ref={register({ validate: validateName })}
+                  ref={register({ required: true })}
                   name="name"
                   placeholder="Simulation name"
                 />
-                <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
+                <FormErrorMessage>{errors.name && 'Simulation name is required'}</FormErrorMessage>
               </FormControl>
             </form>
           </ModalBody>

@@ -73,7 +73,7 @@ const MazePanelHeader = ({ children, ...props }: BoxProps) => {
         </HStack>
       </HStack>
       <HStack spacing={4} alignItems={'center'}>
-        <Settings />
+        <Settings aria-label="Maze Editor Settings" />
         <FileMenu />
       </HStack>
     </PanelHeader>

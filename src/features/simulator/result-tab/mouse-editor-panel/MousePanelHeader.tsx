@@ -11,7 +11,7 @@ const MousePanelHeader = ({ children, ...props }: BoxProps) => {
         <Text fontWeight="medium">Atomic_v1</Text>
       </Flex>
       <HStack spacing={4} alignItems={'center'}>
-        <Settings />
+        <Settings aria-label="Mouse Editor Settings" />
         <FileMenu />
       </HStack>
     </PanelHeader>

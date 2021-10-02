@@ -11,7 +11,14 @@ import {
 import { AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import { MdFolder, MdSave } from 'react-icons/md'
 
-const FileMenu = () => {
+type FileMenuProps = {
+  onSave?: () => void
+  onNewFile?: () => void
+  onOpenFile?: () => void
+  onDelete?: () => void
+}
+
+const FileMenu = ({ onSave, onNewFile, onOpenFile, onDelete }: FileMenuProps) => {
   return (
     <Menu>
       <MenuButton
@@ -21,18 +28,20 @@ const FileMenu = () => {
         size="md"
       />
       <MenuList>
-        <MenuItem icon={<Icon as={MdSave} />} command="Ctrl+S">
+        <MenuItem onClick={onSave} icon={<Icon as={MdSave} />} command="Ctrl+S">
           Save
         </MenuItem>
         <MenuDivider />
-        <MenuItem icon={<AddIcon />} command="Ctrl+N">
+        <MenuItem onClick={onNewFile} icon={<AddIcon />} command="Ctrl+N">
           New File
         </MenuItem>
-        <MenuItem icon={<EditIcon />} command="Ctrl+O">
+        <MenuItem onClick={onOpenFile} icon={<EditIcon />} command="Ctrl+O">
           Open File...
         </MenuItem>
         <MenuDivider />
-        <MenuItem icon={<DeleteIcon />}>Delete</MenuItem>
+        <MenuItem onClick={onDelete} icon={<DeleteIcon />}>
+          Delete
+        </MenuItem>
       </MenuList>
     </Menu>
   )
