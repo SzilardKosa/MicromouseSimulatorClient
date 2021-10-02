@@ -12,7 +12,7 @@ import {
 type DeleteConfirmModalProps = {
   header: string
   body: string
-  onConfirm: () => void
+  onConfirm?: () => Promise<void>
   isOpen: boolean
   onClose: () => void
 }
@@ -26,8 +26,12 @@ const DeleteConfirmModal = ({
 }: DeleteConfirmModalProps) => {
   const cancelRef = React.useRef<any>()
 
-  const handleConfirm = () => {
-    onConfirm()
+  const handleConfirm = async () => {
+    try {
+      if (onConfirm) await onConfirm()
+    } catch (error) {
+      console.error(error)
+    }
     onClose()
   }
 

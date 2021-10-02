@@ -37,7 +37,6 @@ const AddNewAlgorithmModal = ({ isOpen, onClose, simulation }: AddNewAlgorithmMo
         language: values.language,
         codeText: `print("hello world")`,
       }
-      console.log(newAlgorithm)
       const result = await createAlgorithm(newAlgorithm)
       simulation.algorithmId = result.data.id
       await updateSimulation(simulation)
