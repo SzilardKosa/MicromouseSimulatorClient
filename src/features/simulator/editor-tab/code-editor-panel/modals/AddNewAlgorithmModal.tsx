@@ -15,18 +15,32 @@ import {
   Select,
   Stack,
 } from '@chakra-ui/react'
+import { useCreateAlgorithm } from '../../../../../api/hooks/algorithms'
+import { useUpdateSimulation } from '../../../../../api/hooks/simulations'
+import { AlgorithmDTO, SimulationDTO } from '../../../../../api/gen'
 
 type AddNewAlgorithmModalProps = {
   isOpen: boolean
   onClose: () => void
+  simulation: SimulationDTO
 }
 
-const AddNewAlgorithmModal = ({ isOpen, onClose }: AddNewAlgorithmModalProps) => {
+const AddNewAlgorithmModal = ({ isOpen, onClose, simulation }: AddNewAlgorithmModalProps) => {
   const { register, handleSubmit, errors, formState } = useForm()
+  const { mutateAsync: createAlgorithm } = useCreateAlgorithm()
+  const { mutateAsync: updateSimulation } = useUpdateSimulation()
 
   async function onSubmit(values: any) {
     try {
-      console.log('save algo: ', values)
+      const newAlgorithm: AlgorithmDTO = {
+        name: values.name,
+        language: values.language,
+        codeText: `print("hello world")`,
+      }
+      console.log(newAlgorithm)
+      const result = await createAlgorithm(newAlgorithm)
+      simulation.algorithmId = result.data.id
+      await updateSimulation(simulation)
     } catch (error) {
       console.error(error)
     }

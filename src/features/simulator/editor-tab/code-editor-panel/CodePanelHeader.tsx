@@ -8,8 +8,11 @@ import DeleteConfirmModal from './modals/DeleteConfirmModal'
 import AddNewAlgorithmModal from './modals/AddNewAlgorithmModal'
 import OpenAlgorithmModal from './modals/OpenAlgorithmModal'
 import CodeEditorSettingsModal from './modals/CodeEditorSettingsModal'
+import { SimulationDTO } from '../../../../api/gen'
 
-const CodePanelHeader = ({ children, ...props }: BoxProps) => {
+type CodePanelHeaderProps = BoxProps & { simulation: SimulationDTO }
+
+const CodePanelHeader = ({ children, simulation, ...props }: CodePanelHeaderProps) => {
   const [language, setLanguage] = useState<LanguageOptions>('Python')
   const {
     isOpen: isDeleteConfirmModalOpen,
@@ -62,6 +65,7 @@ const CodePanelHeader = ({ children, ...props }: BoxProps) => {
       <AddNewAlgorithmModal
         onClose={onAddNewAlgorithmModalClose}
         isOpen={isAddNewAlgorithmModalOpen}
+        simulation={simulation}
       />
 
       <OpenAlgorithmModal onClose={onOpenAlgorithmModalClose} isOpen={isOpenAlgorithmModalOpen} />

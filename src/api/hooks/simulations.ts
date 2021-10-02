@@ -1,3 +1,4 @@
+import { SimulationDTO } from './../gen/api'
 import { SimulationApi, SimulationExpandedDTO } from '../gen/api'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 
@@ -30,11 +31,17 @@ export function useCreateSimulation() {
 
 export function useUpdateSimulation() {
   const queryClient = useQueryClient()
-  return useMutation(api.simulationsIdPut, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('simulations')
+  return useMutation(
+    async (simulation: SimulationDTO) => {
+      const result = await api.simulationsIdPut(simulation.id!!, simulation)
+      return result.data
     },
-  })
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('simulations')
+      },
+    }
+  )
 }
 
 export function useDeleteSimulation() {
