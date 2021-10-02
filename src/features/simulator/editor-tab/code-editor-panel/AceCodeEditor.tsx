@@ -2,6 +2,7 @@ import React from 'react'
 import AceEditor from 'react-ace'
 import 'ace-builds/src-min-noconflict/ext-searchbox'
 import 'ace-builds/src-min-noconflict/ext-language_tools'
+import { AlgorithmDTO } from '../../../../api/gen'
 
 const languages = ['c_cpp', 'python']
 const fontSizes = [14, 16, 18, 20, 24, 28, 32, 40]
@@ -25,7 +26,11 @@ languages.forEach((lang) => {
 
 themes.forEach((theme) => require(`ace-builds/src-noconflict/theme-${theme}`))
 
-const AceCodeEditor = () => {
+type AceCodeEditorProps = {
+  algorithm: AlgorithmDTO
+}
+
+const AceCodeEditor = ({ algorithm }: AceCodeEditorProps) => {
   const onLoad = () => {
     console.log('load')
   }
@@ -41,6 +46,7 @@ const AceCodeEditor = () => {
       theme={'monokai'}
       name="ace-editor"
       onLoad={onLoad}
+      value={algorithm.codeText}
       onChange={onChange}
       fontSize={fontSizes[0]}
       showPrintMargin={false} // line on the right at 100

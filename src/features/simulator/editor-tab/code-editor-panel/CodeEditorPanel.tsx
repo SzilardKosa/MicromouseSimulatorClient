@@ -15,8 +15,13 @@ const CodeEditorPanel = ({ simulation }: CodeEditorPanelProps) => {
 
   return (
     <>
-      <CodePanelHeader position="relative" zIndex={1} simulation={simulation} />
-      <AceCodeEditor />
+      <CodePanelHeader
+        position="relative"
+        zIndex={1}
+        simulation={simulation}
+        algorithm={algorithm}
+      />
+      <AceCodeEditor algorithm={algorithm} />
     </>
   )
 }

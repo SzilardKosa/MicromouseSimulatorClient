@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Text, Flex, HStack, BoxProps, useDisclosure } from '@chakra-ui/react'
-import LanguagePicker, { LanguageOptions } from './LanguagePicker'
 import Settings from '../../common/Settings'
 import FileMenu from '../../common/FileMenu'
 import PanelHeader from '../../common/PanelHeader'
@@ -8,12 +7,12 @@ import DeleteConfirmModal from './modals/DeleteConfirmModal'
 import AddNewAlgorithmModal from './modals/AddNewAlgorithmModal'
 import OpenAlgorithmModal from './modals/OpenAlgorithmModal'
 import CodeEditorSettingsModal from './modals/CodeEditorSettingsModal'
-import { SimulationDTO } from '../../../../api/gen'
+import { AlgorithmDTO, SimulationDTO } from '../../../../api/gen'
+import LanguageIcon, { LanguageOptions } from './LanguageIcon'
 
-type CodePanelHeaderProps = BoxProps & { simulation: SimulationDTO }
+type CodePanelHeaderProps = BoxProps & { simulation: SimulationDTO; algorithm: AlgorithmDTO }
 
-const CodePanelHeader = ({ children, simulation, ...props }: CodePanelHeaderProps) => {
-  const [language, setLanguage] = useState<LanguageOptions>('Python')
+const CodePanelHeader = ({ algorithm, simulation, children, ...props }: CodePanelHeaderProps) => {
   const {
     isOpen: isDeleteConfirmModalOpen,
     onOpen: onDeleteConfirmModalOpen,
@@ -38,10 +37,10 @@ const CodePanelHeader = ({ children, simulation, ...props }: CodePanelHeaderProp
     <>
       <PanelHeader {...props}>
         <Flex alignItems={'center'}>
-          <Text fontWeight="medium">FloodFill_v1.py</Text>
+          <Text fontWeight="medium">{algorithm.name}</Text>
         </Flex>
         <Flex alignItems={'center'}>
-          <LanguagePicker value={language} onChange={setLanguage} />
+          <LanguageIcon language={algorithm.language as LanguageOptions} />
         </Flex>
         <HStack spacing={4} alignItems={'center'}>
           <Settings aria-label="Code Editor Settings" onClick={onSettingsModalOpen} />
