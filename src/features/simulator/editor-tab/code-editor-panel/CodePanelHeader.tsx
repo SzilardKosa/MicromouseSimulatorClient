@@ -8,9 +8,10 @@ import AddNewAlgorithmModal from './modals/AddNewAlgorithmModal'
 import OpenAlgorithmModal from './modals/OpenAlgorithmModal'
 import CodeEditorSettingsModal from './modals/CodeEditorSettingsModal'
 import { AlgorithmDTO, SimulationDTO } from '../../../../api/gen'
-import LanguageIcon, { LanguageOptions } from './LanguageIcon'
+import LanguageIcon from './LanguageIcon'
 import { useDeleteAlgorithm } from '../../../../api/hooks/algorithms'
 import { useUpdateSimulation } from '../../../../api/hooks/simulations'
+import { Languages } from './consts'
 
 type CodePanelHeaderProps = BoxProps & { simulation: SimulationDTO; algorithm: AlgorithmDTO }
 
@@ -39,7 +40,7 @@ const CodePanelHeader = ({ algorithm, simulation, children, ...props }: CodePane
           <Text fontWeight="medium">{algorithm.name}</Text>
         </Flex>
         <Flex alignItems={'center'}>
-          <LanguageIcon language={algorithm.language as LanguageOptions} />
+          <LanguageIcon language={algorithm.language as Languages} />
         </Flex>
         <HStack spacing={4} alignItems={'center'}>
           <Settings aria-label="Code Editor Settings" onClick={onSettingsOpen} />

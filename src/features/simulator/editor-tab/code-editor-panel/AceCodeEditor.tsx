@@ -3,9 +3,11 @@ import AceEditor from 'react-ace'
 import 'ace-builds/src-min-noconflict/ext-searchbox'
 import 'ace-builds/src-min-noconflict/ext-language_tools'
 import { AlgorithmDTO } from '../../../../api/gen'
+import { Languages } from './consts'
+import { useSelector } from 'react-redux'
+import { selectFontSize } from './codeEditorSlice'
 
 const languages = ['c_cpp', 'python']
-const fontSizes = [14, 16, 18, 20, 24, 28, 32, 40]
 const themes = [
   'monokai',
   'github',
@@ -31,24 +33,27 @@ type AceCodeEditorProps = {
 }
 
 const AceCodeEditor = ({ algorithm }: AceCodeEditorProps) => {
+  const fontSize = useSelector(selectFontSize)
+
   const onLoad = () => {
     console.log('load')
   }
-
   function onChange(newValue: string) {
     console.log('change', newValue)
   }
 
+  const mode = algorithm.language === Languages.python ? 'python' : 'c_cpp'
+
   return (
     <AceEditor
       placeholder="Placeholder Text"
-      mode={'python'}
+      mode={mode}
       theme={'monokai'}
       name="ace-editor"
       onLoad={onLoad}
       value={algorithm.codeText}
       onChange={onChange}
-      fontSize={fontSizes[0]}
+      fontSize={fontSize}
       showPrintMargin={false} // line on the right at 100
       showGutter={true} // left side of the editor with the number
       highlightActiveLine={true}
