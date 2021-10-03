@@ -28,10 +28,14 @@ const FileMenu = ({ onSave, onNewFile, onOpenFile, onDelete }: FileMenuProps) =>
         size="md"
       />
       <MenuList>
-        <MenuItem onClick={onSave} icon={<Icon as={MdSave} />} command="Ctrl+S">
-          Save
-        </MenuItem>
-        <MenuDivider />
+        {onSave && (
+          <>
+            <MenuItem onClick={onSave} icon={<Icon as={MdSave} />} command="Ctrl+S">
+              Save
+            </MenuItem>
+            <MenuDivider />
+          </>
+        )}
         <MenuItem onClick={onNewFile} icon={<AddIcon />} command="Ctrl+N">
           New File
         </MenuItem>
