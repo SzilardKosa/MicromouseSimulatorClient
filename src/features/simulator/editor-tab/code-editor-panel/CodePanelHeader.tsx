@@ -63,7 +63,7 @@ const CodePanelHeader = ({ algorithm, simulation, children, ...props }: CodePane
 
       <AddNewAlgorithmModal onClose={onCreateClose} isOpen={isCreateOpen} simulation={simulation} />
 
-      <OpenAlgorithmModal onClose={onSearchClose} isOpen={isSearchOpen} />
+      <OpenAlgorithmModal onClose={onSearchClose} isOpen={isSearchOpen} simulation={simulation} />
 
       <CodeEditorSettingsModal onClose={onSettingsClose} isOpen={isSettingsOpen} />
     </>
