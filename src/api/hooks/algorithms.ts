@@ -32,8 +32,7 @@ export function useUpdateAlgorithm() {
   const queryClient = useQueryClient()
   return useMutation(
     async (algorithm: AlgorithmDTO) => {
-      const result = await api.algorithmsIdPut(algorithm.id!!, algorithm)
-      return result.data
+      await api.algorithmsIdPut(algorithm.id!!, algorithm)
     },
     {
       onSuccess: () => {

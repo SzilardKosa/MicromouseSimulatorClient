@@ -33,8 +33,7 @@ export function useUpdateSimulation() {
   const queryClient = useQueryClient()
   return useMutation(
     async (simulation: SimulationDTO) => {
-      const result = await api.simulationsIdPut(simulation.id!!, simulation)
-      return result.data
+      await api.simulationsIdPut(simulation.id!!, simulation)
     },
     {
       onSuccess: () => {
