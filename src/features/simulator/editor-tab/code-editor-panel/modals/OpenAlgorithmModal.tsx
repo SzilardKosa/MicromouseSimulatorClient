@@ -37,8 +37,14 @@ const OpenAlgorithmModal = ({ isOpen, onClose, simulation }: OpenAlgorithmModalP
 
   async function onChoose(algorithmId: string) {
     try {
-      simulation.algorithmId = algorithmId
-      await updateSimulation(simulation)
+      const newSimulation: SimulationDTO = {
+        id: simulation.id,
+        algorithmId: algorithmId,
+        mazeId: simulation.mazeId,
+        mouseId: simulation.mouseId,
+        name: simulation.name,
+      }
+      await updateSimulation(newSimulation)
     } catch (error) {
       console.error(error)
     }
@@ -65,6 +71,7 @@ const OpenAlgorithmModal = ({ isOpen, onClose, simulation }: OpenAlgorithmModalP
       <Box w="full">
         {algorithms?.map((algorithm) => (
           <Center
+            key={algorithm.id!!}
             onClick={() => onChoose(algorithm.id!!)}
             backgroundColor={listItemBg}
             cursor="pointer"

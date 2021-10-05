@@ -30,14 +30,25 @@ const CodePanelHeader = ({ algorithm, simulation, children, ...props }: CodePane
 
   const onDeleteAlgorithm = async () => {
     await deleteAlgorithm(algorithm.id!!)
-    simulation.algorithmId = null
-    await updateSimulation(simulation)
+    const newSimulation: SimulationDTO = {
+      id: simulation.id,
+      algorithmId: null,
+      mazeId: simulation.mazeId,
+      mouseId: simulation.mouseId,
+      name: simulation.name,
+    }
+    await updateSimulation(newSimulation)
   }
 
   const onUpdateAlgorithm = async (newName: string) => {
     try {
-      algorithm.name = newName
-      await updateAlgorithm(algorithm)
+      const newAlgorithm: AlgorithmDTO = {
+        id: algorithm.id,
+        name: newName,
+        codeText: algorithm.codeText,
+        language: algorithm.language,
+      }
+      await updateAlgorithm(newAlgorithm)
     } catch (error) {
       console.error(error)
     }
@@ -55,7 +66,7 @@ const CodePanelHeader = ({ algorithm, simulation, children, ...props }: CodePane
     <>
       <PanelHeader {...props}>
         <Flex alignItems={'center'}>
-          <Editable defaultValue={algorithm.name} onSubmit={onUpdateAlgorithm}>
+          <Editable defaultValue={algorithm.name} key={algorithm.name} onSubmit={onUpdateAlgorithm}>
             <EditablePreview fontWeight="medium" />
             <EditableInput />
           </Editable>

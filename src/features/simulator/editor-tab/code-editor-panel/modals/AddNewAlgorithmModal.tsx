@@ -38,8 +38,14 @@ const AddNewAlgorithmModal = ({ isOpen, onClose, simulation }: AddNewAlgorithmMo
         codeText: `print("hello world")`,
       }
       const result = await createAlgorithm(newAlgorithm)
-      simulation.algorithmId = result.data.id
-      await updateSimulation(simulation)
+      const newSimulation: SimulationDTO = {
+        id: simulation.id,
+        algorithmId: result.data.id,
+        mazeId: simulation.mazeId,
+        mouseId: simulation.mouseId,
+        name: simulation.name,
+      }
+      await updateSimulation(newSimulation)
     } catch (error) {
       console.error(error)
     }
