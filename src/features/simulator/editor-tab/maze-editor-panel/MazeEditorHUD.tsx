@@ -30,7 +30,14 @@ const MazeEditorHUD = () => {
       <Box position="absolute" top="6" left="6">
         <EditTypePicker value={editType} onChange={(value) => dispatch(changeEditType(value))} />
       </Box>
-      <VStack spacing={2} alignItems={'flex-end'} position="absolute" top="6" right="6">
+      <VStack
+        spacing={2}
+        alignItems={'flex-end'}
+        position="absolute"
+        top="6"
+        right="6"
+        style={{ isolation: 'isolate' }}
+      >
         <HStack spacing={4} alignItems={'center'}>
           <Text>Zoom:</Text>
           <Slider
