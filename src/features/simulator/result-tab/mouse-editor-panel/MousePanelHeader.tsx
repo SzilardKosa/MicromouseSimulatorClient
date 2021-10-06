@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, Flex, HStack, BoxProps } from '@chakra-ui/react'
-import Settings from '../../common/Settings'
+import SettingsButton from '../../common/SettingsButton'
 import FileMenu from '../../common/FileMenu'
 import PanelHeader from '../../common/PanelHeader'
 
@@ -11,7 +11,7 @@ const MousePanelHeader = ({ children, ...props }: BoxProps) => {
         <Text fontWeight="medium">Atomic_v1</Text>
       </Flex>
       <HStack spacing={4} alignItems={'center'}>
-        <Settings aria-label="Mouse Editor Settings" />
+        <SettingsButton aria-label="Mouse Editor Settings" />
         <FileMenu />
       </HStack>
     </PanelHeader>

@@ -12,7 +12,7 @@ import {
   NumberDecrementStepper,
 } from '@chakra-ui/react'
 import SizeTypePicker, { SizeOptions } from './SizeTypePicker'
-import Settings from '../../common/Settings'
+import SettingsButton from '../../common/SettingsButton'
 import FileMenu from '../../common/FileMenu'
 import PanelHeader from '../../common/PanelHeader'
 import { selectCols, selectRows, setCols, setRows } from './mazeEditorSlice'
@@ -73,7 +73,7 @@ const MazePanelHeader = ({ children, ...props }: BoxProps) => {
         </HStack>
       </HStack>
       <HStack spacing={4} alignItems={'center'}>
-        <Settings aria-label="Maze Editor Settings" />
+        <SettingsButton aria-label="Maze Editor Settings" />
         <FileMenu />
       </HStack>
     </PanelHeader>

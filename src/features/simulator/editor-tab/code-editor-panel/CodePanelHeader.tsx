@@ -8,10 +8,10 @@ import {
   EditablePreview,
   EditableInput,
 } from '@chakra-ui/react'
-import Settings from '../../common/Settings'
+import SettingsButton from '../../common/SettingsButton'
 import FileMenu from '../../common/FileMenu'
 import PanelHeader from '../../common/PanelHeader'
-import DeleteConfirmModal from './modals/DeleteConfirmModal'
+import DeleteConfirmModal from '../../common/DeleteConfirmModal'
 import AddNewAlgorithmModal from './modals/AddNewAlgorithmModal'
 import OpenAlgorithmModal from './modals/OpenAlgorithmModal'
 import CodeEditorSettingsModal from './modals/CodeEditorSettingsModal'
@@ -75,7 +75,7 @@ const CodePanelHeader = ({ algorithm, simulation, children, ...props }: CodePane
           <LanguageIcon language={algorithm.language as Languages} />
         </Flex>
         <HStack spacing={4} alignItems={'center'}>
-          <Settings aria-label="Code Editor Settings" onClick={onSettingsOpen} />
+          <SettingsButton aria-label="Code Editor Settings" onClick={onSettingsOpen} />
           <FileMenu onNewFile={onCreateOpen} onOpenFile={onSearchOpen} onDelete={onDeleteOpen} />
         </HStack>
       </PanelHeader>
