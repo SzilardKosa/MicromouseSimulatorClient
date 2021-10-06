@@ -44,6 +44,8 @@ const MazeCanvas = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current
+    if (canvas && canvas.width) canvas.width = mazeWidth
+    if (canvas && canvas.height) canvas.height = mazeHeight
     const context = canvas?.getContext('2d')
     drawMaze(context!)
   })
@@ -227,8 +229,6 @@ const MazeCanvas = () => {
 
   return (
     <canvas
-      width={mazeWidth}
-      height={mazeHeight}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUP}
       onMouseMove={handleMouseMove}
