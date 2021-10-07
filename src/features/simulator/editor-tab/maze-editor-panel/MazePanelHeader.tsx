@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   Text,
@@ -21,7 +21,7 @@ import FileMenu from '../../common/FileMenu'
 import PanelHeader from '../../common/PanelHeader'
 import { selectCols, selectRows, setCols, setRows } from './mazeEditorSlice'
 import { MazeDTO, SimulationDTO } from '../../../../api/gen'
-import { useDeleteMaze, useUpdateMaze } from '../../../../api/hooks/mazes'
+import { useDeleteMaze, useUpdateMazeOptimistically } from '../../../../api/hooks/mazes'
 import { useUpdateSimulation } from '../../../../api/hooks/simulations'
 import DeleteConfirmModal from '../../common/DeleteConfirmModal'
 import AddNewMazeModal from './modals/AddNewMazeModal'
@@ -31,12 +31,11 @@ import MazeEditorSettingsModal from './modals/MazeEditorSettingsModal'
 type MazePanelHeaderProps = BoxProps & { simulation: SimulationDTO; maze: MazeDTO }
 
 const MazePanelHeader = ({ maze, simulation, children, ...props }: MazePanelHeaderProps) => {
-  const [sizeType, setSizeType] = useState<SizeOptions>('full')
   const rows = useSelector(selectRows)
   const cols = useSelector(selectCols)
   const dispatch = useDispatch()
   const { mutateAsync: deleteMaze } = useDeleteMaze()
-  const { mutateAsync: updateMaze } = useUpdateMaze()
+  const { mutateAsync: updateMaze } = useUpdateMazeOptimistically()
   const { mutateAsync: updateSimulation } = useUpdateSimulation()
 
   const onDeleteMaze = async () => {
@@ -51,24 +50,39 @@ const MazePanelHeader = ({ maze, simulation, children, ...props }: MazePanelHead
     await updateSimulation(newSimulation)
   }
 
-  const onUpdateMaze = async (newName: string) => {
+  const onUpdateMaze = async (newMaze: MazeDTO) => {
     try {
-      const newMaze: MazeDTO = {
-        ...maze,
-        name: newName,
-        goalArea: {
-          topLeft: {
-            ...maze.goalArea.topLeft,
-          },
-          bottomRight: {
-            ...maze.goalArea.bottomRight,
-          },
-        },
-      }
       await updateMaze(newMaze)
     } catch (error) {
       console.error(error)
     }
+  }
+
+  const getMazeDeepCopy = () => {
+    const newMaze: MazeDTO = {
+      ...maze,
+      goalArea: {
+        topLeft: {
+          ...maze.goalArea.topLeft,
+        },
+        bottomRight: {
+          ...maze.goalArea.bottomRight,
+        },
+      },
+    }
+    return newMaze
+  }
+
+  const onUpdateName = async (newName: string) => {
+    const newMaze = getMazeDeepCopy()
+    newMaze.name = newName
+    await onUpdateMaze(newMaze)
+  }
+
+  const onUpdateIsFullSize = async (isFullSize: SizeOptions) => {
+    const newMaze = getMazeDeepCopy()
+    newMaze.isFullSize = isFullSize === 'full'
+    await onUpdateMaze(newMaze)
   }
 
   const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure()
@@ -83,13 +97,13 @@ const MazePanelHeader = ({ maze, simulation, children, ...props }: MazePanelHead
     <>
       <PanelHeader {...props}>
         <Flex alignItems={'center'}>
-          <Editable defaultValue={maze.name} key={maze.name} onSubmit={onUpdateMaze}>
+          <Editable defaultValue={maze.name} key={maze.name} onSubmit={onUpdateName}>
             <EditablePreview fontWeight="medium" />
             <EditableInput />
           </Editable>
         </Flex>
         <Flex alignItems={'center'}>
-          <SizeTypePicker value={sizeType} onChange={setSizeType} />
+          <SizeTypePicker value={maze.isFullSize ? 'full' : 'half'} onChange={onUpdateIsFullSize} />
         </Flex>
         <HStack spacing={4} alignItems={'center'}>
           <HStack spacing={2} alignItems={'center'}>

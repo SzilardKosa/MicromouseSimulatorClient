@@ -6,7 +6,7 @@ export type SizeOptions = 'full' | 'half'
 
 interface SizeTypePickerProps {
   value: SizeOptions
-  onChange: (value: SizeOptions) => void
+  onChange: (value: SizeOptions) => Promise<void>
 }
 
 const SizeTypePicker: FC<SizeTypePickerProps> = ({ value, onChange }) => {

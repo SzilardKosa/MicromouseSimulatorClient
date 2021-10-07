@@ -42,6 +42,29 @@ export function useUpdateMaze() {
   )
 }
 
+export function useUpdateMazeOptimistically() {
+  const queryClient = useQueryClient()
+  return useMutation(
+    async (maze: MazeDTO) => {
+      await api.mazesIdPut(maze.id!!, maze)
+    },
+    {
+      onMutate: async (newMaze: MazeDTO) => {
+        await queryClient.cancelQueries(['mazes', newMaze.id])
+        const previousMaze = queryClient.getQueryData(['mazes', newMaze.id])
+        queryClient.setQueryData(['mazes', newMaze.id], newMaze)
+        return { previousMaze, newMaze }
+      },
+      onError: (err, newMaze, context: any) => {
+        queryClient.setQueryData(['mazes', context.newMaze.id], context.previousMaze)
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries('mazes')
+      },
+    }
+  )
+}
+
 export function useDeleteMaze() {
   const queryClient = useQueryClient()
   return useMutation(api.mazesIdDelete, {
