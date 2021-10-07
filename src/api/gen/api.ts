@@ -221,6 +221,24 @@ export interface SimulationExpandedDTO {
     name: string;
     /**
      * 
+     * @type {string}
+     * @memberof SimulationExpandedDTO
+     */
+    algorithmId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimulationExpandedDTO
+     */
+    mazeId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimulationExpandedDTO
+     */
+    mouseId?: string | null;
+    /**
+     * 
      * @type {AlgorithmDTO}
      * @memberof SimulationExpandedDTO
      */

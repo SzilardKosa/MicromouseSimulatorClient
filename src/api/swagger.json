@@ -875,6 +875,18 @@
           "name": {
             "type": "string"
           },
+          "algorithmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "mazeId": {
+            "type": "string",
+            "nullable": true
+          },
+          "mouseId": {
+            "type": "string",
+            "nullable": true
+          },
           "algorithm": {
             "$ref": "#/components/schemas/AlgorithmDTO"
           },
