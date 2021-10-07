@@ -50,7 +50,7 @@ const SimulatorPage = () => {
         <Box display={currentTab === SimulatorTabs.Editor ? 'block' : 'none'}>
           <SplitterLayout percentage secondaryInitialSize={50}>
             <CodeEditorPanel simulation={simulation} />
-            <MazeEditorPanel />
+            <MazeEditorPanel simulation={simulation} />
           </SplitterLayout>
         </Box>
         <Box display={currentTab === SimulatorTabs.Result ? 'block' : 'none'}>
