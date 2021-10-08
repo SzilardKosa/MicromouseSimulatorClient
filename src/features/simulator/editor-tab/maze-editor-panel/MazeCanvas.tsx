@@ -1,17 +1,19 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { MazeDTO } from '../../../../api/gen'
+import { useUpdateMazeOptimistically } from '../../../../api/hooks/mazes'
+import { getMazeDeepCopy } from './consts'
 import {
   selectCellSize,
   selectCellWallRation,
-  selectCols,
   selectEditType,
   selectGoalArea,
-  selectRows,
   selectWalls,
   setBottomWall,
   setGoalArea,
   setLeftWall,
   Cell,
+  CellWalls,
 } from './mazeEditorSlice'
 
 const wallColor = 'rgb(122, 0, 0)'
@@ -23,7 +25,9 @@ const startCell = {
 
 type editGoalStates = 'done' | 'active'
 
-const MazeCanvas = () => {
+type MazeCanvasProps = { maze: MazeDTO }
+
+const MazeCanvas = ({ maze }: MazeCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [isMouseDown, setIsMouseDown] = useState(false)
   const [editGoalState, setEditGoalState] = useState<editGoalStates>('done')
@@ -32,8 +36,8 @@ const MazeCanvas = () => {
   const cellSize = useSelector(selectCellSize)
   const cellWallRation = useSelector(selectCellWallRation)
   const wallWidth = Math.floor(cellSize * cellWallRation)
-  const rows = useSelector(selectRows)
-  const cols = useSelector(selectCols)
+  const rows = maze.height
+  const cols = maze.width
   const mazeWidth = cols * cellSize + wallWidth
   const mazeHeight = rows * cellSize + wallWidth
 
@@ -41,6 +45,29 @@ const MazeCanvas = () => {
   const goalArea = useSelector(selectGoalArea)
 
   const dispatch = useDispatch()
+
+  const { mutateAsync: updateMaze } = useUpdateMazeOptimistically()
+
+  const onUpdateMaze = async (newMaze: MazeDTO) => {
+    try {
+      await updateMaze(newMaze)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const onUpdateWalls = async (newWalls: CellWalls[][]) => {
+    const newMaze = getMazeDeepCopy(maze)
+    newMaze.walls = newWalls
+    await onUpdateMaze(newMaze)
+  }
+
+  const onUpdateGoalArea = async (newGoalArea: Cell[]) => {
+    const newMaze = getMazeDeepCopy(maze)
+    newMaze.goalArea.cell1 = newGoalArea[0]
+    newMaze.goalArea.cell2 = newGoalArea[1]
+    await onUpdateMaze(newMaze)
+  }
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -153,15 +180,17 @@ const MazeCanvas = () => {
     }
   }
 
-  const handleMouseUP = (event: React.MouseEvent<HTMLElement>) => {
+  const handleMouseUP = async (event: React.MouseEvent<HTMLElement>) => {
     setIsMouseDown(false)
     if (editType !== 'editGoal') {
+      await onUpdateWalls(walls)
       return
     }
     if (editGoalState === 'done') {
       startEditGoal(event)
     } else {
       endEditGoal(event)
+      await onUpdateGoalArea(goalArea)
     }
   }
 

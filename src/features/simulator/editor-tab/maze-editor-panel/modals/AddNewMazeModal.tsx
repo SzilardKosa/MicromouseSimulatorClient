@@ -16,6 +16,7 @@ import {
 import { useCreateMaze } from '../../../../../api/hooks/mazes'
 import { useUpdateSimulation } from '../../../../../api/hooks/simulations'
 import { MazeDTO, SimulationDTO } from '../../../../../api/gen'
+import { defaultHeight, defaultWalls, defaultWidth } from '../consts'
 
 type AddNewMazeModalProps = {
   isOpen: boolean
@@ -33,19 +34,19 @@ const AddNewMazeModal = ({ isOpen, onClose, simulation }: AddNewMazeModalProps) 
       const newMaze: MazeDTO = {
         name: values.name,
         isFullSize: true,
-        width: 10,
-        height: 10,
+        width: defaultWidth,
+        height: defaultHeight,
+        walls: defaultWalls,
         goalArea: {
-          topLeft: {
-            x: 0,
-            y: 0,
+          cell1: {
+            x: 3,
+            y: 3,
           },
-          bottomRight: {
-            x: 0,
-            y: 0,
+          cell2: {
+            x: 3,
+            y: 3,
           },
         },
-        walls: 'string',
       }
       const result = await createMaze(newMaze)
       const newSimulation: SimulationDTO = {

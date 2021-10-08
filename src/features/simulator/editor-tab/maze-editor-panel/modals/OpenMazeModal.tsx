@@ -42,7 +42,6 @@ const OpenMazeModal = ({ isOpen, onClose, simulation }: OpenMazeModalProps) => {
         mouseId: simulation.mouseId,
         name: simulation.name,
       }
-      console.log(newSimulation)
       await updateSimulation(newSimulation)
     } catch (error) {
       console.error(error)

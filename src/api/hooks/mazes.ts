@@ -12,11 +12,21 @@ export function useMazes() {
   })
 }
 
-export function useMaze(id: string) {
-  return useQuery<MazeDTO, Error>(['mazes', id], async () => {
-    const result = await api.mazesIdGet(id)
-    return result.data
-  })
+type useMazeInputs = { id: string; onSuccess?: (maze: MazeDTO) => void }
+
+export function useMaze({ id, onSuccess }: useMazeInputs) {
+  return useQuery<MazeDTO, Error>(
+    ['mazes', id],
+    async () => {
+      const result = await api.mazesIdGet(id)
+      return result.data
+    },
+    {
+      onSuccess: (data) => {
+        if (onSuccess) onSuccess(data)
+      },
+    }
+  )
 }
 
 export function useCreateMaze() {
