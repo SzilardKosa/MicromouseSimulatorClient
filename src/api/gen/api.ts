@@ -55,6 +55,25 @@ export interface AlgorithmDTO {
 /**
  * 
  * @export
+ * @interface CellWalls
+ */
+export interface CellWalls {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CellWalls
+     */
+    bottom: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CellWalls
+     */
+    left: boolean;
+}
+/**
+ * 
+ * @export
  * @interface Coordinate
  */
 export interface Coordinate {
@@ -63,13 +82,13 @@ export interface Coordinate {
      * @type {number}
      * @memberof Coordinate
      */
-    x?: number;
+    x: number;
     /**
      * 
      * @type {number}
      * @memberof Coordinate
      */
-    y?: number;
+    y: number;
 }
 /**
  * 
@@ -82,13 +101,13 @@ export interface GoalAreaDTO {
      * @type {Coordinate}
      * @memberof GoalAreaDTO
      */
-    topLeft: Coordinate;
+    cell1: Coordinate;
     /**
      * 
      * @type {Coordinate}
      * @memberof GoalAreaDTO
      */
-    bottomRight: Coordinate;
+    cell2: Coordinate;
 }
 /**
  * 
@@ -134,10 +153,10 @@ export interface MazeDTO {
     goalArea: GoalAreaDTO;
     /**
      * 
-     * @type {string}
+     * @type {Array<Array<CellWalls>>}
      * @memberof MazeDTO
      */
-    walls: string;
+    walls: Array<Array<CellWalls>>;
 }
 /**
  * 

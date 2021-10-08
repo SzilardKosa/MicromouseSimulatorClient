@@ -759,7 +759,21 @@
         },
         "additionalProperties": false
       },
+      "CellWalls": {
+        "required": ["bottom", "left"],
+        "type": "object",
+        "properties": {
+          "bottom": {
+            "type": "boolean"
+          },
+          "left": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "Coordinate": {
+        "required": ["x", "y"],
         "type": "object",
         "properties": {
           "x": {
@@ -774,13 +788,13 @@
         "additionalProperties": false
       },
       "GoalAreaDTO": {
-        "required": ["bottomRight", "topLeft"],
+        "required": ["cell1", "cell2"],
         "type": "object",
         "properties": {
-          "topLeft": {
+          "cell1": {
             "$ref": "#/components/schemas/Coordinate"
           },
-          "bottomRight": {
+          "cell2": {
             "$ref": "#/components/schemas/Coordinate"
           }
         },
@@ -816,7 +830,13 @@
             "$ref": "#/components/schemas/GoalAreaDTO"
           },
           "walls": {
-            "type": "string"
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CellWalls"
+              }
+            }
           }
         },
         "additionalProperties": false
