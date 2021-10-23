@@ -4,15 +4,10 @@ import { selectCurrentTab, SimulatorTabs } from './simulatorSlice'
 import { useParams } from 'react-router-dom'
 import Navbar from './Navbar'
 import '../../common/Splitter.css'
-import SplitterLayout from 'react-splitter-layout'
-import CodeEditorPanel from './editor-tab/code-editor-panel/CodeEditorPanel'
-import MazeEditorPanel from './editor-tab/maze-editor-panel/MazeEditorPanel'
-import MazeViewerPanel from './result-tab/maze-viewer-panel/MazeViewerPanel'
-import StatsPanel from './result-tab/stats-panel/StatsPanel'
-import MouseEditorPanel from './result-tab/mouse-editor-panel/MouseEditorPanel'
-import ConsolePanel from './result-tab/console-panel/ConsolePanel'
 import { useSimulation } from '../../api/hooks/simulations'
 import { Box, Center, Spinner, useColorModeValue, Text } from '@chakra-ui/react'
+import EditorTab from './editor-tab/EditorTab'
+import ResultTab from './result-tab/ResultTab'
 
 const SimulatorPage = () => {
   const currentTab = useSelector(selectCurrentTab)
@@ -48,22 +43,10 @@ const SimulatorPage = () => {
     content = (
       <>
         <Box display={currentTab === SimulatorTabs.Editor ? 'block' : 'none'}>
-          <SplitterLayout percentage secondaryInitialSize={50}>
-            <CodeEditorPanel simulation={simulation} />
-            <MazeEditorPanel simulation={simulation} />
-          </SplitterLayout>
+          <EditorTab simulation={simulation} />
         </Box>
         <Box display={currentTab === SimulatorTabs.Result ? 'block' : 'none'}>
-          <SplitterLayout percentage secondaryInitialSize={40}>
-            <SplitterLayout percentage vertical secondaryInitialSize={30}>
-              <MazeViewerPanel />
-              <ConsolePanel />
-            </SplitterLayout>
-            <SplitterLayout percentage vertical secondaryInitialSize={40}>
-              <StatsPanel />
-              <MouseEditorPanel />
-            </SplitterLayout>
-          </SplitterLayout>
+          <ResultTab simulation={simulation} />
         </Box>
       </>
     )
