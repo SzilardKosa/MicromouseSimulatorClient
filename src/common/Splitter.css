@@ -5,6 +5,22 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+  /* default color values */
+  --bg-color: #2d3748;
+  --bg-color-hover: #4a5568;
+  --bg-color-active: #718096;
+}
+
+.splitter-layout.dark {
+  --bg-color: #2d3748;
+  --bg-color-hover: #4a5568;
+  --bg-color-active: #718096;
+}
+
+.splitter-layout.light {
+  --bg-color: #e2e8f0;
+  --bg-color-hover: #cbd5e0;
+  --bg-color-active: #a0aec0;
 }
 
 .splitter-layout .layout-pane {
@@ -22,11 +38,11 @@
   width: 12px;
   height: 100%;
   cursor: col-resize;
-  background-color: #ccc;
+  background-color: var(--bg-color);
 }
 
 .splitter-layout .layout-splitter:hover {
-  background-color: #bbb;
+  background-color: var(--bg-color-hover);
 }
 
 .splitter-layout.layout-changing {
@@ -34,7 +50,7 @@
 }
 
 .splitter-layout.layout-changing > .layout-splitter {
-  background-color: #aaa;
+  background-color: var(--bg-color-active);
 }
 
 .splitter-layout.splitter-layout-vertical {
