@@ -7,6 +7,7 @@ import { Languages } from './consts'
 import { useSelector } from 'react-redux'
 import { selectFontSize } from './codeEditorSlice'
 import { useUpdateAlgorithm } from '../../../../api/hooks/algorithms'
+import { useColorModeValue } from '@chakra-ui/react'
 
 const languages = ['c_cpp', 'python']
 const themes = [
@@ -36,6 +37,7 @@ type AceCodeEditorProps = {
 const AceCodeEditor = ({ algorithm }: AceCodeEditorProps) => {
   const fontSize = useSelector(selectFontSize)
   const { mutateAsync: updateAlgorithm } = useUpdateAlgorithm()
+  const theme = useColorModeValue('xcode', 'monokai')
 
   async function onUpdateAlgorithm(newValue: string) {
     console.log('change', newValue)
@@ -58,7 +60,7 @@ const AceCodeEditor = ({ algorithm }: AceCodeEditorProps) => {
     <AceEditor
       placeholder="Placeholder Text"
       mode={mode}
-      theme={'monokai'}
+      theme={theme}
       name="ace-editor"
       key={algorithm.codeText}
       defaultValue={algorithm.codeText}
