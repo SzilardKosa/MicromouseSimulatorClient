@@ -18,6 +18,7 @@ import {
 import { SimulationDTO } from '../../../../../api/gen'
 import { useMazes } from '../../../../../api/hooks/mazes'
 import { useUpdateSimulation } from '../../../../../api/hooks/simulations'
+import ErrorMessageView from '../../../../../common/ErrorMessageView'
 
 type OpenMazeModalProps = {
   isOpen: boolean
@@ -28,7 +29,6 @@ type OpenMazeModalProps = {
 const OpenMazeModal = ({ isOpen, onClose, simulation }: OpenMazeModalProps) => {
   const { status, data: mazes, error } = useMazes()
   const { mutateAsync: updateSimulation } = useUpdateSimulation()
-  const errorColor = useColorModeValue('red.700', 'red.300')
   const listItemBg = useColorModeValue('blackAlpha.200', 'blackAlpha.400')
   const listItemBgHover = useColorModeValue('green.200', 'green.400')
   let content
@@ -57,13 +57,7 @@ const OpenMazeModal = ({ isOpen, onClose, simulation }: OpenMazeModalProps) => {
     )
   } else if (status === 'error') {
     console.log(error)
-    content = (
-      <Center h="full">
-        <Text fontSize="md" color={errorColor}>
-          An error occured while loading the mazes!
-        </Text>
-      </Center>
-    )
+    content = <ErrorMessageView message={'An error occured while loading the mazes!'} />
   } else {
     content = (
       <Box w="full">

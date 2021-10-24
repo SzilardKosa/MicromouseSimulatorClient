@@ -5,15 +5,15 @@ import { useParams } from 'react-router-dom'
 import Navbar from './Navbar'
 import '../../common/Splitter.css'
 import { useSimulation } from '../../api/hooks/simulations'
-import { Box, Center, Spinner, useColorModeValue, Text } from '@chakra-ui/react'
+import { Box, Center, Spinner } from '@chakra-ui/react'
 import EditorTab from './editor-tab/EditorTab'
 import ResultTab from './result-tab/ResultTab'
+import ErrorMessageView from '../../common/ErrorMessageView'
 
 const SimulatorPage = () => {
   const currentTab = useSelector(selectCurrentTab)
   let { id } = useParams<{ id: string }>()
   const { status, data: simulation, error } = useSimulation(id)
-  const errorColor = useColorModeValue('red.700', 'red.300')
   let content
 
   if (status === 'loading') {
@@ -24,21 +24,9 @@ const SimulatorPage = () => {
     )
   } else if (status === 'error') {
     console.log(error)
-    content = (
-      <Center h="full">
-        <Text fontSize="md" color={errorColor}>
-          An error occured while loading the simulation!
-        </Text>
-      </Center>
-    )
+    content = <ErrorMessageView message={'An error occured while loading the simulation!'} />
   } else if (!simulation) {
-    content = (
-      <Center h="full">
-        <Text fontSize="md" color={errorColor}>
-          Simulation not found!
-        </Text>
-      </Center>
-    )
+    content = <ErrorMessageView message={'Simulation not found!'} />
   } else {
     content = (
       <>

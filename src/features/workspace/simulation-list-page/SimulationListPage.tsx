@@ -1,11 +1,11 @@
 import React from 'react'
-import { Box, Center, Spinner, Text, useColorModeValue } from '@chakra-ui/react'
+import { Box, Center, Spinner } from '@chakra-ui/react'
 import { useSimulations } from '../../../api/hooks/simulations'
 import SimulationList from './SimulationList'
+import ErrorMessageView from '../../../common/ErrorMessageView'
 
 const SimulationListPage = () => {
   const { status, data, error } = useSimulations()
-  const errorColor = useColorModeValue('red.700', 'red.300')
   let content
 
   if (status === 'loading') {
@@ -16,13 +16,7 @@ const SimulationListPage = () => {
     )
   } else if (status === 'error') {
     console.log(error)
-    content = (
-      <Center h="full">
-        <Text fontSize="md" color={errorColor}>
-          An error occured while loading the simulations!
-        </Text>
-      </Center>
-    )
+    content = <ErrorMessageView message={'An error occured while loading the simulations!'} />
   } else {
     content = <SimulationList simulations={data ?? []} />
   }

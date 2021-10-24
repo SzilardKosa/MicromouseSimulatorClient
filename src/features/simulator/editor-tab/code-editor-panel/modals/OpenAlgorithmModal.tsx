@@ -20,6 +20,7 @@ import { useAlgorithms } from '../../../../../api/hooks/algorithms'
 import { useUpdateSimulation } from '../../../../../api/hooks/simulations'
 import LanguageIcon from '../LanguageIcon'
 import { Languages } from '../consts'
+import ErrorMessageView from '../../../../../common/ErrorMessageView'
 
 type OpenAlgorithmModalProps = {
   isOpen: boolean
@@ -30,7 +31,6 @@ type OpenAlgorithmModalProps = {
 const OpenAlgorithmModal = ({ isOpen, onClose, simulation }: OpenAlgorithmModalProps) => {
   const { status, data: algorithms, error } = useAlgorithms()
   const { mutateAsync: updateSimulation } = useUpdateSimulation()
-  const errorColor = useColorModeValue('red.700', 'red.300')
   const listItemBg = useColorModeValue('blackAlpha.200', 'blackAlpha.400')
   const listItemBgHover = useColorModeValue('green.200', 'green.400')
   let content
@@ -59,13 +59,7 @@ const OpenAlgorithmModal = ({ isOpen, onClose, simulation }: OpenAlgorithmModalP
     )
   } else if (status === 'error') {
     console.log(error)
-    content = (
-      <Center h="full">
-        <Text fontSize="md" color={errorColor}>
-          An error occured while loading the algorithms!
-        </Text>
-      </Center>
-    )
+    content = <ErrorMessageView message={'An error occured while loading the algorithms!'} />
   } else {
     content = (
       <Box w="full">
