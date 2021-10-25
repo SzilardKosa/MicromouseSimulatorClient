@@ -4,7 +4,7 @@ import { selectCurrentTab, SimulatorTabs } from './simulatorSlice'
 import { useParams } from 'react-router-dom'
 import Navbar from './Navbar'
 import '../../common/Splitter.css'
-import { useSimulation } from '../../api/hooks/simulations'
+import { useRunSimulation, useSimulation } from '../../api/hooks/simulations'
 import { Box, Center, Spinner } from '@chakra-ui/react'
 import EditorTab from './editor-tab/EditorTab'
 import ResultTab from './result-tab/ResultTab'
@@ -14,6 +14,7 @@ const SimulatorPage = () => {
   const currentTab = useSelector(selectCurrentTab)
   let { id } = useParams<{ id: string }>()
   const { status, data: simulation, error } = useSimulation(id)
+  const { isLoading, status: runStatus, mutateAsync: runSimulation } = useRunSimulation()
   let content
 
   if (status === 'loading') {
@@ -34,7 +35,7 @@ const SimulatorPage = () => {
           <EditorTab simulation={simulation} />
         </Box>
         <Box display={currentTab === SimulatorTabs.Result ? 'block' : 'none'}>
-          <ResultTab simulation={simulation} />
+          <ResultTab simulation={simulation} status={runStatus} />
         </Box>
       </>
     )
@@ -42,7 +43,13 @@ const SimulatorPage = () => {
 
   return (
     <>
-      <Navbar position="relative" zIndex={2} />
+      <Navbar
+        simulation={simulation}
+        runSimulation={runSimulation}
+        isRunning={isLoading}
+        position="relative"
+        zIndex={2}
+      />
       <Box h="calc(100vh - 64px)" w="full" position="absolute">
         {content}
       </Box>

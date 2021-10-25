@@ -1,5 +1,4 @@
-import { SimulationDTO } from './../gen/api'
-import { SimulationApi, SimulationExpandedDTO } from '../gen/api'
+import { SimulationApi, SimulationExpandedDTO, SimulationDTO } from './../gen/api'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 
 const api = new SimulationApi()
@@ -50,4 +49,8 @@ export function useDeleteSimulation() {
       queryClient.invalidateQueries('simulations')
     },
   })
+}
+
+export function useRunSimulation() {
+  return useMutation(api.simulationsIdRunGet)
 }

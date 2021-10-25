@@ -7,9 +7,12 @@ import MazeViewerPanel from './maze-viewer-panel/MazeViewerPanel'
 import MouseEditorPanel from './mouse-editor-panel/MouseEditorPanel'
 import StatsPanel from './stats-panel/StatsPanel'
 
-type ResultTabProps = { simulation: SimulationExpandedDTO }
+type ResultTabProps = {
+  simulation: SimulationExpandedDTO
+  status: 'error' | 'idle' | 'loading' | 'success'
+}
 
-const ResultTab = ({ simulation }: ResultTabProps) => {
+const ResultTab = ({ simulation, status }: ResultTabProps) => {
   return (
     <SplitterLayout
       percentage

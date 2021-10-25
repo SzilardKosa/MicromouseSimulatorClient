@@ -7,6 +7,9 @@ import {
   BoxProps,
   Button,
   ButtonGroup,
+  Editable,
+  EditableInput,
+  EditablePreview,
   Flex,
   HStack,
   Icon,
@@ -17,12 +20,28 @@ import {
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import DarkLightSwitch from '../../common/DarkLightSwitch'
 import { MdPlayArrow } from 'react-icons/md'
+import { UseMutateAsyncFunction } from 'react-query'
+import { AxiosResponse } from 'axios'
+import { SimulationDTO, SimulationExpandedDTO, SimulationResultDTO } from '../../api/gen'
+import { useUpdateSimulation } from '../../api/hooks/simulations'
 
-const Navbar = (props: BoxProps) => {
+type NavbarProps = BoxProps & {
+  simulation?: SimulationExpandedDTO
+  runSimulation: UseMutateAsyncFunction<
+    AxiosResponse<SimulationResultDTO>,
+    unknown,
+    string,
+    unknown
+  >
+  isRunning: boolean
+}
+
+const Navbar = ({ simulation, runSimulation, isRunning, ...etc }: NavbarProps) => {
   const currentTab = useSelector(selectCurrentTab)
   const dispatch = useDispatch()
   let history = useHistory()
   const iconButtonColor = useColorModeValue('gray.800', 'white')
+  const { mutateAsync: updateSimulation } = useUpdateSimulation()
 
   const iconButtonProps: Omit<IconButtonProps, 'aria-label'> = {
     variant: 'ghost',
@@ -31,8 +50,31 @@ const Navbar = (props: BoxProps) => {
     size: 'md',
   }
 
+  const onRunSimulation = async () => {
+    if (simulation == null) return
+    try {
+      const result = await runSimulation(simulation.id!)
+      console.log(result)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const onUpdateSimulation = async (newName: string) => {
+    if (simulation == null) return
+    try {
+      const newSimulation: SimulationDTO = {
+        ...simulation,
+        name: newName,
+      }
+      await updateSimulation(newSimulation)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
-    <Box bg={useColorModeValue('green.400', 'green.800')} px={4} shadow="base" {...props}>
+    <Box bg={useColorModeValue('green.400', 'green.800')} px={4} shadow="base" {...etc}>
       <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
         <HStack spacing={4} alignItems={'center'}>
           <IconButton
@@ -41,7 +83,16 @@ const Navbar = (props: BoxProps) => {
             aria-label={'Back to list'}
             onClick={() => history.push('/workspace/simulations')}
           />
-          <Box fontWeight="bold">Simulator</Box>
+          {simulation && (
+            <Editable
+              defaultValue={simulation.name}
+              key={simulation.name}
+              onSubmit={onUpdateSimulation}
+            >
+              <EditablePreview fontWeight="bold" />
+              <EditableInput />
+            </Editable>
+          )}
         </HStack>
         <Flex alignItems={'center'}>
           <ButtonGroup isAttached>
@@ -64,7 +115,8 @@ const Navbar = (props: BoxProps) => {
             {...iconButtonProps}
             icon={<Icon w={5} h={5} as={MdPlayArrow} />}
             aria-label={'Run simulation'}
-            onClick={() => console.log('simulation finished')}
+            onClick={onRunSimulation}
+            isLoading={isRunning}
           />
           <DarkLightSwitch {...iconButtonProps} />
         </HStack>
