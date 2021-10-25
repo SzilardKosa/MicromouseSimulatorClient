@@ -1,11 +1,18 @@
 import React from 'react'
-import { Box } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
+import PanelHeader from '../../common/PanelHeader'
+import MazeViewerPanelBody from './MazeViewerPanelBody'
 
 const MazeViewerPanel = () => {
   return (
-    <Box bg="lightskyblue" h="100%">
-      Maze Viewer Panel
-    </Box>
+    <>
+      <PanelHeader position="relative" zIndex={1}>
+        <Flex alignItems={'center'}>
+          <Text fontWeight="medium">Maze viewer</Text>
+        </Flex>
+      </PanelHeader>
+      <MazeViewerPanelBody />
+    </>
   )
 }
 

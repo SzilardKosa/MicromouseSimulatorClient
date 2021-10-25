@@ -6,7 +6,7 @@ const MouseEditorPanel = () => {
   return (
     <>
       <MousePanelHeader position="relative" zIndex={1} />
-      <Box bg="lightcoral" h="100%">
+      <Box bg="lightcoral" h="calc(100% - 48px)">
         Mouse Editor Panel
       </Box>
     </>
