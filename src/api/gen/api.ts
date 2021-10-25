@@ -286,19 +286,19 @@ export interface SimulationResultDTO {
      * @type {string}
      * @memberof SimulationResultDTO
      */
-    error?: string | null;
+    error: string;
     /**
      * 
      * @type {SimulationExpandedDTO}
      * @memberof SimulationResultDTO
      */
-    simulation?: SimulationExpandedDTO;
+    simulation: SimulationExpandedDTO;
     /**
      * 
      * @type {Array<string>}
      * @memberof SimulationResultDTO
      */
-    history?: Array<string> | null;
+    history: Array<string>;
 }
 
 /**
