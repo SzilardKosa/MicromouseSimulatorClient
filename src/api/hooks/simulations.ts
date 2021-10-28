@@ -52,5 +52,8 @@ export function useDeleteSimulation() {
 }
 
 export function useRunSimulation() {
-  return useMutation(api.simulationsIdRunGet)
+  return useMutation(async (id: string) => {
+    const result = await api.simulationsIdRunGet(id)
+    return result.data
+  })
 }

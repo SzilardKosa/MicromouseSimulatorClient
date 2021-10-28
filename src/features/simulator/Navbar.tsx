@@ -21,18 +21,13 @@ import { ArrowBackIcon } from '@chakra-ui/icons'
 import DarkLightSwitch from '../../common/DarkLightSwitch'
 import { MdPlayArrow } from 'react-icons/md'
 import { UseMutateAsyncFunction } from 'react-query'
-import { AxiosResponse } from 'axios'
 import { SimulationDTO, SimulationExpandedDTO, SimulationResultDTO } from '../../api/gen'
 import { useUpdateSimulation } from '../../api/hooks/simulations'
+import { simulationFinished } from './result-tab/resultSlice'
 
 type NavbarProps = BoxProps & {
   simulation?: SimulationExpandedDTO
-  runSimulation: UseMutateAsyncFunction<
-    AxiosResponse<SimulationResultDTO>,
-    unknown,
-    string,
-    unknown
-  >
+  runSimulation: UseMutateAsyncFunction<SimulationResultDTO, unknown, string, unknown>
   isRunning: boolean
 }
 
@@ -53,7 +48,9 @@ const Navbar = ({ simulation, runSimulation, isRunning, ...etc }: NavbarProps) =
   const onRunSimulation = async () => {
     if (simulation == null) return
     try {
+      dispatch(changeTab(SimulatorTabs.Result))
       const result = await runSimulation(simulation.id!)
+      dispatch(simulationFinished(result))
       console.log(result)
     } catch (error) {
       console.error(error)
