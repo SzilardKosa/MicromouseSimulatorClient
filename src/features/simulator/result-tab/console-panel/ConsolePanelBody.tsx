@@ -28,90 +28,58 @@ const dummyLogs: Log[] = [
     text: 'hello',
   },
   {
-    step: 23,
+    step: 28,
     text: '',
   },
   {
-    step: 24,
+    step: 29,
     text: 'its  amubhc lonbger testijsf\n iejiafgidfn its i s tislna gldihjbfg shifjianlfnanfsjf \nf afkja',
   },
   {
-    step: 25,
+    step: 30,
     text: '',
   },
   {
-    step: 26,
+    step: 31,
     text: '',
   },
   {
-    step: 27,
+    step: 32,
     text: 'hello',
   },
   {
-    step: 23,
+    step: 33,
     text: 'hello',
   },
   {
-    step: 24,
+    step: 34,
     text: 'its  amubhc lonbger testijsf\n iejiafgidfn its i s tislna gldihjbfg shifjianlfnanfsjf \nf afkja',
   },
   {
-    step: 25,
+    step: 35,
     text: 'hello',
   },
   {
-    step: 26,
+    step: 36,
     text: 'hello',
   },
   {
-    step: 27,
+    step: 37,
     text: 'hello',
   },
   {
-    step: 23,
+    step: 38,
     text: 'hello',
   },
   {
-    step: 24,
+    step: 39,
     text: 'its  amubhc lonbger testijsf\n iejiafgidfn its i s tislna gldihjbfg shifjianlfnanfsjf \nf afkja',
-  },
-  {
-    step: 25,
-    text: 'hello',
-  },
-  {
-    step: 26,
-    text: 'hello',
-  },
-  {
-    step: 27,
-    text: 'hello',
-  },
-  {
-    step: 23,
-    text: 'hello',
-  },
-  {
-    step: 24,
-    text: 'its  amubhc lonbger testijsf\n iejiafgidfn its i s tislna gldihjbfg shifjianlfnanfsjf \nf afkja',
-  },
-  {
-    step: 25,
-    text: 'hello',
-  },
-  {
-    step: 26,
-    text: 'hello',
-  },
-  {
-    step: 27,
-    text: 'hello',
   },
 ]
 
 const ConsolePanelBody = () => {
   const logs = dummyLogs.map((log) => (
-    <HStack spacing={2} alignItems="flex-start">
+    <HStack spacing={2} alignItems="flex-start" key={log.step}>
       <Text color="gray.500" fontWeight="semibold">
         {log.step}
       </Text>
