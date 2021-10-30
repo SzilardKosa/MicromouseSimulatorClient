@@ -29,16 +29,23 @@ export interface MazeViewerInput {
   cellLabels: string[][]
 }
 
+export interface ConsoleLog {
+  step: number
+  text: string
+}
+
 interface ProcessedHistory {
   positions: MousePosition[]
   cellVisitesPrefixSum: number[][][] // w*h*intSize*steps= 32 * 32 * 4 byte * 10000 = 41MB
   observedWallsPrefixSum: ObservedWalls[][][] // ~ max 41MB
+  consoleLogs: ConsoleLog[]
 }
 
 interface ResultState {
   errorMessage?: string
   mazeViewerInput?: MazeViewerInput
   processedHistory?: ProcessedHistory
+  consoleInput?: ConsoleLog[]
   // HUD
   cellSize: number
   cellWallRation: number
@@ -65,18 +72,21 @@ const resultSlice = createSlice({
     },
     setSelectedInterval: (state, action: PayloadAction<number[]>) => {
       state.selectedInterval = action.payload
+      const [start, end] = action.payload
       const { mazeViewerInput, processedHistory } = state
       if (mazeViewerInput && processedHistory) {
-        mazeViewerInput.currentPosition = processedHistory.positions[state.selectedInterval[1]]
-        mazeViewerInput.observedWalls =
-          processedHistory.observedWallsPrefixSum[state.selectedInterval[1]]
+        mazeViewerInput.currentPosition = processedHistory.positions[end]
+        mazeViewerInput.observedWalls = processedHistory.observedWallsPrefixSum[end]
         mazeViewerInput.cellVisites =
           state.selectedInterval[0] === 0
-            ? processedHistory.cellVisitesPrefixSum[state.selectedInterval[1]]
+            ? processedHistory.cellVisitesPrefixSum[end]
             : subtract(
-                processedHistory.cellVisitesPrefixSum[state.selectedInterval[1]],
-                processedHistory.cellVisitesPrefixSum[state.selectedInterval[0] - 1]
+                processedHistory.cellVisitesPrefixSum[end],
+                processedHistory.cellVisitesPrefixSum[start - 1]
               )
+      }
+      if (state.consoleInput && processedHistory) {
+        state.consoleInput = processedHistory.consoleLogs.slice(start, end + 1)
       }
     },
     simulationFinished: (state, action: PayloadAction<SimulationResultDTO>) => {
@@ -100,59 +110,56 @@ const resultSlice = createSlice({
         ],
         cellVisitesPrefixSum: [cellVisitesInitial],
         observedWallsPrefixSum: [observedWallsInitial],
+        consoleLogs: [
+          {
+            step: 0,
+            text: '',
+          },
+        ],
       }
+      let currentStep = 0
 
       // process history
       history.forEach((command) => {
         switch (true) {
           case /^fw$/.test(command): {
-            let { x, y, direction } =
-              processedHistory.positions[processedHistory.positions.length - 1]
-            let observedWalls =
-              processedHistory.observedWallsPrefixSum[
-                processedHistory.observedWallsPrefixSum.length - 1
-              ]
+            let { x, y, direction } = processedHistory.positions[currentStep]
+            let observedWalls = processedHistory.observedWallsPrefixSum[currentStep]
             setObservedWalls(x, y, direction, observedWalls, height, width)
             break
           }
           case /^lw$/.test(command): {
-            let { x, y, direction } =
-              processedHistory.positions[processedHistory.positions.length - 1]
-            let observedWalls =
-              processedHistory.observedWallsPrefixSum[
-                processedHistory.observedWallsPrefixSum.length - 1
-              ]
+            let { x, y, direction } = processedHistory.positions[currentStep]
+            let observedWalls = processedHistory.observedWallsPrefixSum[currentStep]
             const sensorDirection = mod(direction + 1, 4)
             setObservedWalls(x, y, sensorDirection, observedWalls, height, width)
             break
           }
           case /^rw$/.test(command): {
-            let { x, y, direction } =
-              processedHistory.positions[processedHistory.positions.length - 1]
-            let observedWalls =
-              processedHistory.observedWallsPrefixSum[
-                processedHistory.observedWallsPrefixSum.length - 1
-              ]
+            let { x, y, direction } = processedHistory.positions[currentStep]
+            let observedWalls = processedHistory.observedWallsPrefixSum[currentStep]
             const sensorDirection = mod(direction - 1, 4)
             setObservedWalls(x, y, sensorDirection, observedWalls, height, width)
             break
           }
           case /^tl$/.test(command): {
             let positions = processedHistory.positions
-            positions[positions.length - 1].direction += 1
-            positions[positions.length - 1].direction = mod(
-              positions[positions.length - 1].direction,
-              4
-            )
+            positions[currentStep].direction += 1
+            positions[currentStep].direction = mod(positions[currentStep].direction, 4)
             break
           }
           case /^tr$/.test(command): {
             let positions = processedHistory.positions
-            positions[positions.length - 1].direction -= 1
-            positions[positions.length - 1].direction = mod(
-              positions[positions.length - 1].direction,
-              4
-            )
+            positions[currentStep].direction -= 1
+            positions[currentStep].direction = mod(positions[currentStep].direction, 4)
+            break
+          }
+          case /^cl /.test(command): {
+            let message = ' '
+            if (command.split(' ').length > 1) {
+              message = command.substring(3) + '\n'
+            }
+            processedHistory.consoleLogs[currentStep].text += message
             break
           }
           case /^mf [0-9]{1,2}$|^mf$/.test(command): {
@@ -164,11 +171,12 @@ const resultSlice = createSlice({
             let positions = processedHistory.positions
             let cellVisitesPrefixSum = processedHistory.cellVisitesPrefixSum
             let observedWallsPrefixSum = processedHistory.observedWallsPrefixSum
+            let consoleLogs = processedHistory.consoleLogs
             for (let i = 0; i < numberOfSteps; i++) {
               // add new position
-              const dir = positions[positions.length - 1].direction
-              const x = positions[positions.length - 1].x
-              const y = positions[positions.length - 1].y
+              const dir = positions[currentStep].direction
+              const x = positions[currentStep].x
+              const y = positions[currentStep].y
               const newPosition: MousePosition = {
                 x: dir % 2 === 1 ? x + dir - 2 : x,
                 y: dir % 2 === 0 ? y - dir + 1 : y,
@@ -176,16 +184,18 @@ const resultSlice = createSlice({
               }
               positions.push(newPosition)
               // add new cell visites array
-              const newCellVisites = _.cloneDeep(
-                cellVisitesPrefixSum[cellVisitesPrefixSum.length - 1]
-              )
+              const newCellVisites = _.cloneDeep(cellVisitesPrefixSum[currentStep])
               newCellVisites[newPosition.y][newPosition.x] += 1
               cellVisitesPrefixSum.push(newCellVisites)
               // add new observed walls array
-              const newObservedWalls = _.cloneDeep(
-                observedWallsPrefixSum[observedWallsPrefixSum.length - 1]
-              )
+              const newObservedWalls = _.cloneDeep(observedWallsPrefixSum[currentStep])
               observedWallsPrefixSum.push(newObservedWalls)
+              // add new console log
+              consoleLogs.push({
+                step: currentStep + 1,
+                text: '',
+              })
+              currentStep += 1
             }
             break
           }
@@ -208,6 +218,7 @@ const resultSlice = createSlice({
         cellVisites: cellVisitesPrefixSum[cellVisitesPrefixSum.length - 1],
         cellLabels: [...Array(height)].map((e) => Array(width).fill('')),
       }
+      state.consoleInput = processedHistory.consoleLogs
     },
   },
 })
@@ -255,3 +266,4 @@ export const selectCellWallRation = (state: RootState) => state.result.cellWallR
 export const selectSelectedInterval = (state: RootState) => state.result.selectedInterval
 export const selectIntervalLength = (state: RootState) => state.result.intervalLength
 export const selectMazeViewerInput = (state: RootState) => state.result.mazeViewerInput
+export const selectConsoleInput = (state: RootState) => state.result.consoleInput
