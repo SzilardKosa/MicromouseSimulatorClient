@@ -19,7 +19,7 @@ const startCell = {
 const MazeViewerCanvas = ({
   currentPosition,
   observedWalls,
-  cellVisits,
+  cellVisites,
   cellLabels,
   mazeSnapshot,
 }: MazeViewerInput) => {
@@ -75,9 +75,9 @@ const MazeViewerCanvas = ({
     )
 
     // draw route
-    cellVisits.forEach((row, r) => {
-      row.forEach((numberOfVisits, c) => {
-        context.globalAlpha = Math.min(0.4 * numberOfVisits)
+    cellVisites.forEach((row, r) => {
+      row.forEach((numberOfVisites, c) => {
+        context.globalAlpha = Math.min(0.4 * numberOfVisites)
         fillCell(context, c, r, visitedColor)
       })
     })
