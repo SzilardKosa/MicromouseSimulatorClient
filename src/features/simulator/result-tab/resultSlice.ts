@@ -68,6 +68,8 @@ const resultSlice = createSlice({
       const { mazeViewerInput, processedHistory } = state
       if (mazeViewerInput && processedHistory) {
         mazeViewerInput.currentPosition = processedHistory.positions[state.selectedInterval[1]]
+        mazeViewerInput.observedWalls =
+          processedHistory.observedWallsPrefixSum[state.selectedInterval[1]]
         mazeViewerInput.cellVisites =
           state.selectedInterval[0] === 0
             ? processedHistory.cellVisitesPrefixSum[state.selectedInterval[1]]
@@ -80,11 +82,14 @@ const resultSlice = createSlice({
     simulationFinished: (state, action: PayloadAction<SimulationResultDTO>) => {
       state.errorMessage = action.payload.error
       const maze = action.payload.simulation.maze
-      const width = maze?.width
-      const height = maze?.height
+      const width = maze?.width!
+      const height = maze?.height!
       const history = action.payload.history
       const cellVisitesInitial = [...Array(height)].map((e) => Array(width).fill(0))
       cellVisitesInitial[0][0] = 1
+      const observedWallsInitial = [...Array(height)].map((e) =>
+        Array.from({ length: width }, () => ({ bottom: false, left: false }))
+      )
       const processedHistory: ProcessedHistory = {
         positions: [
           {
@@ -94,12 +99,44 @@ const resultSlice = createSlice({
           },
         ],
         cellVisitesPrefixSum: [cellVisitesInitial],
-        observedWallsPrefixSum: [],
+        observedWallsPrefixSum: [observedWallsInitial],
       }
 
       // process history
       history.forEach((command) => {
         switch (true) {
+          case /^fw$/.test(command): {
+            let { x, y, direction } =
+              processedHistory.positions[processedHistory.positions.length - 1]
+            let observedWalls =
+              processedHistory.observedWallsPrefixSum[
+                processedHistory.observedWallsPrefixSum.length - 1
+              ]
+            setObservedWalls(x, y, direction, observedWalls, height, width)
+            break
+          }
+          case /^lw$/.test(command): {
+            let { x, y, direction } =
+              processedHistory.positions[processedHistory.positions.length - 1]
+            let observedWalls =
+              processedHistory.observedWallsPrefixSum[
+                processedHistory.observedWallsPrefixSum.length - 1
+              ]
+            const sensorDirection = mod(direction + 1, 4)
+            setObservedWalls(x, y, sensorDirection, observedWalls, height, width)
+            break
+          }
+          case /^rw$/.test(command): {
+            let { x, y, direction } =
+              processedHistory.positions[processedHistory.positions.length - 1]
+            let observedWalls =
+              processedHistory.observedWallsPrefixSum[
+                processedHistory.observedWallsPrefixSum.length - 1
+              ]
+            const sensorDirection = mod(direction - 1, 4)
+            setObservedWalls(x, y, sensorDirection, observedWalls, height, width)
+            break
+          }
           case /^tl$/.test(command): {
             let positions = processedHistory.positions
             positions[positions.length - 1].direction += 1
@@ -126,6 +163,7 @@ const resultSlice = createSlice({
 
             let positions = processedHistory.positions
             let cellVisitesPrefixSum = processedHistory.cellVisitesPrefixSum
+            let observedWallsPrefixSum = processedHistory.observedWallsPrefixSum
             for (let i = 0; i < numberOfSteps; i++) {
               // add new position
               const dir = positions[positions.length - 1].direction
@@ -143,6 +181,11 @@ const resultSlice = createSlice({
               )
               newCellVisites[newPosition.y][newPosition.x] += 1
               cellVisitesPrefixSum.push(newCellVisites)
+              // add new observed walls array
+              const newObservedWalls = _.cloneDeep(
+                observedWallsPrefixSum[observedWallsPrefixSum.length - 1]
+              )
+              observedWallsPrefixSum.push(newObservedWalls)
             }
             break
           }
@@ -155,20 +198,38 @@ const resultSlice = createSlice({
       state.processedHistory = processedHistory
       const positions = processedHistory.positions
       const cellVisitesPrefixSum = processedHistory.cellVisitesPrefixSum
+      const observedWallsPrefixSum = processedHistory.observedWallsPrefixSum
       state.selectedInterval = [0, positions.length - 1]
       state.intervalLength = positions.length - 1
       state.mazeViewerInput = {
         mazeSnapshot: maze!,
         currentPosition: positions[positions.length - 1],
-        observedWalls: [...Array(height)].map((e) =>
-          Array(width).fill({ bottom: false, left: false })
-        ),
+        observedWalls: observedWallsPrefixSum[observedWallsPrefixSum.length - 1],
         cellVisites: cellVisitesPrefixSum[cellVisitesPrefixSum.length - 1],
         cellLabels: [...Array(height)].map((e) => Array(width).fill('')),
       }
     },
   },
 })
+
+function setObservedWalls(
+  x: number,
+  y: number,
+  direction: MouseDirection,
+  observedWalls: ObservedWalls[][],
+  height: number,
+  width: number
+) {
+  if (direction === MouseDirection.UP && y + 1 < height) {
+    observedWalls[y + 1][x].bottom = true
+  } else if (direction === MouseDirection.LEFT) {
+    observedWalls[y][x].left = true
+  } else if (direction === MouseDirection.DOWN) {
+    observedWalls[y][x].bottom = true
+  } else if (direction === MouseDirection.RIGHT && x + 1 < width) {
+    observedWalls[y][x + 1].left = true
+  }
+}
 
 // https://stackoverflow.com/questions/4467539/javascript-modulo-gives-a-negative-result-for-negative-numbers
 function mod(n: number, m: number) {
