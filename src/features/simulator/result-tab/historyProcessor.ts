@@ -16,6 +16,7 @@ const initHistoryProcessorState = (maze: MazeDTO): HistoryProcessorState => {
   const observedWallsInitial = [...Array(height)].map((e) =>
     Array.from({ length: width }, () => ({ bottom: false, left: false }))
   )
+  const cellLabelsInitial = [...Array(height)].map((e) => Array(width).fill(''))
   return {
     width: width,
     height: height,
@@ -30,6 +31,7 @@ const initHistoryProcessorState = (maze: MazeDTO): HistoryProcessorState => {
       ],
       cellVisitesPrefixSum: [cellVisitesInitial],
       observedWallsPrefixSum: [observedWallsInitial],
+      cellLabelsHistory: [cellLabelsInitial],
       consoleLogs: [
         {
           step: 0,
@@ -45,7 +47,7 @@ const setStoreState = (
   state: ResultState,
   maze: MazeDTO
 ) => {
-  const { currentStep, processedHistory, width, height } = historyProcessorState
+  const { currentStep, processedHistory } = historyProcessorState
   state.selectedInterval = [0, currentStep]
   state.intervalLength = currentStep
   state.processedHistory = processedHistory
@@ -54,7 +56,7 @@ const setStoreState = (
     currentPosition: processedHistory.positions[currentStep],
     observedWalls: processedHistory.observedWallsPrefixSum[currentStep],
     cellVisites: processedHistory.cellVisitesPrefixSum[currentStep],
-    cellLabels: [...Array(height)].map((e) => Array(width).fill('')),
+    cellLabels: processedHistory.cellLabelsHistory[currentStep],
   }
   state.consoleInput = processedHistory.consoleLogs
 }

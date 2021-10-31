@@ -95,7 +95,15 @@ const turnRight = ({
 
 const moveForward = ({ state, command }: CommandProcessorInput) => {
   const {
-    processedHistory: { positions, cellVisitesPrefixSum, observedWallsPrefixSum, consoleLogs },
+    processedHistory: {
+      positions,
+      cellVisitesPrefixSum,
+      observedWallsPrefixSum,
+      consoleLogs,
+      cellLabelsHistory,
+    },
+    width,
+    height,
     currentStep,
   } = state
   let numberOfSteps = 1
@@ -119,6 +127,9 @@ const moveForward = ({ state, command }: CommandProcessorInput) => {
     // add new observed walls array
     const newObservedWalls = _.cloneDeep(observedWallsPrefixSum[currentStep])
     observedWallsPrefixSum.push(newObservedWalls)
+    // add new cell labels array
+    const cellLabelsInitial = [...Array(height)].map((e) => Array(width).fill(''))
+    cellLabelsHistory.push(cellLabelsInitial)
     // add new console log
     consoleLogs.push({
       step: currentStep + 1,
@@ -143,7 +154,19 @@ const consoleLog = ({
   consoleLogs[currentStep].text += message
 }
 
-const setText = (state: CommandProcessorInput) => {}
+const setText = ({
+  state: {
+    processedHistory: { cellLabelsHistory },
+    currentStep,
+  },
+  command,
+}: CommandProcessorInput) => {
+  const parsedCmd = command.split(' ')
+  const x = parseInt(parsedCmd[1])
+  const y = parseInt(parsedCmd[2])
+  const text = parsedCmd[3]
+  cellLabelsHistory[currentStep][y][x] = text
+}
 
 const wrongSyntax = ({ command }: CommandProcessorInput) => {
   console.error('Unrecognized syntax used: ' + command)

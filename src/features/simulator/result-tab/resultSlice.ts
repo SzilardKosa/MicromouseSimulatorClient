@@ -37,8 +37,9 @@ export interface ConsoleLog {
 
 export interface ProcessedHistory {
   positions: MousePosition[]
-  cellVisitesPrefixSum: number[][][] // w*h*intSize*steps= 32 * 32 * 4 byte * 10000 = 41MB
-  observedWallsPrefixSum: ObservedWalls[][][] // ~ max 41MB
+  cellVisitesPrefixSum: number[][][] // w*h*intSize*steps= 32 * 32 * 4 byte * 10000 = 41MB MAX
+  observedWallsPrefixSum: ObservedWalls[][][] // (2 booleans = 4 bytes) ~ 20.5MB MAX
+  cellLabelsHistory: string[][][] // (string with 4 char = 8 bytes) ~ 82MB MAX
   consoleLogs: ConsoleLog[]
 }
 
@@ -78,6 +79,7 @@ const resultSlice = createSlice({
       if (mazeViewerInput && processedHistory) {
         mazeViewerInput.currentPosition = processedHistory.positions[end]
         mazeViewerInput.observedWalls = processedHistory.observedWallsPrefixSum[end]
+        mazeViewerInput.cellLabels = processedHistory.cellLabelsHistory[end]
         mazeViewerInput.cellVisites =
           start === 0
             ? processedHistory.cellVisitesPrefixSum[end]
