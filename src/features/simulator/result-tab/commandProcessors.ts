@@ -104,7 +104,6 @@ const moveForward = ({ state, command }: CommandProcessorInput) => {
     },
     width,
     height,
-    currentStep,
   } = state
   let numberOfSteps = 1
   if (command.split(' ').length > 1) {
@@ -113,7 +112,7 @@ const moveForward = ({ state, command }: CommandProcessorInput) => {
 
   for (let i = 0; i < numberOfSteps; i++) {
     // add new position
-    const { direction: dir, x, y } = positions[currentStep]
+    const { direction: dir, x, y } = positions[state.currentStep]
     const newPosition: MousePosition = {
       x: dir % 2 === 1 ? x + dir - 2 : x,
       y: dir % 2 === 0 ? y - dir + 1 : y,
@@ -121,18 +120,18 @@ const moveForward = ({ state, command }: CommandProcessorInput) => {
     }
     positions.push(newPosition)
     // add new cell visites array
-    const newCellVisites = _.cloneDeep(cellVisitesPrefixSum[currentStep])
+    const newCellVisites = _.cloneDeep(cellVisitesPrefixSum[state.currentStep])
     newCellVisites[newPosition.y][newPosition.x] += 1
     cellVisitesPrefixSum.push(newCellVisites)
     // add new observed walls array
-    const newObservedWalls = _.cloneDeep(observedWallsPrefixSum[currentStep])
+    const newObservedWalls = _.cloneDeep(observedWallsPrefixSum[state.currentStep])
     observedWallsPrefixSum.push(newObservedWalls)
     // add new cell labels array
     const cellLabelsInitial = [...Array(height)].map((e) => Array(width).fill(''))
     cellLabelsHistory.push(cellLabelsInitial)
     // add new console log
     consoleLogs.push({
-      step: currentStep + 1,
+      step: state.currentStep + 1,
       text: '',
     })
     state.currentStep += 1
