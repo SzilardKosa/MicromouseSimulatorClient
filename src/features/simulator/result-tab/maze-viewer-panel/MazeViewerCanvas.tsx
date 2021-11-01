@@ -77,7 +77,7 @@ const MazeViewerCanvas = ({
     // draw route
     cellVisites.forEach((row, r) => {
       row.forEach((numberOfVisites, c) => {
-        context.globalAlpha = Math.min(0.4 * numberOfVisites)
+        context.globalAlpha = Math.min(0.3 * numberOfVisites, 1)
         fillCell(context, c, r, visitedColor)
       })
     })
