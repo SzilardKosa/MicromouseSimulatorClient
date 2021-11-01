@@ -49,7 +49,7 @@ const ResultTab = ({ simulation, status }: ResultTabProps) => {
       </SplitterLayout>
       <SplitterLayout percentage vertical secondaryInitialSize={40} customClassName={colorMode}>
         <StatsPanel />
-        <MouseEditorPanel />
+        <MouseEditorPanel simulation={simulation} />
       </SplitterLayout>
     </SplitterLayout>
   )

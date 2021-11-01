@@ -1,16 +1,16 @@
 import React from 'react'
-import { Box } from '@chakra-ui/react'
-import MousePanelHeader from './MousePanelHeader'
+import { SimulationExpandedDTO } from '../../../../api/gen'
+import NoMouseAssigned from './NoMouseAssigned'
+import MouseEditorPanelContent from './MouseEditorPanelContent'
 
-const MouseEditorPanel = () => {
-  return (
-    <>
-      <MousePanelHeader position="relative" zIndex={1} />
-      <Box bg="lightcoral" h="calc(100% - 48px)">
-        Mouse Editor Panel
-      </Box>
-    </>
-  )
+type MouseEditorPanelProps = { simulation: SimulationExpandedDTO }
+
+const MouseEditorPanel = ({ simulation }: MouseEditorPanelProps) => {
+  if (!simulation.mouse || !simulation.mouseId) {
+    return <NoMouseAssigned simulation={simulation} />
+  }
+
+  return <MouseEditorPanelContent simulation={simulation} mouseId={simulation.mouseId} />
 }
 
 export default MouseEditorPanel

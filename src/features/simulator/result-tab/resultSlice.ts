@@ -1,5 +1,5 @@
 import { processHistory } from './historyProcessor'
-import { MazeDTO, SimulationResultDTO } from './../../../api/gen/api'
+import { MazeDTO, MouseDTO, SimulationResultDTO } from './../../../api/gen/api'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../../../app/store'
 import { subtractMatrices } from './utils'
@@ -60,6 +60,7 @@ export interface ResultState {
   mazeViewerInput?: MazeViewerInput
   consoleInput?: ConsoleLog[]
   mazeRuns?: MazeRun[]
+  mouse?: MouseDTO
   // HUD
   cellSize: number
   cellWallRation: number
@@ -83,6 +84,9 @@ const resultSlice = createSlice({
     },
     setCellWallRation: (state, action: PayloadAction<number>) => {
       state.cellWallRation = action.payload
+    },
+    setMouse: (state, action: PayloadAction<MouseDTO>) => {
+      state.mouse = action.payload
     },
     setSelectedInterval: (state, action: PayloadAction<number[]>) => {
       state.selectedInterval = action.payload
@@ -120,7 +124,7 @@ const resultSlice = createSlice({
 
 export default resultSlice.reducer
 
-export const { setCellSize, setCellWallRation, setSelectedInterval, simulationFinished } =
+export const { setCellSize, setCellWallRation, setSelectedInterval, simulationFinished, setMouse } =
   resultSlice.actions
 
 export const selectCellSize = (state: RootState) => state.result.cellSize
@@ -131,3 +135,4 @@ export const selectMazeViewerInput = (state: RootState) => state.result.mazeView
 export const selectConsoleInput = (state: RootState) => state.result.consoleInput
 export const selectMazeRuns = (state: RootState) => state.result.mazeRuns
 export const selectErrorMessage = (state: RootState) => state.result.errorMessage
+export const selectMouse = (state: RootState) => state.result.mouse
