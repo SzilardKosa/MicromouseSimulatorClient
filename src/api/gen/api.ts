@@ -178,10 +178,28 @@ export interface MouseDTO {
     name: string;
     /**
      * 
-     * @type {boolean}
+     * @type {number}
      * @memberof MouseDTO
      */
-    isFullSize: boolean;
+    acceleration: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MouseDTO
+     */
+    deceleration: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MouseDTO
+     */
+    maxSpeed: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MouseDTO
+     */
+    turnTime: number;
 }
 /**
  * 

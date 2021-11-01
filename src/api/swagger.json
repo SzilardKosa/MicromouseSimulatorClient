@@ -842,7 +842,7 @@
         "additionalProperties": false
       },
       "MouseDTO": {
-        "required": ["isFullSize", "name"],
+        "required": ["acceleration", "deceleration", "maxSpeed", "name", "turnTime"],
         "type": "object",
         "properties": {
           "id": {
@@ -852,8 +852,21 @@
           "name": {
             "type": "string"
           },
-          "isFullSize": {
-            "type": "boolean"
+          "acceleration": {
+            "type": "number",
+            "format": "double"
+          },
+          "deceleration": {
+            "type": "number",
+            "format": "double"
+          },
+          "maxSpeed": {
+            "type": "number",
+            "format": "double"
+          },
+          "turnTime": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
