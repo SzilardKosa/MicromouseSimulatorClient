@@ -11,6 +11,7 @@ export const store = configureStore({
     mazeEditor: mazeEditorReducer,
     codeEditor: codeEditorReducer,
   },
+  middleware: [],
 })
 
 export type RootState = ReturnType<typeof store.getState>
