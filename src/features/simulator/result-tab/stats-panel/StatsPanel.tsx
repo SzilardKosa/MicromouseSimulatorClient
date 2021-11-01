@@ -1,6 +1,7 @@
 import React from 'react'
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
 import PanelHeader from '../../common/PanelHeader'
+import StatsPanelBody from './StatsPanelBody'
 
 const StatsPanel = () => {
   return (
@@ -10,9 +11,7 @@ const StatsPanel = () => {
           <Text fontWeight="medium">Stats</Text>
         </Flex>
       </PanelHeader>
-      <Box bg="lightgoldenrodyellow" h="calc(100% - 48px)">
-        Stats Panel
-      </Box>
+      <StatsPanelBody />
     </>
   )
 }
