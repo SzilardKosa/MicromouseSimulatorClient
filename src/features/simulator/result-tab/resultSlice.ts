@@ -3,6 +3,7 @@ import { MazeDTO, SimulationResultDTO } from './../../../api/gen/api'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../../../app/store'
 import { subtractMatrices } from './utils'
+import { parseRoute } from './routeParser'
 
 export enum MouseDirection {
   UP = 0,
@@ -43,11 +44,22 @@ export interface ProcessedHistory {
   consoleLogs: ConsoleLog[]
 }
 
+export interface MazeRun {
+  startIndex: number
+  goalReachedIndex?: number
+  endIndex: number
+  // estimated times
+  mazeRunTime?: number // from start to the goal area
+  searchBackTime?: number // from the goal to the start
+  fullRunTime?: number // from start to start
+}
+
 export interface ResultState {
   errorMessage?: string
   processedHistory?: ProcessedHistory
   mazeViewerInput?: MazeViewerInput
   consoleInput?: ConsoleLog[]
+  mazeRuns?: MazeRun[]
   // HUD
   cellSize: number
   cellWallRation: number
@@ -98,7 +110,10 @@ const resultSlice = createSlice({
         history,
         simulation: { maze },
       } = action.payload
+
       processHistory({ maze: maze!, history, state })
+      if (state.processedHistory)
+        parseRoute({ maze: maze!, positions: state.processedHistory.positions, state })
     },
   },
 })
@@ -114,3 +129,5 @@ export const selectSelectedInterval = (state: RootState) => state.result.selecte
 export const selectIntervalLength = (state: RootState) => state.result.intervalLength
 export const selectMazeViewerInput = (state: RootState) => state.result.mazeViewerInput
 export const selectConsoleInput = (state: RootState) => state.result.consoleInput
+export const selectMazeRuns = (state: RootState) => state.result.mazeRuns
+export const selectErrorMessage = (state: RootState) => state.result.errorMessage
