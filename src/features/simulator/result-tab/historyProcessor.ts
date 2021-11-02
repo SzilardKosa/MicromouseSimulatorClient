@@ -80,4 +80,5 @@ export const processHistory = ({ maze, history, state }: HistoryProcessorInput) 
   })
 
   setStoreState(historyProcessorState, state, maze)
+  return historyProcessorState
 }

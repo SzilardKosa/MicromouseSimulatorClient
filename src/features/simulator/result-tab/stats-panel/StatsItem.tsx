@@ -19,7 +19,13 @@ const StatsItem = ({ steps, estimatedTime, ...rest }: StatsItemProps) => {
       {...rest}
     >
       <Text fontSize="sm">Steps: {steps}</Text>
-      <Text fontSize="sm">Time: --:-- s</Text>
+      {estimatedTime == null ? (
+        <Text fontSize="sm">Time: --:-- s</Text>
+      ) : (
+        <Text fontSize="sm">
+          Time: {Math.floor(estimatedTime / 60)}:{Math.round((estimatedTime % 60) * 100) / 100}
+        </Text>
+      )}
     </VStack>
   )
 }

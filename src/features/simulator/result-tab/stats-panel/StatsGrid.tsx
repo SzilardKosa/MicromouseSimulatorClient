@@ -11,37 +11,45 @@ const StatsGrid = ({ mazeRuns }: StatsGridProps) => {
   const errorColor = useColorModeValue('red.700', 'red.300')
   const dispatch = useDispatch()
 
-  const runs = mazeRuns.map(({ endIndex, startIndex, goalReachedIndex }, index) => {
-    return (
-      <Center key={startIndex} backgroundColor={listItemBg} w="sm" borderRadius="md">
-        <Grid templateColumns="70px repeat(3, 1fr)" w="full" p="1" gap="1">
-          <Center>
-            <Text>#{index + 1} Run</Text>
-          </Center>
-          <StatsItem
-            steps={endIndex - startIndex}
-            onClick={() => dispatch(setSelectedInterval([startIndex, endIndex]))}
-          />
-          {goalReachedIndex ? (
-            <>
-              <StatsItem
-                steps={goalReachedIndex - startIndex}
-                onClick={() => dispatch(setSelectedInterval([startIndex, goalReachedIndex]))}
-              />
-              <StatsItem
-                steps={endIndex - goalReachedIndex}
-                onClick={() => dispatch(setSelectedInterval([goalReachedIndex, endIndex]))}
-              />
-            </>
-          ) : (
-            <Center gridColumn="3 / 5">
-              <Text color={errorColor}>Goal not reached</Text>
+  const runs = mazeRuns.map(
+    (
+      { endIndex, startIndex, goalReachedIndex, fullRunTime, mazeRunTime, searchBackTime },
+      index
+    ) => {
+      return (
+        <Center key={startIndex} backgroundColor={listItemBg} w="sm" borderRadius="md">
+          <Grid templateColumns="70px repeat(3, 1fr)" w="full" p="1" gap="1">
+            <Center>
+              <Text>#{index + 1} Run</Text>
             </Center>
-          )}
-        </Grid>
-      </Center>
-    )
-  })
+            <StatsItem
+              steps={endIndex - startIndex}
+              estimatedTime={fullRunTime}
+              onClick={() => dispatch(setSelectedInterval([startIndex, endIndex]))}
+            />
+            {goalReachedIndex ? (
+              <>
+                <StatsItem
+                  steps={goalReachedIndex - startIndex}
+                  estimatedTime={mazeRunTime}
+                  onClick={() => dispatch(setSelectedInterval([startIndex, goalReachedIndex]))}
+                />
+                <StatsItem
+                  steps={endIndex - goalReachedIndex}
+                  estimatedTime={searchBackTime}
+                  onClick={() => dispatch(setSelectedInterval([goalReachedIndex, endIndex]))}
+                />
+              </>
+            ) : (
+              <Center gridColumn="3 / 5">
+                <Text color={errorColor}>Goal not reached</Text>
+              </Center>
+            )}
+          </Grid>
+        </Center>
+      )
+    }
+  )
   return (
     <>
       <Grid templateColumns="70px repeat(3, 1fr)" w="sm" p="1" gap="1">

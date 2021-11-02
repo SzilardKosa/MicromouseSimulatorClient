@@ -1,3 +1,4 @@
+import { estimateTime } from './timeEstimator'
 import { processHistory } from './historyProcessor'
 import { MazeDTO, MouseDTO, SimulationResultDTO } from './../../../api/gen/api'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
@@ -87,6 +88,13 @@ const resultSlice = createSlice({
     },
     setMouse: (state, action: PayloadAction<MouseDTO>) => {
       state.mouse = action.payload
+      if (state.mazeViewerInput && state.processedHistory) {
+        const {
+          mazeViewerInput: { mazeSnapshot: maze },
+          processedHistory: { positions },
+        } = state
+        estimateTime({ maze: maze, mouse: state.mouse, positions, state })
+      }
     },
     setSelectedInterval: (state, action: PayloadAction<number[]>) => {
       state.selectedInterval = action.payload
@@ -115,9 +123,13 @@ const resultSlice = createSlice({
         simulation: { maze },
       } = action.payload
 
-      processHistory({ maze: maze!, history, state })
-      if (state.processedHistory)
-        parseRoute({ maze: maze!, positions: state.processedHistory.positions, state })
+      const {
+        processedHistory: { positions },
+      } = processHistory({ maze: maze!, history, state })
+
+      parseRoute({ maze: maze!, positions, state })
+
+      if (state.mouse) estimateTime({ maze: maze!, mouse: state.mouse, positions, state })
     },
   },
 })
