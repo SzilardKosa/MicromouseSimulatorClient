@@ -118,6 +118,14 @@ const moveForward = ({ state, command }: CommandProcessorInput) => {
       y: dir % 2 === 0 ? y - dir + 1 : y,
       direction: dir,
     }
+    if (
+      newPosition.x < 0 ||
+      width <= newPosition.x ||
+      newPosition.y < 0 ||
+      height <= newPosition.y
+    ) {
+      break
+    }
     positions.push(newPosition)
     // add new cell visites array
     const newCellVisites = _.cloneDeep(cellVisitesPrefixSum[state.currentStep])
