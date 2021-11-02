@@ -62,6 +62,7 @@ export interface ResultState {
   consoleInput?: ConsoleLog[]
   mazeRuns?: MazeRun[]
   mouse?: MouseDTO
+  simulationId?: string
   // HUD
   cellSize: number
   cellWallRation: number
@@ -118,6 +119,7 @@ const resultSlice = createSlice({
     },
     simulationFinished: (state, action: PayloadAction<SimulationResultDTO>) => {
       state.errorMessage = action.payload.error
+      state.simulationId = action.payload.simulation.id
       const {
         history,
         simulation: { maze },
@@ -148,3 +150,4 @@ export const selectConsoleInput = (state: RootState) => state.result.consoleInpu
 export const selectMazeRuns = (state: RootState) => state.result.mazeRuns
 export const selectErrorMessage = (state: RootState) => state.result.errorMessage
 export const selectMouse = (state: RootState) => state.result.mouse
+export const selectSimulationId = (state: RootState) => state.result.simulationId

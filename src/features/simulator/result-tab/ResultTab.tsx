@@ -44,11 +44,11 @@ const ResultTab = ({ simulation, status }: ResultTabProps) => {
   return (
     <SplitterLayout percentage secondaryInitialSize={40} customClassName={colorMode}>
       <SplitterLayout percentage vertical secondaryInitialSize={30} customClassName={colorMode}>
-        <MazeViewerPanel />
-        <ConsolePanel />
+        <MazeViewerPanel simulation={simulation} />
+        <ConsolePanel simulation={simulation} />
       </SplitterLayout>
       <SplitterLayout percentage vertical secondaryInitialSize={40} customClassName={colorMode}>
-        <StatsPanel />
+        <StatsPanel simulation={simulation} />
         <MouseEditorPanel simulation={simulation} />
       </SplitterLayout>
     </SplitterLayout>

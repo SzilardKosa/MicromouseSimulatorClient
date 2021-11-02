@@ -1,11 +1,15 @@
 import React, { useEffect, useRef } from 'react'
 import { Box, Center, HStack, Text, VStack } from '@chakra-ui/react'
-import { selectConsoleInput } from '../resultSlice'
+import { selectConsoleInput, selectSimulationId } from '../resultSlice'
 import { useSelector } from 'react-redux'
 import ErrorMessageView from '../../../../common/ErrorMessageView'
+import { SimulationExpandedDTO } from '../../../../api/gen'
 
-const ConsolePanelBody = () => {
+type ConsolePanelBodyProps = { simulation: SimulationExpandedDTO }
+
+const ConsolePanelBody = ({ simulation }: ConsolePanelBodyProps) => {
   const consoleLogs = useSelector(selectConsoleInput)
+  const simulationId = useSelector(selectSimulationId)
   const logsEndRef = useRef<HTMLDivElement>(null)
   const scrollToBottom = () => {
     logsEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -15,7 +19,7 @@ const ConsolePanelBody = () => {
     scrollToBottom()
   }, [consoleLogs])
 
-  if (consoleLogs == null) {
+  if (consoleLogs == null || simulation.id !== simulationId) {
     return (
       <Center h="calc(100% - 48px)" overflow="hidden" position="relative">
         <ErrorMessageView message={'Nothing to show yet!'} />

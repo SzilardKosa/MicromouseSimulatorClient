@@ -2,8 +2,11 @@ import React from 'react'
 import { Flex, Text } from '@chakra-ui/react'
 import PanelHeader from '../../common/PanelHeader'
 import StatsPanelBody from './StatsPanelBody'
+import { SimulationExpandedDTO } from '../../../../api/gen'
 
-const StatsPanel = () => {
+type StatsPanelProps = { simulation: SimulationExpandedDTO }
+
+const StatsPanel = ({ simulation }: StatsPanelProps) => {
   return (
     <>
       <PanelHeader position="relative" zIndex={1}>
@@ -11,7 +14,7 @@ const StatsPanel = () => {
           <Text fontWeight="medium">Stats</Text>
         </Flex>
       </PanelHeader>
-      <StatsPanelBody />
+      <StatsPanelBody simulation={simulation} />
     </>
   )
 }

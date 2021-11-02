@@ -1,16 +1,20 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Text, Center, HStack, VStack } from '@chakra-ui/react'
-import { selectErrorMessage, selectMazeRuns } from '../resultSlice'
+import { selectErrorMessage, selectMazeRuns, selectSimulationId } from '../resultSlice'
 import ErrorMessageView from '../../../../common/ErrorMessageView'
 import StatsGrid from './StatsGrid'
 import StatusMessage from './StatusMessage'
+import { SimulationExpandedDTO } from '../../../../api/gen'
 
-const StatsPanelBody = () => {
+type StatsPanelBodyProps = { simulation: SimulationExpandedDTO }
+
+const StatsPanelBody = ({ simulation }: StatsPanelBodyProps) => {
   const mazeRuns = useSelector(selectMazeRuns)
   const errorMessage = useSelector(selectErrorMessage)
+  const simulationId = useSelector(selectSimulationId)
 
-  if (!mazeRuns && !errorMessage) {
+  if ((!mazeRuns && !errorMessage) || simulation.id !== simulationId) {
     return (
       <Center h="calc(100% - 48px)" overflow="hidden" position="relative">
         <ErrorMessageView message={'Nothing to show yet!'} />
