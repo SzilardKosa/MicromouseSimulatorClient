@@ -40,7 +40,7 @@ const MouseEditorPanelContent = ({ simulation, mouseId }: MouseEditorPanelConten
   return (
     <>
       <MousePanelHeader position="relative" zIndex={1} simulation={simulation} mouse={mouse} />
-      <MousePanelBody />
+      <MousePanelBody mouse={mouse} />
     </>
   )
 }
