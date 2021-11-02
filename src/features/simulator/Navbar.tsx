@@ -49,7 +49,7 @@ const Navbar = ({ simulation, runSimulation, isRunning, ...etc }: NavbarProps) =
     if (simulation == null) return
     try {
       dispatch(changeTab(SimulatorTabs.Result))
-      const result = await runSimulation(simulation.id!)
+      const result = await runSimulation(simulation.id)
       dispatch(simulationFinished(result))
       console.log(result)
     } catch (error) {

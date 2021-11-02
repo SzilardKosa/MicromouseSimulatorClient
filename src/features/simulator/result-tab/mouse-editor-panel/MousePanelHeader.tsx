@@ -24,7 +24,7 @@ const MousePanelHeader = ({ mouse, simulation, children, ...props }: MousePanelH
   const { mutateAsync: updateSimulation } = useUpdateSimulation()
 
   const onDeleteMouse = async () => {
-    await deleteMouse(mouse.id!)
+    await deleteMouse(mouse.id)
     const newSimulation: SimulationDTO = {
       ...simulation,
       mouseId: null,

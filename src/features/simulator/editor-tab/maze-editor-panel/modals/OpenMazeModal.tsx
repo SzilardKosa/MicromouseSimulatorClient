@@ -63,8 +63,8 @@ const OpenMazeModal = ({ isOpen, onClose, simulation }: OpenMazeModalProps) => {
       <Box w="full">
         {mazes?.map((maze) => (
           <Center
-            key={maze.id!!}
-            onClick={() => onChoose(maze.id!!)}
+            key={maze.id}
+            onClick={() => onChoose(maze.id)}
             backgroundColor={listItemBg}
             cursor="pointer"
             _hover={{ backgroundColor: listItemBgHover }}

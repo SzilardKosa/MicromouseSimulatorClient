@@ -35,7 +35,7 @@ const MazePanelHeader = ({ maze, simulation, children, ...props }: MazePanelHead
   const { mutateAsync: updateSimulation } = useUpdateSimulation()
 
   const onDeleteMaze = async () => {
-    await deleteMaze(maze.id!!)
+    await deleteMaze(maze.id)
     const newSimulation: SimulationDTO = {
       id: simulation.id,
       algorithmId: simulation.algorithmId,

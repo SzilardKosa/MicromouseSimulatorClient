@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react'
 import { useCreateAlgorithm } from '../../../../../api/hooks/algorithms'
 import { useUpdateSimulation } from '../../../../../api/hooks/simulations'
-import { AlgorithmDTO, SimulationDTO } from '../../../../../api/gen'
+import { NewAlgorithmDTO, SimulationDTO } from '../../../../../api/gen'
 
 type AddNewAlgorithmModalProps = {
   isOpen: boolean
@@ -32,7 +32,7 @@ const AddNewAlgorithmModal = ({ isOpen, onClose, simulation }: AddNewAlgorithmMo
 
   async function onSubmit(values: any) {
     try {
-      const newAlgorithm: AlgorithmDTO = {
+      const newAlgorithm: NewAlgorithmDTO = {
         name: values.name,
         language: values.language,
         codeText: `print("hello world")`,

@@ -65,8 +65,8 @@ const OpenAlgorithmModal = ({ isOpen, onClose, simulation }: OpenAlgorithmModalP
       <Box w="full">
         {algorithms?.map((algorithm) => (
           <Center
-            key={algorithm.id!!}
-            onClick={() => onChoose(algorithm.id!!)}
+            key={algorithm.id}
+            onClick={() => onChoose(algorithm.id)}
             backgroundColor={listItemBg}
             cursor="pointer"
             _hover={{ backgroundColor: listItemBgHover }}

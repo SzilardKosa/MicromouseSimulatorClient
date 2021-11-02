@@ -32,7 +32,7 @@ export interface AlgorithmDTO {
      * @type {string}
      * @memberof AlgorithmDTO
      */
-    id?: string | null;
+    id: string;
     /**
      * 
      * @type {string}
@@ -120,7 +120,7 @@ export interface MazeDTO {
      * @type {string}
      * @memberof MazeDTO
      */
-    id?: string | null;
+    id: string;
     /**
      * 
      * @type {string}
@@ -169,7 +169,7 @@ export interface MouseDTO {
      * @type {string}
      * @memberof MouseDTO
      */
-    id?: string | null;
+    id: string;
     /**
      * 
      * @type {string}
@@ -204,6 +204,166 @@ export interface MouseDTO {
 /**
  * 
  * @export
+ * @interface NewAlgorithmDTO
+ */
+export interface NewAlgorithmDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof NewAlgorithmDTO
+     */
+    id?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewAlgorithmDTO
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewAlgorithmDTO
+     */
+    language: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewAlgorithmDTO
+     */
+    codeText: string;
+}
+/**
+ * 
+ * @export
+ * @interface NewMazeDTO
+ */
+export interface NewMazeDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof NewMazeDTO
+     */
+    id?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewMazeDTO
+     */
+    name: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof NewMazeDTO
+     */
+    isFullSize: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof NewMazeDTO
+     */
+    width: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NewMazeDTO
+     */
+    height: number;
+    /**
+     * 
+     * @type {GoalAreaDTO}
+     * @memberof NewMazeDTO
+     */
+    goalArea: GoalAreaDTO;
+    /**
+     * 
+     * @type {Array<Array<CellWalls>>}
+     * @memberof NewMazeDTO
+     */
+    walls: Array<Array<CellWalls>>;
+}
+/**
+ * 
+ * @export
+ * @interface NewMouseDTO
+ */
+export interface NewMouseDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof NewMouseDTO
+     */
+    id?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewMouseDTO
+     */
+    name: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof NewMouseDTO
+     */
+    acceleration: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NewMouseDTO
+     */
+    deceleration: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NewMouseDTO
+     */
+    maxSpeed: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof NewMouseDTO
+     */
+    turnTime: number;
+}
+/**
+ * 
+ * @export
+ * @interface NewSimulationDTO
+ */
+export interface NewSimulationDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof NewSimulationDTO
+     */
+    id?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewSimulationDTO
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewSimulationDTO
+     */
+    algorithmId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewSimulationDTO
+     */
+    mazeId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewSimulationDTO
+     */
+    mouseId?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface SimulationDTO
  */
 export interface SimulationDTO {
@@ -212,7 +372,7 @@ export interface SimulationDTO {
      * @type {string}
      * @memberof SimulationDTO
      */
-    id?: string | null;
+    id: string;
     /**
      * 
      * @type {string}
@@ -249,7 +409,7 @@ export interface SimulationExpandedDTO {
      * @type {string}
      * @memberof SimulationExpandedDTO
      */
-    id?: string | null;
+    id: string;
     /**
      * 
      * @type {string}
@@ -423,11 +583,11 @@ export const AlgorithmApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @param {string} id 
-         * @param {AlgorithmDTO} [algorithmDTO] 
+         * @param {NewAlgorithmDTO} [newAlgorithmDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        algorithmsIdPut: async (id: string, algorithmDTO?: AlgorithmDTO, options: any = {}): Promise<RequestArgs> => {
+        algorithmsIdPut: async (id: string, newAlgorithmDTO?: NewAlgorithmDTO, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('algorithmsIdPut', 'id', id)
             const localVarPath = `/algorithms/{id}`
@@ -450,7 +610,7 @@ export const AlgorithmApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(algorithmDTO, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(newAlgorithmDTO, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -459,11 +619,11 @@ export const AlgorithmApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @param {AlgorithmDTO} [algorithmDTO] 
+         * @param {NewAlgorithmDTO} [newAlgorithmDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        algorithmsPost: async (algorithmDTO?: AlgorithmDTO, options: any = {}): Promise<RequestArgs> => {
+        algorithmsPost: async (newAlgorithmDTO?: NewAlgorithmDTO, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/algorithms`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -483,7 +643,7 @@ export const AlgorithmApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(algorithmDTO, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(newAlgorithmDTO, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -532,22 +692,22 @@ export const AlgorithmApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} id 
-         * @param {AlgorithmDTO} [algorithmDTO] 
+         * @param {NewAlgorithmDTO} [newAlgorithmDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async algorithmsIdPut(id: string, algorithmDTO?: AlgorithmDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.algorithmsIdPut(id, algorithmDTO, options);
+        async algorithmsIdPut(id: string, newAlgorithmDTO?: NewAlgorithmDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.algorithmsIdPut(id, newAlgorithmDTO, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {AlgorithmDTO} [algorithmDTO] 
+         * @param {NewAlgorithmDTO} [newAlgorithmDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async algorithmsPost(algorithmDTO?: AlgorithmDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AlgorithmDTO>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.algorithmsPost(algorithmDTO, options);
+        async algorithmsPost(newAlgorithmDTO?: NewAlgorithmDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AlgorithmDTO>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.algorithmsPost(newAlgorithmDTO, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -589,21 +749,21 @@ export const AlgorithmApiFactory = function (configuration?: Configuration, base
         /**
          * 
          * @param {string} id 
-         * @param {AlgorithmDTO} [algorithmDTO] 
+         * @param {NewAlgorithmDTO} [newAlgorithmDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        algorithmsIdPut(id: string, algorithmDTO?: AlgorithmDTO, options?: any): AxiosPromise<void> {
-            return localVarFp.algorithmsIdPut(id, algorithmDTO, options).then((request) => request(axios, basePath));
+        algorithmsIdPut(id: string, newAlgorithmDTO?: NewAlgorithmDTO, options?: any): AxiosPromise<void> {
+            return localVarFp.algorithmsIdPut(id, newAlgorithmDTO, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {AlgorithmDTO} [algorithmDTO] 
+         * @param {NewAlgorithmDTO} [newAlgorithmDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        algorithmsPost(algorithmDTO?: AlgorithmDTO, options?: any): AxiosPromise<AlgorithmDTO> {
-            return localVarFp.algorithmsPost(algorithmDTO, options).then((request) => request(axios, basePath));
+        algorithmsPost(newAlgorithmDTO?: NewAlgorithmDTO, options?: any): AxiosPromise<AlgorithmDTO> {
+            return localVarFp.algorithmsPost(newAlgorithmDTO, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -650,24 +810,24 @@ export class AlgorithmApi extends BaseAPI {
     /**
      * 
      * @param {string} id 
-     * @param {AlgorithmDTO} [algorithmDTO] 
+     * @param {NewAlgorithmDTO} [newAlgorithmDTO] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AlgorithmApi
      */
-    public algorithmsIdPut(id: string, algorithmDTO?: AlgorithmDTO, options?: any) {
-        return AlgorithmApiFp(this.configuration).algorithmsIdPut(id, algorithmDTO, options).then((request) => request(this.axios, this.basePath));
+    public algorithmsIdPut(id: string, newAlgorithmDTO?: NewAlgorithmDTO, options?: any) {
+        return AlgorithmApiFp(this.configuration).algorithmsIdPut(id, newAlgorithmDTO, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {AlgorithmDTO} [algorithmDTO] 
+     * @param {NewAlgorithmDTO} [newAlgorithmDTO] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AlgorithmApi
      */
-    public algorithmsPost(algorithmDTO?: AlgorithmDTO, options?: any) {
-        return AlgorithmApiFp(this.configuration).algorithmsPost(algorithmDTO, options).then((request) => request(this.axios, this.basePath));
+    public algorithmsPost(newAlgorithmDTO?: NewAlgorithmDTO, options?: any) {
+        return AlgorithmApiFp(this.configuration).algorithmsPost(newAlgorithmDTO, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -776,11 +936,11 @@ export const MazeApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @param {string} id 
-         * @param {MazeDTO} [mazeDTO] 
+         * @param {NewMazeDTO} [newMazeDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        mazesIdPut: async (id: string, mazeDTO?: MazeDTO, options: any = {}): Promise<RequestArgs> => {
+        mazesIdPut: async (id: string, newMazeDTO?: NewMazeDTO, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('mazesIdPut', 'id', id)
             const localVarPath = `/mazes/{id}`
@@ -803,7 +963,7 @@ export const MazeApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(mazeDTO, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(newMazeDTO, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -812,11 +972,11 @@ export const MazeApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {MazeDTO} [mazeDTO] 
+         * @param {NewMazeDTO} [newMazeDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        mazesPost: async (mazeDTO?: MazeDTO, options: any = {}): Promise<RequestArgs> => {
+        mazesPost: async (newMazeDTO?: NewMazeDTO, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/mazes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -836,7 +996,7 @@ export const MazeApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(mazeDTO, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(newMazeDTO, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -885,22 +1045,22 @@ export const MazeApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} id 
-         * @param {MazeDTO} [mazeDTO] 
+         * @param {NewMazeDTO} [newMazeDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async mazesIdPut(id: string, mazeDTO?: MazeDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.mazesIdPut(id, mazeDTO, options);
+        async mazesIdPut(id: string, newMazeDTO?: NewMazeDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.mazesIdPut(id, newMazeDTO, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {MazeDTO} [mazeDTO] 
+         * @param {NewMazeDTO} [newMazeDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async mazesPost(mazeDTO?: MazeDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MazeDTO>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.mazesPost(mazeDTO, options);
+        async mazesPost(newMazeDTO?: NewMazeDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MazeDTO>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.mazesPost(newMazeDTO, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -942,21 +1102,21 @@ export const MazeApiFactory = function (configuration?: Configuration, basePath?
         /**
          * 
          * @param {string} id 
-         * @param {MazeDTO} [mazeDTO] 
+         * @param {NewMazeDTO} [newMazeDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        mazesIdPut(id: string, mazeDTO?: MazeDTO, options?: any): AxiosPromise<void> {
-            return localVarFp.mazesIdPut(id, mazeDTO, options).then((request) => request(axios, basePath));
+        mazesIdPut(id: string, newMazeDTO?: NewMazeDTO, options?: any): AxiosPromise<void> {
+            return localVarFp.mazesIdPut(id, newMazeDTO, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {MazeDTO} [mazeDTO] 
+         * @param {NewMazeDTO} [newMazeDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        mazesPost(mazeDTO?: MazeDTO, options?: any): AxiosPromise<MazeDTO> {
-            return localVarFp.mazesPost(mazeDTO, options).then((request) => request(axios, basePath));
+        mazesPost(newMazeDTO?: NewMazeDTO, options?: any): AxiosPromise<MazeDTO> {
+            return localVarFp.mazesPost(newMazeDTO, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1003,24 +1163,24 @@ export class MazeApi extends BaseAPI {
     /**
      * 
      * @param {string} id 
-     * @param {MazeDTO} [mazeDTO] 
+     * @param {NewMazeDTO} [newMazeDTO] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MazeApi
      */
-    public mazesIdPut(id: string, mazeDTO?: MazeDTO, options?: any) {
-        return MazeApiFp(this.configuration).mazesIdPut(id, mazeDTO, options).then((request) => request(this.axios, this.basePath));
+    public mazesIdPut(id: string, newMazeDTO?: NewMazeDTO, options?: any) {
+        return MazeApiFp(this.configuration).mazesIdPut(id, newMazeDTO, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {MazeDTO} [mazeDTO] 
+     * @param {NewMazeDTO} [newMazeDTO] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MazeApi
      */
-    public mazesPost(mazeDTO?: MazeDTO, options?: any) {
-        return MazeApiFp(this.configuration).mazesPost(mazeDTO, options).then((request) => request(this.axios, this.basePath));
+    public mazesPost(newMazeDTO?: NewMazeDTO, options?: any) {
+        return MazeApiFp(this.configuration).mazesPost(newMazeDTO, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1129,11 +1289,11 @@ export const MouseApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @param {string} id 
-         * @param {MouseDTO} [mouseDTO] 
+         * @param {NewMouseDTO} [newMouseDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        miceIdPut: async (id: string, mouseDTO?: MouseDTO, options: any = {}): Promise<RequestArgs> => {
+        miceIdPut: async (id: string, newMouseDTO?: NewMouseDTO, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('miceIdPut', 'id', id)
             const localVarPath = `/mice/{id}`
@@ -1156,7 +1316,7 @@ export const MouseApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(mouseDTO, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(newMouseDTO, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1165,11 +1325,11 @@ export const MouseApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @param {MouseDTO} [mouseDTO] 
+         * @param {NewMouseDTO} [newMouseDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        micePost: async (mouseDTO?: MouseDTO, options: any = {}): Promise<RequestArgs> => {
+        micePost: async (newMouseDTO?: NewMouseDTO, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/mice`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1189,7 +1349,7 @@ export const MouseApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(mouseDTO, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(newMouseDTO, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1238,22 +1398,22 @@ export const MouseApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} id 
-         * @param {MouseDTO} [mouseDTO] 
+         * @param {NewMouseDTO} [newMouseDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async miceIdPut(id: string, mouseDTO?: MouseDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.miceIdPut(id, mouseDTO, options);
+        async miceIdPut(id: string, newMouseDTO?: NewMouseDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.miceIdPut(id, newMouseDTO, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {MouseDTO} [mouseDTO] 
+         * @param {NewMouseDTO} [newMouseDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async micePost(mouseDTO?: MouseDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MouseDTO>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.micePost(mouseDTO, options);
+        async micePost(newMouseDTO?: NewMouseDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MouseDTO>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.micePost(newMouseDTO, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1295,21 +1455,21 @@ export const MouseApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @param {string} id 
-         * @param {MouseDTO} [mouseDTO] 
+         * @param {NewMouseDTO} [newMouseDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        miceIdPut(id: string, mouseDTO?: MouseDTO, options?: any): AxiosPromise<void> {
-            return localVarFp.miceIdPut(id, mouseDTO, options).then((request) => request(axios, basePath));
+        miceIdPut(id: string, newMouseDTO?: NewMouseDTO, options?: any): AxiosPromise<void> {
+            return localVarFp.miceIdPut(id, newMouseDTO, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {MouseDTO} [mouseDTO] 
+         * @param {NewMouseDTO} [newMouseDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        micePost(mouseDTO?: MouseDTO, options?: any): AxiosPromise<MouseDTO> {
-            return localVarFp.micePost(mouseDTO, options).then((request) => request(axios, basePath));
+        micePost(newMouseDTO?: NewMouseDTO, options?: any): AxiosPromise<MouseDTO> {
+            return localVarFp.micePost(newMouseDTO, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1356,24 +1516,24 @@ export class MouseApi extends BaseAPI {
     /**
      * 
      * @param {string} id 
-     * @param {MouseDTO} [mouseDTO] 
+     * @param {NewMouseDTO} [newMouseDTO] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MouseApi
      */
-    public miceIdPut(id: string, mouseDTO?: MouseDTO, options?: any) {
-        return MouseApiFp(this.configuration).miceIdPut(id, mouseDTO, options).then((request) => request(this.axios, this.basePath));
+    public miceIdPut(id: string, newMouseDTO?: NewMouseDTO, options?: any) {
+        return MouseApiFp(this.configuration).miceIdPut(id, newMouseDTO, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {MouseDTO} [mouseDTO] 
+     * @param {NewMouseDTO} [newMouseDTO] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MouseApi
      */
-    public micePost(mouseDTO?: MouseDTO, options?: any) {
-        return MouseApiFp(this.configuration).micePost(mouseDTO, options).then((request) => request(this.axios, this.basePath));
+    public micePost(newMouseDTO?: NewMouseDTO, options?: any) {
+        return MouseApiFp(this.configuration).micePost(newMouseDTO, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1482,11 +1642,11 @@ export const SimulationApiAxiosParamCreator = function (configuration?: Configur
         /**
          * 
          * @param {string} id 
-         * @param {SimulationDTO} [simulationDTO] 
+         * @param {NewSimulationDTO} [newSimulationDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        simulationsIdPut: async (id: string, simulationDTO?: SimulationDTO, options: any = {}): Promise<RequestArgs> => {
+        simulationsIdPut: async (id: string, newSimulationDTO?: NewSimulationDTO, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('simulationsIdPut', 'id', id)
             const localVarPath = `/simulations/{id}`
@@ -1509,7 +1669,7 @@ export const SimulationApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(simulationDTO, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(newSimulationDTO, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1551,11 +1711,11 @@ export const SimulationApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @param {SimulationDTO} [simulationDTO] 
+         * @param {NewSimulationDTO} [newSimulationDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        simulationsPost: async (simulationDTO?: SimulationDTO, options: any = {}): Promise<RequestArgs> => {
+        simulationsPost: async (newSimulationDTO?: NewSimulationDTO, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/simulations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1575,7 +1735,7 @@ export const SimulationApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(simulationDTO, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(newSimulationDTO, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1624,12 +1784,12 @@ export const SimulationApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} id 
-         * @param {SimulationDTO} [simulationDTO] 
+         * @param {NewSimulationDTO} [newSimulationDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async simulationsIdPut(id: string, simulationDTO?: SimulationDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.simulationsIdPut(id, simulationDTO, options);
+        async simulationsIdPut(id: string, newSimulationDTO?: NewSimulationDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.simulationsIdPut(id, newSimulationDTO, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1644,12 +1804,12 @@ export const SimulationApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {SimulationDTO} [simulationDTO] 
+         * @param {NewSimulationDTO} [newSimulationDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async simulationsPost(simulationDTO?: SimulationDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SimulationDTO>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.simulationsPost(simulationDTO, options);
+        async simulationsPost(newSimulationDTO?: NewSimulationDTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SimulationDTO>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.simulationsPost(newSimulationDTO, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1691,12 +1851,12 @@ export const SimulationApiFactory = function (configuration?: Configuration, bas
         /**
          * 
          * @param {string} id 
-         * @param {SimulationDTO} [simulationDTO] 
+         * @param {NewSimulationDTO} [newSimulationDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        simulationsIdPut(id: string, simulationDTO?: SimulationDTO, options?: any): AxiosPromise<void> {
-            return localVarFp.simulationsIdPut(id, simulationDTO, options).then((request) => request(axios, basePath));
+        simulationsIdPut(id: string, newSimulationDTO?: NewSimulationDTO, options?: any): AxiosPromise<void> {
+            return localVarFp.simulationsIdPut(id, newSimulationDTO, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1709,12 +1869,12 @@ export const SimulationApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * 
-         * @param {SimulationDTO} [simulationDTO] 
+         * @param {NewSimulationDTO} [newSimulationDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        simulationsPost(simulationDTO?: SimulationDTO, options?: any): AxiosPromise<SimulationDTO> {
-            return localVarFp.simulationsPost(simulationDTO, options).then((request) => request(axios, basePath));
+        simulationsPost(newSimulationDTO?: NewSimulationDTO, options?: any): AxiosPromise<SimulationDTO> {
+            return localVarFp.simulationsPost(newSimulationDTO, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1761,13 +1921,13 @@ export class SimulationApi extends BaseAPI {
     /**
      * 
      * @param {string} id 
-     * @param {SimulationDTO} [simulationDTO] 
+     * @param {NewSimulationDTO} [newSimulationDTO] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SimulationApi
      */
-    public simulationsIdPut(id: string, simulationDTO?: SimulationDTO, options?: any) {
-        return SimulationApiFp(this.configuration).simulationsIdPut(id, simulationDTO, options).then((request) => request(this.axios, this.basePath));
+    public simulationsIdPut(id: string, newSimulationDTO?: NewSimulationDTO, options?: any) {
+        return SimulationApiFp(this.configuration).simulationsIdPut(id, newSimulationDTO, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1783,13 +1943,13 @@ export class SimulationApi extends BaseAPI {
 
     /**
      * 
-     * @param {SimulationDTO} [simulationDTO] 
+     * @param {NewSimulationDTO} [newSimulationDTO] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SimulationApi
      */
-    public simulationsPost(simulationDTO?: SimulationDTO, options?: any) {
-        return SimulationApiFp(this.configuration).simulationsPost(simulationDTO, options).then((request) => request(this.axios, this.basePath));
+    public simulationsPost(newSimulationDTO?: NewSimulationDTO, options?: any) {
+        return SimulationApiFp(this.configuration).simulationsPost(newSimulationDTO, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

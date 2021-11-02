@@ -29,7 +29,7 @@ const CodePanelHeader = ({ algorithm, simulation, children, ...props }: CodePane
   const { mutateAsync: updateSimulation } = useUpdateSimulation()
 
   const onDeleteAlgorithm = async () => {
-    await deleteAlgorithm(algorithm.id!!)
+    await deleteAlgorithm(algorithm.id)
     const newSimulation: SimulationDTO = {
       id: simulation.id,
       algorithmId: null,

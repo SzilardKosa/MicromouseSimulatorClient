@@ -42,7 +42,7 @@ export function useUpdateMaze() {
   const queryClient = useQueryClient()
   return useMutation(
     async (maze: MazeDTO) => {
-      await api.mazesIdPut(maze.id!!, maze)
+      await api.mazesIdPut(maze.id, maze)
     },
     {
       onSuccess: () => {
@@ -56,7 +56,7 @@ export function useUpdateMazeOptimistically() {
   const queryClient = useQueryClient()
   return useMutation(
     async (maze: MazeDTO) => {
-      await api.mazesIdPut(maze.id!!, maze)
+      await api.mazesIdPut(maze.id, maze)
     },
     {
       onMutate: async (newMaze: MazeDTO) => {

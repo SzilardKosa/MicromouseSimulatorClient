@@ -42,7 +42,7 @@ export function useUpdateMouse() {
   const queryClient = useQueryClient()
   return useMutation(
     async (mouse: MouseDTO) => {
-      await api.miceIdPut(mouse.id!!, mouse)
+      await api.miceIdPut(mouse.id, mouse)
     },
     {
       onSuccess: () => {
@@ -56,7 +56,7 @@ export function useUpdateMouseOptimistically() {
   const queryClient = useQueryClient()
   return useMutation(
     async (mouse: MouseDTO) => {
-      await api.miceIdPut(mouse.id!!, mouse)
+      await api.miceIdPut(mouse.id, mouse)
     },
     {
       onMutate: async (newMouse: MouseDTO) => {

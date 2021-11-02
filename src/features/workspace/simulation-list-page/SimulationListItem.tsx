@@ -44,7 +44,7 @@ const SimulationListItem = ({ simulation, ...boxProps }: SimulationListItemProps
         />
         <Spacer />
         <IconButton
-          onClick={() => deleteSimulation(simulation.id!)}
+          onClick={() => deleteSimulation(simulation.id)}
           aria-label="Delete simulation"
           size="sm"
           variant="ghost"

@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react'
 import { useCreateMaze } from '../../../../../api/hooks/mazes'
 import { useUpdateSimulation } from '../../../../../api/hooks/simulations'
-import { MazeDTO, SimulationDTO } from '../../../../../api/gen'
+import { NewMazeDTO, SimulationDTO } from '../../../../../api/gen'
 import { defaultHeight, defaultWalls, defaultWidth } from '../consts'
 
 type AddNewMazeModalProps = {
@@ -31,7 +31,7 @@ const AddNewMazeModal = ({ isOpen, onClose, simulation }: AddNewMazeModalProps) 
 
   async function onSubmit(values: any) {
     try {
-      const newMaze: MazeDTO = {
+      const newMaze: NewMazeDTO = {
         name: values.name,
         isFullSize: true,
         width: defaultWidth,

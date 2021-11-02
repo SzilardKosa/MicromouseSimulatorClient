@@ -60,8 +60,8 @@ const OpenMouseModal = ({ isOpen, onClose, simulation }: OpenMouseModalProps) =>
       <Box w="full">
         {mice?.map((mouse) => (
           <Center
-            key={mouse.id!}
-            onClick={() => onChoose(mouse.id!)}
+            key={mouse.id}
+            onClick={() => onChoose(mouse.id)}
             backgroundColor={listItemBg}
             cursor="pointer"
             _hover={{ backgroundColor: listItemBgHover }}

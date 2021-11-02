@@ -12,7 +12,7 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react'
-import { MouseDTO, SimulationDTO } from '../../../../../api/gen'
+import { NewMouseDTO, SimulationDTO } from '../../../../../api/gen'
 import { useForm } from 'react-hook-form'
 import { useCreateMouse } from '../../../../../api/hooks/mice'
 import { useUpdateSimulation } from '../../../../../api/hooks/simulations'
@@ -30,7 +30,7 @@ const AddNewMouseModal = ({ isOpen, onClose, simulation }: AddNewMouseModalProps
 
   async function onSubmit(values: any) {
     try {
-      const newMouse: MouseDTO = {
+      const newMouse: NewMouseDTO = {
         name: values.name,
         acceleration: 1,
         deceleration: 1,

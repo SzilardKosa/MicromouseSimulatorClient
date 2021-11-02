@@ -51,17 +51,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AlgorithmDTO"
+                "$ref": "#/components/schemas/NewAlgorithmDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AlgorithmDTO"
+                "$ref": "#/components/schemas/NewAlgorithmDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AlgorithmDTO"
+                "$ref": "#/components/schemas/NewAlgorithmDTO"
               }
             }
           }
@@ -142,17 +142,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AlgorithmDTO"
+                "$ref": "#/components/schemas/NewAlgorithmDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AlgorithmDTO"
+                "$ref": "#/components/schemas/NewAlgorithmDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AlgorithmDTO"
+                "$ref": "#/components/schemas/NewAlgorithmDTO"
               }
             }
           }
@@ -223,17 +223,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MazeDTO"
+                "$ref": "#/components/schemas/NewMazeDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/MazeDTO"
+                "$ref": "#/components/schemas/NewMazeDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/MazeDTO"
+                "$ref": "#/components/schemas/NewMazeDTO"
               }
             }
           }
@@ -314,17 +314,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MazeDTO"
+                "$ref": "#/components/schemas/NewMazeDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/MazeDTO"
+                "$ref": "#/components/schemas/NewMazeDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/MazeDTO"
+                "$ref": "#/components/schemas/NewMazeDTO"
               }
             }
           }
@@ -395,17 +395,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MouseDTO"
+                "$ref": "#/components/schemas/NewMouseDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/MouseDTO"
+                "$ref": "#/components/schemas/NewMouseDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/MouseDTO"
+                "$ref": "#/components/schemas/NewMouseDTO"
               }
             }
           }
@@ -486,17 +486,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MouseDTO"
+                "$ref": "#/components/schemas/NewMouseDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/MouseDTO"
+                "$ref": "#/components/schemas/NewMouseDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/MouseDTO"
+                "$ref": "#/components/schemas/NewMouseDTO"
               }
             }
           }
@@ -567,17 +567,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SimulationDTO"
+                "$ref": "#/components/schemas/NewSimulationDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/SimulationDTO"
+                "$ref": "#/components/schemas/NewSimulationDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/SimulationDTO"
+                "$ref": "#/components/schemas/NewSimulationDTO"
               }
             }
           }
@@ -658,17 +658,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SimulationDTO"
+                "$ref": "#/components/schemas/NewSimulationDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/SimulationDTO"
+                "$ref": "#/components/schemas/NewSimulationDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/SimulationDTO"
+                "$ref": "#/components/schemas/NewSimulationDTO"
               }
             }
           }
@@ -739,12 +739,11 @@
   "components": {
     "schemas": {
       "AlgorithmDTO": {
-        "required": ["codeText", "language", "name"],
+        "required": ["codeText", "id", "language", "name"],
         "type": "object",
         "properties": {
           "id": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "name": {
             "type": "string"
@@ -801,6 +800,96 @@
         "additionalProperties": false
       },
       "MazeDTO": {
+        "required": ["goalArea", "height", "id", "isFullSize", "name", "walls", "width"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "isFullSize": {
+            "type": "boolean"
+          },
+          "width": {
+            "maximum": 32,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "height": {
+            "maximum": 32,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "goalArea": {
+            "$ref": "#/components/schemas/GoalAreaDTO"
+          },
+          "walls": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CellWalls"
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "MouseDTO": {
+        "required": ["acceleration", "deceleration", "id", "maxSpeed", "name", "turnTime"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "acceleration": {
+            "type": "number",
+            "format": "double"
+          },
+          "deceleration": {
+            "type": "number",
+            "format": "double"
+          },
+          "maxSpeed": {
+            "type": "number",
+            "format": "double"
+          },
+          "turnTime": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NewAlgorithmDTO": {
+        "required": ["codeText", "language", "name"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string"
+          },
+          "language": {
+            "pattern": "^Python$|^C$|^C\\+\\+$",
+            "type": "string"
+          },
+          "codeText": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NewMazeDTO": {
         "required": ["goalArea", "height", "isFullSize", "name", "walls", "width"],
         "type": "object",
         "properties": {
@@ -841,7 +930,7 @@
         },
         "additionalProperties": false
       },
-      "MouseDTO": {
+      "NewMouseDTO": {
         "required": ["acceleration", "deceleration", "maxSpeed", "name", "turnTime"],
         "type": "object",
         "properties": {
@@ -871,7 +960,7 @@
         },
         "additionalProperties": false
       },
-      "SimulationDTO": {
+      "NewSimulationDTO": {
         "required": ["name"],
         "type": "object",
         "properties": {
@@ -897,13 +986,37 @@
         },
         "additionalProperties": false
       },
-      "SimulationExpandedDTO": {
-        "required": ["name"],
+      "SimulationDTO": {
+        "required": ["id", "name"],
         "type": "object",
         "properties": {
           "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "algorithmId": {
             "type": "string",
             "nullable": true
+          },
+          "mazeId": {
+            "type": "string",
+            "nullable": true
+          },
+          "mouseId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SimulationExpandedDTO": {
+        "required": ["id", "name"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
           },
           "name": {
             "type": "string"
