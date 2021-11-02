@@ -113,6 +113,7 @@ const Navbar = ({ simulation, runSimulation, isRunning, ...etc }: NavbarProps) =
             icon={<Icon w={5} h={5} as={MdPlayArrow} />}
             aria-label={'Run simulation'}
             onClick={onRunSimulation}
+            isDisabled={simulation?.algorithm == null || simulation.maze == null}
             isLoading={isRunning}
           />
           <DarkLightSwitch {...iconButtonProps} />
