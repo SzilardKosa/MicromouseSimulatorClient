@@ -8,6 +8,7 @@ import MouseEditorPanel from './mouse-editor-panel/MouseEditorPanel'
 import StatsPanel from './stats-panel/StatsPanel'
 import { Center, Spinner, Text, VStack } from '@chakra-ui/react'
 import ErrorMessageView from '../../../common/ErrorMessageView'
+import { navbarHeight } from '../../../common/consts'
 
 type ResultTabProps = {
   simulation: SimulationExpandedDTO
@@ -16,7 +17,7 @@ type ResultTabProps = {
 
 const ResultTab = ({ simulation, status }: ResultTabProps) => {
   const colorMode = useColorModeValue('light', 'dark')
-  const maxHeight = 'calc(100vh - 64px)'
+  const maxHeight = `calc(100vh - ${navbarHeight}px)`
 
   if (status === 'loading') {
     return (

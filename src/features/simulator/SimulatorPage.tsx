@@ -9,6 +9,7 @@ import { Box, Center, Spinner } from '@chakra-ui/react'
 import EditorTab from './editor-tab/EditorTab'
 import ResultTab from './result-tab/ResultTab'
 import ErrorMessageView from '../../common/ErrorMessageView'
+import { navbarHeight } from '../../common/consts'
 
 const SimulatorPage = () => {
   const currentTab = useSelector(selectCurrentTab)
@@ -50,7 +51,7 @@ const SimulatorPage = () => {
         position="relative"
         zIndex={2}
       />
-      <Box h="calc(100vh - 64px)" w="full" position="absolute">
+      <Box h={`calc(100vh - ${navbarHeight}px)`} w="full" position="absolute">
         {content}
       </Box>
     </>

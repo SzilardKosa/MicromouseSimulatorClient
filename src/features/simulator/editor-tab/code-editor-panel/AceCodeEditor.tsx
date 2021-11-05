@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { selectFontSize } from './codeEditorSlice'
 import { useUpdateAlgorithm } from '../../../../api/hooks/algorithms'
 import { useColorModeValue } from '@chakra-ui/react'
+import { panelHeaderHeight } from '../../../../common/consts'
 
 const languages = ['c_cpp', 'python']
 const themes = [
@@ -71,7 +72,7 @@ const AceCodeEditor = ({ algorithm }: AceCodeEditorProps) => {
       showGutter={true} // left side of the editor with the number
       highlightActiveLine={true}
       width={'100%'}
-      height={'calc(100% - 48px)'}
+      height={`calc(100% - ${panelHeaderHeight}px)`}
       wrapEnabled={true} //wraping lines
       setOptions={{
         enableBasicAutocompletion: true,

@@ -3,6 +3,7 @@ import { Box, Center, Spinner } from '@chakra-ui/react'
 import { useSimulations } from '../../../api/hooks/simulations'
 import SimulationList from './SimulationList'
 import ErrorMessageView from '../../../common/ErrorMessageView'
+import { navbarHeight } from '../../../common/consts'
 
 const SimulationListPage = () => {
   const { status, data, error } = useSimulations()
@@ -22,7 +23,7 @@ const SimulationListPage = () => {
   }
 
   return (
-    <Box h="calc(100vh - 64px)" w="full" position="relative">
+    <Box h={`calc(100vh - ${navbarHeight}px)`} w="full" position="relative">
       {content}
     </Box>
   )

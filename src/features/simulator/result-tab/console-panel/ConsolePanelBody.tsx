@@ -4,6 +4,7 @@ import { selectConsoleInput, selectSimulationId } from '../resultSlice'
 import { useSelector } from 'react-redux'
 import ErrorMessageView from '../../../../common/ErrorMessageView'
 import { SimulationExpandedDTO } from '../../../../api/gen'
+import { panelHeaderHeight } from '../../../../common/consts'
 
 type ConsolePanelBodyProps = { simulation: SimulationExpandedDTO }
 
@@ -21,7 +22,7 @@ const ConsolePanelBody = ({ simulation }: ConsolePanelBodyProps) => {
 
   if (consoleLogs == null || simulation.id !== simulationId) {
     return (
-      <Center h="calc(100% - 48px)" overflow="hidden" position="relative">
+      <Center h={`calc(100% - ${panelHeaderHeight}px)`} overflow="hidden" position="relative">
         <ErrorMessageView message={'Nothing to show yet!'} />
       </Center>
     )
@@ -41,7 +42,7 @@ const ConsolePanelBody = ({ simulation }: ConsolePanelBodyProps) => {
   })
 
   return (
-    <Box h="calc(100% - 48px)" overflowY="auto" p={4}>
+    <Box h={`calc(100% - ${panelHeaderHeight}px)`} overflowY="auto" p={4}>
       <VStack spacing={3} align="stretch">
         {logs}
       </VStack>

@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { MouseDTO } from '../../../../api/gen'
 import { useUpdateMouseOptimistically } from '../../../../api/hooks/mice'
+import { panelHeaderHeight } from '../../../../common/consts'
 
 type MousePanelBodyProps = {
   mouse: MouseDTO
@@ -60,7 +61,7 @@ const MousePanelBody = ({ mouse }: MousePanelBodyProps) => {
   }
 
   return (
-    <Center h="calc(100% - 48px)" w="full" position="relative">
+    <Center h={`calc(100% - ${panelHeaderHeight}px)`} w="full" position="relative">
       <SimpleGrid columns={3} gap="1" alignItems="center" justifyItems="center">
         <Text justifySelf="end">Acceleration:</Text>
         <NumberInput

@@ -8,6 +8,7 @@ import MazeCanvas from './MazeCanvas'
 import MazeEditorHUD from './MazeEditorHUD'
 import MazePanelHeader from './MazePanelHeader'
 import ErrorMessageView from '../../../../common/ErrorMessageView'
+import { panelHeaderHeight } from '../../../../common/consts'
 
 type MazeEditorPanelContentProps = {
   simulation: SimulationExpandedDTO
@@ -42,7 +43,7 @@ const MazeEditorPanelContent = ({ simulation, mazeId }: MazeEditorPanelContentPr
   return (
     <>
       <MazePanelHeader position="relative" zIndex={1} simulation={simulation} maze={maze} />
-      <Center h="calc(100% - 48px)" overflow="hidden" position="relative">
+      <Center h={`calc(100% - ${panelHeaderHeight}px)`} overflow="hidden" position="relative">
         <MazeEditorHUD />
         <MazeCanvas maze={maze} />
       </Center>
