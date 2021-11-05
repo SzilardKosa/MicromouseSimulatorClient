@@ -1,10 +1,11 @@
 import React from 'react'
 import { Text, useColorModeValue } from '@chakra-ui/react'
+import { useErrorColor } from '../../../../common/consts'
 
 type StatusMessageProps = { errorMessage?: string }
 
 const StatusMessage = ({ errorMessage }: StatusMessageProps) => {
-  const errorColor = useColorModeValue('red.700', 'red.300')
+  const errorColor = useErrorColor()
   const successColor = useColorModeValue('green.500', 'green.300')
 
   if (!errorMessage) {

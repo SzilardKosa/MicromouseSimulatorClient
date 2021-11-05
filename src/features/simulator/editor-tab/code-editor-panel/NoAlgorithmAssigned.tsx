@@ -1,13 +1,14 @@
 import React from 'react'
-import { Center, useColorModeValue, Text, useDisclosure, Button } from '@chakra-ui/react'
+import { Center, Text, useDisclosure, Button } from '@chakra-ui/react'
 import AddNewAlgorithmModal from './modals/AddNewAlgorithmModal'
 import OpenAlgorithmModal from './modals/OpenAlgorithmModal'
 import { SimulationDTO } from '../../../../api/gen'
+import { useErrorColor } from '../../../../common/consts'
 
 type NoAlgorithmAssignedProps = { simulation: SimulationDTO }
 
 const NoAlgorithmAssigned = ({ simulation }: NoAlgorithmAssignedProps) => {
-  const errorColor = useColorModeValue('red.700', 'red.300')
+  const errorColor = useErrorColor()
   const { isOpen: isCreateOpen, onOpen: onCreateOpen, onClose: onCreateClose } = useDisclosure()
   const { isOpen: isSearchOpen, onOpen: onSearchOpen, onClose: onSearchClose } = useDisclosure()
 

@@ -1,10 +1,11 @@
-import { Center, Text, useColorModeValue } from '@chakra-ui/react'
+import { Center, Text } from '@chakra-ui/react'
 import React from 'react'
+import { useErrorColor } from './consts'
 
 type ErrorMessageViewProps = { message: String }
 
 const ErrorMessageView = ({ message }: ErrorMessageViewProps) => {
-  const errorColor = useColorModeValue('red.700', 'red.300')
+  const errorColor = useErrorColor()
   return (
     <Center h="full">
       <Text fontSize="md" color={errorColor}>

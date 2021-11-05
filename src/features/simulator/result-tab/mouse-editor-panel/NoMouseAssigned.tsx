@@ -1,13 +1,14 @@
 import React from 'react'
-import { Button, Center, Text, useColorModeValue, useDisclosure } from '@chakra-ui/react'
+import { Button, Center, Text, useDisclosure } from '@chakra-ui/react'
 import { SimulationDTO } from '../../../../api/gen'
 import AddNewMouseModal from './modals/AddNewMouseModal'
 import OpenMouseModal from './modals/OpenMouseModal'
+import { useErrorColor } from '../../../../common/consts'
 
 type NoMouseAssignedProps = { simulation: SimulationDTO }
 
 const NoMouseAssigned = ({ simulation }: NoMouseAssignedProps) => {
-  const errorColor = useColorModeValue('red.700', 'red.300')
+  const errorColor = useErrorColor()
   const { isOpen: isCreateOpen, onOpen: onCreateOpen, onClose: onCreateClose } = useDisclosure()
   const { isOpen: isSearchOpen, onOpen: onSearchOpen, onClose: onSearchClose } = useDisclosure()
 

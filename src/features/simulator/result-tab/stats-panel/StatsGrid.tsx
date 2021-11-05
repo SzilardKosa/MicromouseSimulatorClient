@@ -3,12 +3,13 @@ import { useDispatch } from 'react-redux'
 import { Text, Center, useColorModeValue, VStack, Grid } from '@chakra-ui/react'
 import { MazeRun, setSelectedInterval } from '../resultSlice'
 import StatsItem from './StatsItem'
+import { useErrorColor } from '../../../../common/consts'
 
 type StatsGridProps = { mazeRuns: MazeRun[] }
 
 const StatsGrid = ({ mazeRuns }: StatsGridProps) => {
   const listItemBg = useColorModeValue('gray.100', 'gray.900')
-  const errorColor = useColorModeValue('red.700', 'red.300')
+  const errorColor = useErrorColor()
   const dispatch = useDispatch()
 
   const runs = mazeRuns.map(

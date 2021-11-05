@@ -1,13 +1,14 @@
 import React from 'react'
-import { Center, useColorModeValue, useDisclosure, Text, Button } from '@chakra-ui/react'
+import { Center, useDisclosure, Text, Button } from '@chakra-ui/react'
 import AddNewMazeModal from './modals/AddNewMazeModal'
 import OpenMazeModal from './modals/OpenMazeModal'
 import { SimulationDTO } from '../../../../api/gen'
+import { useErrorColor } from '../../../../common/consts'
 
 type NoMazeAssignedProps = { simulation: SimulationDTO }
 
 const NoMazeAssigned = ({ simulation }: NoMazeAssignedProps) => {
-  const errorColor = useColorModeValue('red.700', 'red.300')
+  const errorColor = useErrorColor()
   const { isOpen: isCreateOpen, onOpen: onCreateOpen, onClose: onCreateClose } = useDisclosure()
   const { isOpen: isSearchOpen, onOpen: onSearchOpen, onClose: onSearchClose } = useDisclosure()
 
