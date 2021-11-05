@@ -36,15 +36,15 @@ const FileMenu = ({ onSave, onNewFile, onOpenFile, onDelete }: FileMenuProps) =>
             <MenuDivider />
           </>
         )}
-        <MenuItem onClick={onNewFile} icon={<AddIcon />} command="Ctrl+N">
-          New File
+        <MenuItem onClick={onNewFile} icon={<AddIcon />}>
+          Create New...
         </MenuItem>
-        <MenuItem onClick={onOpenFile} icon={<EditIcon />} command="Ctrl+O">
-          Open File...
+        <MenuItem onClick={onOpenFile} icon={<EditIcon />}>
+          Open...
         </MenuItem>
         <MenuDivider />
         <MenuItem onClick={onDelete} icon={<DeleteIcon />}>
-          Delete
+          Delete...
         </MenuItem>
       </MenuList>
     </Menu>
