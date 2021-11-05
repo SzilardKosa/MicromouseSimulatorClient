@@ -11,7 +11,7 @@ import {
 import SettingsButton from '../../common/SettingsButton'
 import FileMenu from '../../common/FileMenu'
 import PanelHeader from '../../common/PanelHeader'
-import DeleteConfirmModal from '../../common/DeleteConfirmModal'
+import DeleteConfirmModal from '../../../../common/DeleteConfirmModal'
 import AddNewAlgorithmModal from './modals/AddNewAlgorithmModal'
 import OpenAlgorithmModal from './modals/OpenAlgorithmModal'
 import CodeEditorSettingsModal from './modals/CodeEditorSettingsModal'

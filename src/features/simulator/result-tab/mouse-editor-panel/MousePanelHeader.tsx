@@ -12,7 +12,7 @@ import PanelHeader from '../../common/PanelHeader'
 import { MouseDTO, SimulationDTO } from '../../../../api/gen'
 import { useDeleteMouse, useUpdateMouseOptimistically } from '../../../../api/hooks/mice'
 import { useUpdateSimulation } from '../../../../api/hooks/simulations'
-import DeleteConfirmModal from '../../common/DeleteConfirmModal'
+import DeleteConfirmModal from '../../../../common/DeleteConfirmModal'
 import AddNewMouseModal from './modals/AddNewMouseModal'
 import OpenMouseModal from './modals/OpenMouseModal'
 
