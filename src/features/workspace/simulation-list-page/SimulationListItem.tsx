@@ -31,6 +31,8 @@ const SimulationListItem = ({ simulation, ...boxProps }: SimulationListItemProps
         _hover={{ shadow: 'md' }}
         role="group"
         bg={useColorModeValue('white', 'gray.900')}
+        borderWidth="1px"
+        borderColor={useColorModeValue('gray.300', 'gray.700')}
         {...boxProps}
       >
         <Text>{simulation.name}</Text>
