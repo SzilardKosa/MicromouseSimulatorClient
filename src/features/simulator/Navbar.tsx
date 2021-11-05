@@ -70,6 +70,11 @@ const Navbar = ({ simulation, runSimulation, isRunning, ...etc }: NavbarProps) =
     }
   }
 
+  const onNavigateBack = () => {
+    history.push('/workspace/simulations')
+    dispatch(changeTab(SimulatorTabs.Editor))
+  }
+
   return (
     <Box bg={useColorModeValue('green.400', 'green.800')} px={4} shadow="base" {...etc}>
       <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
@@ -78,7 +83,7 @@ const Navbar = ({ simulation, runSimulation, isRunning, ...etc }: NavbarProps) =
             {...iconButtonProps}
             icon={<ArrowBackIcon w={5} h={5} />}
             aria-label={'Back to list'}
-            onClick={() => history.push('/workspace/simulations')}
+            onClick={onNavigateBack}
             isDisabled={isRunning}
           />
           {simulation && (
