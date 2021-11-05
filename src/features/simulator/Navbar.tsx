@@ -79,6 +79,7 @@ const Navbar = ({ simulation, runSimulation, isRunning, ...etc }: NavbarProps) =
             icon={<ArrowBackIcon w={5} h={5} />}
             aria-label={'Back to list'}
             onClick={() => history.push('/workspace/simulations')}
+            isDisabled={isRunning}
           />
           {simulation && (
             <Editable
