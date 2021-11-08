@@ -92,16 +92,6 @@ const MazeViewerCanvas = ({
       }
     }
 
-    // draw outter walls
-    for (let c = 0; c < cols; c++) {
-      context.fillRect(c * cellSize + wallWidth, 0, cellSize - wallWidth, wallWidth)
-      context.fillRect(c * cellSize + wallWidth, rows * cellSize, cellSize - wallWidth, wallWidth)
-    }
-    for (let r = 0; r < rows; r++) {
-      context.fillRect(0, r * cellSize + wallWidth, wallWidth, cellSize - wallWidth)
-      context.fillRect(cols * cellSize, r * cellSize + wallWidth, wallWidth, cellSize - wallWidth)
-    }
-
     // draw inner walls
     walls.forEach((row, r) => {
       row.forEach((cell, c) => {
@@ -116,6 +106,17 @@ const MazeViewerCanvas = ({
         }
       })
     })
+
+    // draw outter walls
+    context.fillStyle = wallColor
+    for (let c = 0; c < cols; c++) {
+      context.fillRect(c * cellSize + wallWidth, 0, cellSize - wallWidth, wallWidth)
+      context.fillRect(c * cellSize + wallWidth, rows * cellSize, cellSize - wallWidth, wallWidth)
+    }
+    for (let r = 0; r < rows; r++) {
+      context.fillRect(0, r * cellSize + wallWidth, wallWidth, cellSize - wallWidth)
+      context.fillRect(cols * cellSize, r * cellSize + wallWidth, wallWidth, cellSize - wallWidth)
+    }
 
     // draw labels
     context.save()
