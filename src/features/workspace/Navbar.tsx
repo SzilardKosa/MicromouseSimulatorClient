@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Link as RouterLink, useHistory, useRouteMatch } from 'react-router-dom'
 import {
   Box,
@@ -19,11 +20,18 @@ import {
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import NavLink from './NavLink'
 import DarkLightSwitch from '../../common/DarkLightSwitch'
+import { logout } from '../auth/authSlice'
 
 const Navbar = () => {
   let { url } = useRouteMatch()
   let history = useHistory()
+  const dispatch = useDispatch()
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const onLogout = () => {
+    dispatch(logout())
+    history.push('/')
+  }
 
   return (
     <>
@@ -66,7 +74,7 @@ const Navbar = () => {
                   Settings
                 </MenuItem>
                 <MenuDivider />
-                <MenuItem onClick={() => history.push('/')}>Log out</MenuItem>
+                <MenuItem onClick={onLogout}>Log out</MenuItem>
               </MenuList>
             </Menu>
           </Flex>

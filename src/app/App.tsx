@@ -1,6 +1,7 @@
 import React from 'react'
 import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import LogInPage from '../features/auth/LogInPage'
+import ProtectedRoute from '../features/auth/ProtectedRoute'
 import SignUpPage from '../features/auth/SignUpPage'
 import SimulatorPage from '../features/simulator/SimulatorPage'
 import WelcomePage from '../features/welcome-page/WelcomePage'
@@ -10,11 +11,21 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={WelcomePage} />
-        <Route exact path="/signup" component={SignUpPage} />
-        <Route exact path="/login" component={LogInPage} />
-        <Route exact path="/simulator/:id" component={SimulatorPage} />
-        <Route path="/workspace" component={WorkSpace} />
+        <Route exact path="/">
+          <WelcomePage />
+        </Route>
+        <Route exact path="/signup">
+          <SignUpPage />
+        </Route>
+        <Route exact path="/login">
+          <LogInPage />
+        </Route>
+        <ProtectedRoute exact path="/simulator/:id">
+          <SimulatorPage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/workspace">
+          <WorkSpace />
+        </ProtectedRoute>
         <Route path="/">
           <Redirect to="/" />
         </Route>

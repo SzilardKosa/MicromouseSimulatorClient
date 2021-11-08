@@ -14,11 +14,15 @@ import {
   Text,
   useColorModeValue,
   FormErrorMessage,
+  Alert,
+  AlertIcon,
 } from '@chakra-ui/react'
 import { EMAIL_REGEX, PASSWORD_REGEX } from './consts'
+import { useRegister } from '../../api/hooks/auth'
 
 const SignUpPage = () => {
   const { register, handleSubmit, errors, formState } = useForm()
+  const { isError, isSuccess, error, mutateAsync: registerUser } = useRegister()
 
   function validateEmail(value: any) {
     if (!value) {
@@ -42,13 +46,12 @@ const SignUpPage = () => {
     } else return true
   }
 
-  function onSubmit(values: any): Promise<void> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        console.log(JSON.stringify(values, null, 2))
-        resolve()
-      }, 3000)
-    })
+  async function onSubmit(values: any) {
+    try {
+      await registerUser({ email: values.email, password: values.password })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -67,6 +70,18 @@ const SignUpPage = () => {
         <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={4}>
+              {isError && (
+                <Alert status="error">
+                  <AlertIcon />
+                  {error && error.response?.data}
+                </Alert>
+              )}
+              {isSuccess && (
+                <Alert status="success">
+                  <AlertIcon />
+                  Account successfully created!
+                </Alert>
+              )}
               <FormControl id="email" isInvalid={errors.email}>
                 <FormLabel>Email address</FormLabel>
                 <Input type="email" name="email" ref={register({ validate: validateEmail })} />

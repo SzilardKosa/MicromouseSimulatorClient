@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Link as RouterLink, useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import {
@@ -14,11 +15,17 @@ import {
   Text,
   useColorModeValue,
   FormErrorMessage,
+  Alert,
+  AlertIcon,
 } from '@chakra-ui/react'
 import { EMAIL_REGEX } from './consts'
+import { useLogin } from '../../api/hooks/auth'
+import { login } from './authSlice'
 
 const LogInPage = () => {
   const { register, handleSubmit, errors, formState } = useForm()
+  const { isError, error, mutateAsync: loginUser } = useLogin()
+  const dispatch = useDispatch()
   let history = useHistory()
 
   function validateEmail(value: any) {
@@ -35,14 +42,14 @@ const LogInPage = () => {
     } else return true
   }
 
-  function onSubmit(values: any): Promise<void> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        console.log(JSON.stringify(values, null, 2))
-        history.replace('/workspace')
-        resolve()
-      }, 3000)
-    })
+  async function onSubmit(values: any) {
+    try {
+      const token = await loginUser({ email: values.email, password: values.password })
+      dispatch(login(token))
+      history.replace('/workspace')
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -61,6 +68,12 @@ const LogInPage = () => {
         <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={4}>
+              {isError && (
+                <Alert status="error">
+                  <AlertIcon />
+                  {error && error.response?.data}
+                </Alert>
+              )}
               <FormControl id="email" isInvalid={errors.email}>
                 <FormLabel>Email address</FormLabel>
                 <Input type="email" name="email" ref={register({ validate: validateEmail })} />
@@ -87,7 +100,6 @@ const LogInPage = () => {
                       Create one
                     </Link>
                   </Text>
-                  <Link color={'blue.400'}>Forgot password?</Link>
                 </Stack>
                 <Button
                   bg={'blue.400'}
