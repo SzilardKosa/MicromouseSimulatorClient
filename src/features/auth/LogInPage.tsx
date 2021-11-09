@@ -71,7 +71,7 @@ const LogInPage = () => {
               {isError && (
                 <Alert status="error">
                   <AlertIcon />
-                  {error && error.response?.data}
+                  Unsuccessful login! {error && error.response?.data}
                 </Alert>
               )}
               <FormControl id="email" isInvalid={errors.email}>
