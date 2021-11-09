@@ -55,10 +55,13 @@ const OpenMouseModal = ({ isOpen, onClose, simulation }: OpenMouseModalProps) =>
   } else if (status === 'error') {
     console.log(error)
     content = <ErrorMessageView message={'An error occured while loading the mice!'} />
+  } else if (!mice || mice.length === 0) {
+    console.log(error)
+    content = <ErrorMessageView message={'No mice found!'} />
   } else {
     content = (
       <Box w="full">
-        {mice?.map((mouse) => (
+        {mice.map((mouse) => (
           <Center
             key={mouse.id}
             onClick={() => onChoose(mouse.id)}

@@ -58,10 +58,13 @@ const OpenMazeModal = ({ isOpen, onClose, simulation }: OpenMazeModalProps) => {
   } else if (status === 'error') {
     console.log(error)
     content = <ErrorMessageView message={'An error occured while loading the mazes!'} />
+  } else if (!mazes || mazes.length === 0) {
+    console.log(error)
+    content = <ErrorMessageView message={'No mazes found!'} />
   } else {
     content = (
       <Box w="full">
-        {mazes?.map((maze) => (
+        {mazes.map((maze) => (
           <Center
             key={maze.id}
             onClick={() => onChoose(maze.id)}

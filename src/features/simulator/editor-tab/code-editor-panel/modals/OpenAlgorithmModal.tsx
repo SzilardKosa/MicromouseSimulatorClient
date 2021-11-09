@@ -60,10 +60,13 @@ const OpenAlgorithmModal = ({ isOpen, onClose, simulation }: OpenAlgorithmModalP
   } else if (status === 'error') {
     console.log(error)
     content = <ErrorMessageView message={'An error occured while loading the algorithms!'} />
+  } else if (!algorithms || algorithms.length === 0) {
+    console.log(error)
+    content = <ErrorMessageView message={'No algorithms found!'} />
   } else {
     content = (
       <Box w="full">
-        {algorithms?.map((algorithm) => (
+        {algorithms.map((algorithm) => (
           <Center
             key={algorithm.id}
             onClick={() => onChoose(algorithm.id)}
