@@ -54,7 +54,7 @@ const Navbar = () => {
             <Box fontWeight="bold">Micromouse Simulator</Box>
             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
               <NavLink to={`${url}/simulations`}>Simulations</NavLink>
-              <NavLink to={`${url}/help`}>Help</NavLink>
+              {/* <NavLink to={`${url}/help`}>Help</NavLink> */}
             </HStack>
           </HStack>
           <Flex alignItems={'center'}>

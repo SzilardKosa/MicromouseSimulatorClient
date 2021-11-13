@@ -15,7 +15,6 @@ import {
   EditableInput,
 } from '@chakra-ui/react'
 import SizeTypePicker, { SizeOptions } from './SizeTypePicker'
-import SettingsButton from '../../common/SettingsButton'
 import FileMenu from '../../common/FileMenu'
 import PanelHeader from '../../common/PanelHeader'
 import { MazeDTO, SimulationDTO } from '../../../../api/gen'
@@ -24,7 +23,6 @@ import { useUpdateSimulation } from '../../../../api/hooks/simulations'
 import DeleteConfirmModal from '../../../../common/DeleteConfirmModal'
 import AddNewMazeModal from './modals/AddNewMazeModal'
 import OpenMazeModal from './modals/OpenMazeModal'
-import MazeEditorSettingsModal from './modals/MazeEditorSettingsModal'
 import { getMazeDeepCopy } from './consts'
 
 type MazePanelHeaderProps = BoxProps & { simulation: SimulationDTO; maze: MazeDTO }
@@ -91,11 +89,11 @@ const MazePanelHeader = ({ maze, simulation, children, ...props }: MazePanelHead
   const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure()
   const { isOpen: isCreateOpen, onOpen: onCreateOpen, onClose: onCreateClose } = useDisclosure()
   const { isOpen: isSearchOpen, onOpen: onSearchOpen, onClose: onSearchClose } = useDisclosure()
-  const {
-    isOpen: isSettingsOpen,
-    onOpen: onSettingsOpen,
-    onClose: onSettingsClose,
-  } = useDisclosure()
+  // const {
+  //   isOpen: isSettingsOpen,
+  //   onOpen: onSettingsOpen,
+  //   onClose: onSettingsClose,
+  // } = useDisclosure()
   return (
     <>
       <PanelHeader {...props}>
@@ -149,7 +147,7 @@ const MazePanelHeader = ({ maze, simulation, children, ...props }: MazePanelHead
           </HStack>
         </HStack>
         <HStack spacing={4} alignItems={'center'}>
-          <SettingsButton aria-label="Maze Editor Settings" onClick={onSettingsOpen} />
+          {/* <SettingsButton aria-label="Maze Editor Settings" onClick={onSettingsOpen} /> */}
           <FileMenu onNewFile={onCreateOpen} onOpenFile={onSearchOpen} onDelete={onDeleteOpen} />
         </HStack>
       </PanelHeader>
@@ -166,7 +164,7 @@ const MazePanelHeader = ({ maze, simulation, children, ...props }: MazePanelHead
 
       <OpenMazeModal onClose={onSearchClose} isOpen={isSearchOpen} simulation={simulation} />
 
-      <MazeEditorSettingsModal onClose={onSettingsClose} isOpen={isSettingsOpen} />
+      {/* <MazeEditorSettingsModal onClose={onSettingsClose} isOpen={isSettingsOpen} /> */}
     </>
   )
 }

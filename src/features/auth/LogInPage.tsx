@@ -57,13 +57,13 @@ const LogInPage = () => {
       <Stack spacing="8" w="md" maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Log in to your account</Heading>
-          <Text fontSize={'lg'} color={'gray.600'}>
+          {/* <Text fontSize={'lg'} color={'gray.600'}>
             to enjoy all of our cool{' '}
             <Link color={'blue.400'} as={RouterLink} to="/">
               features
             </Link>{' '}
             ✌️
-          </Text>
+          </Text> */}
         </Stack>
         <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
           <form onSubmit={handleSubmit(onSubmit)}>
