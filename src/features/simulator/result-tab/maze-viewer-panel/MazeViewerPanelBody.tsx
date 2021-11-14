@@ -7,6 +7,7 @@ import { selectMazeViewerInput, selectSimulationId } from '../resultSlice'
 import ErrorMessageView from '../../../../common/ErrorMessageView'
 import { SimulationExpandedDTO } from '../../../../api/gen'
 import { panelHeaderHeight } from '../../../../common/consts'
+import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 
 type MazeViewerPanelBodyProps = { simulation: SimulationExpandedDTO }
 
@@ -22,9 +23,24 @@ const MazeViewerPanelBody = ({ simulation }: MazeViewerPanelBodyProps) => {
   }
 
   return (
-    <Center h={`calc(100% - ${panelHeaderHeight}px)`} overflow="hidden" position="relative">
+    <Center
+      h={`calc(100% - ${panelHeaderHeight}px)`}
+      w="full"
+      overflow="hidden"
+      position="relative"
+    >
       <MazeViewerHUD />
-      <MazeViewerCanvas {...mazeViewerInput} />
+      <TransformWrapper initialScale={0.05} minScale={0.02} centerOnInit={true}>
+        <TransformComponent
+          wrapperStyle={{
+            width: '100%',
+            height: '100%',
+            zIndex: 1,
+          }}
+        >
+          <MazeViewerCanvas {...mazeViewerInput} />
+        </TransformComponent>
+      </TransformWrapper>
     </Center>
   )
 }
