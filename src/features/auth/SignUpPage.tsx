@@ -17,34 +17,12 @@ import {
   Alert,
   AlertIcon,
 } from '@chakra-ui/react'
-import { EMAIL_REGEX, PASSWORD_REGEX } from './consts'
 import { useRegister } from '../../api/hooks/auth'
+import { validateEmail, validatePassword } from '../../common/consts'
 
 const SignUpPage = () => {
   const { register, handleSubmit, errors, formState } = useForm()
   const { isError, isSuccess, error, mutateAsync: registerUser } = useRegister()
-
-  function validateEmail(value: any) {
-    if (!value) {
-      return 'Email is required'
-    } else if (!EMAIL_REGEX.test(String(value).toLowerCase())) {
-      return 'Please provide a valid email address'
-    } else return true
-  }
-
-  function validatePassword(value: string) {
-    if (!value) {
-      return 'Password is required'
-    } else if (!PASSWORD_REGEX.atLeastOneDigit.test(value)) {
-      return 'Password must contain at least one digit'
-    } else if (!PASSWORD_REGEX.atLeastOneLower.test(value)) {
-      return 'Password must contain at least one lower case letter'
-    } else if (!PASSWORD_REGEX.atLeastOneUpper.test(value)) {
-      return 'Password must contain at least one upper case letter'
-    } else if (!PASSWORD_REGEX.minLength.test(value)) {
-      return 'Password must be at least 8 characters long'
-    } else return true
-  }
 
   async function onSubmit(values: any) {
     try {

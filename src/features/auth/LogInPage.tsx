@@ -18,23 +18,15 @@ import {
   Alert,
   AlertIcon,
 } from '@chakra-ui/react'
-import { EMAIL_REGEX } from './consts'
 import { useLogin } from '../../api/hooks/auth'
 import { login } from './authSlice'
+import { validateEmail } from '../../common/consts'
 
 const LogInPage = () => {
   const { register, handleSubmit, errors, formState } = useForm()
   const { isError, error, mutateAsync: loginUser } = useLogin()
   const dispatch = useDispatch()
   let history = useHistory()
-
-  function validateEmail(value: any) {
-    if (!value) {
-      return 'Email is required'
-    } else if (!EMAIL_REGEX.test(String(value).toLowerCase())) {
-      return 'Please provide a valid email address'
-    } else return true
-  }
 
   function validatePassword(value: any) {
     if (!value) {
