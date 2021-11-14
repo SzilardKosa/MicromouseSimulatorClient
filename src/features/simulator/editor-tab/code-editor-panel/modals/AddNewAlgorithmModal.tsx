@@ -18,6 +18,7 @@ import {
 import { useCreateAlgorithm } from '../../../../../api/hooks/algorithms'
 import { useUpdateSimulation } from '../../../../../api/hooks/simulations'
 import { NewAlgorithmDTO, SimulationDTO } from '../../../../../api/gen'
+import { initialCodeText, Languages } from '../consts'
 
 type AddNewAlgorithmModalProps = {
   isOpen: boolean
@@ -32,10 +33,11 @@ const AddNewAlgorithmModal = ({ isOpen, onClose, simulation }: AddNewAlgorithmMo
 
   async function onSubmit(values: any) {
     try {
+      const language = values.language as Languages
       const newAlgorithm: NewAlgorithmDTO = {
         name: values.name,
-        language: values.language,
-        codeText: `print("hello world")`,
+        language: language,
+        codeText: initialCodeText[language],
       }
       const result = await createAlgorithm(newAlgorithm)
       const newSimulation: SimulationDTO = {
