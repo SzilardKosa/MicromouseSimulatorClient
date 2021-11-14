@@ -1,12 +1,11 @@
 import { MazeApi, MazeDTO } from './../gen/api'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { AxiosError } from 'axios'
 
 const api = new MazeApi()
 
-type Error = { message: string }
-
 export function useMazes() {
-  return useQuery<MazeDTO[], Error>('mazes', async () => {
+  return useQuery<MazeDTO[], AxiosError>('mazes', async () => {
     const result = await api.mazesGet()
     return result.data
   })
@@ -15,7 +14,7 @@ export function useMazes() {
 type useMazeInputs = { id: string; onSuccess?: (maze: MazeDTO) => void }
 
 export function useMaze({ id, onSuccess }: useMazeInputs) {
-  return useQuery<MazeDTO, Error>(
+  return useQuery<MazeDTO, AxiosError>(
     ['mazes', id],
     async () => {
       const result = await api.mazesIdGet(id)
