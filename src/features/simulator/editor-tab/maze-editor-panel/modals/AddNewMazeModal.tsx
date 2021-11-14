@@ -39,12 +39,12 @@ const AddNewMazeModal = ({ isOpen, onClose, simulation }: AddNewMazeModalProps) 
         walls: defaultWalls,
         goalArea: {
           cell1: {
-            x: 3,
-            y: 3,
+            x: 7,
+            y: 7,
           },
           cell2: {
-            x: 3,
-            y: 3,
+            x: 8,
+            y: 8,
           },
         },
       }

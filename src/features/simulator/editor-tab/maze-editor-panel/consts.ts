@@ -1,10 +1,11 @@
 import { MazeDTO } from './../../../../api/gen/api'
 
-export const defaultWalls = [...Array(10)].map((e) =>
-  Array(12).fill({ bottom: false, left: false })
+export const defaultHeight = 16
+export const defaultWidth = 16
+
+export const defaultWalls = [...Array(defaultHeight)].map((e) =>
+  Array(defaultWidth).fill({ bottom: false, left: false })
 )
-export const defaultHeight = 10
-export const defaultWidth = 12
 
 export const getMazeDeepCopy = (maze: MazeDTO) => {
   const newMaze: MazeDTO = {
