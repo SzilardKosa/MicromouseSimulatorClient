@@ -30,7 +30,7 @@ const MazeViewerPanelBody = ({ simulation }: MazeViewerPanelBodyProps) => {
       position="relative"
     >
       <MazeViewerHUD />
-      <TransformWrapper initialScale={0.05} minScale={0.02} centerOnInit={true}>
+      <TransformWrapper initialScale={0.2} minScale={0.1} centerOnInit={true}>
         <TransformComponent
           wrapperStyle={{
             width: '100%',
