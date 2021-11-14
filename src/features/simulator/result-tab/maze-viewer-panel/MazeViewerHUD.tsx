@@ -20,6 +20,7 @@ const MazeViewerHUD = () => {
   return (
     <Box
       position="absolute"
+      transform="translate3d(0,0,0)"
       zIndex="2"
       bottom="6"
       rounded={'md'}
