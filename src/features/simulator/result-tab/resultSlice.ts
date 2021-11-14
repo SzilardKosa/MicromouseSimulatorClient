@@ -64,15 +64,11 @@ export interface ResultState {
   mouse?: MouseDTO
   simulationId?: string
   // HUD
-  cellSize: number
-  cellWallRation: number
   selectedInterval: number[]
   intervalLength: number
 }
 
 const initialState: ResultState = {
-  cellSize: 50,
-  cellWallRation: 0.1,
   selectedInterval: [0, 0],
   intervalLength: 0,
 }
@@ -81,12 +77,6 @@ const resultSlice = createSlice({
   name: 'result',
   initialState,
   reducers: {
-    setCellSize: (state, action: PayloadAction<number>) => {
-      state.cellSize = action.payload
-    },
-    setCellWallRation: (state, action: PayloadAction<number>) => {
-      state.cellWallRation = action.payload
-    },
     setMouse: (state, action: PayloadAction<MouseDTO>) => {
       state.mouse = action.payload
       if (state.mazeViewerInput && state.processedHistory) {
@@ -138,11 +128,8 @@ const resultSlice = createSlice({
 
 export default resultSlice.reducer
 
-export const { setCellSize, setCellWallRation, setSelectedInterval, simulationFinished, setMouse } =
-  resultSlice.actions
+export const { setSelectedInterval, simulationFinished, setMouse } = resultSlice.actions
 
-export const selectCellSize = (state: RootState) => state.result.cellSize
-export const selectCellWallRation = (state: RootState) => state.result.cellWallRation
 export const selectSelectedInterval = (state: RootState) => state.result.selectedInterval
 export const selectIntervalLength = (state: RootState) => state.result.intervalLength
 export const selectMazeViewerInput = (state: RootState) => state.result.mazeViewerInput

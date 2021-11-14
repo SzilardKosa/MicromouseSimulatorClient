@@ -8,6 +8,7 @@ import {
   SliderThumb,
   SliderTrack,
   Text,
+  useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
 import EditTypePicker from './EditTypePicker'
@@ -30,53 +31,57 @@ const MazeEditorHUD = () => {
       <Box position="absolute" top="6" left="6">
         <EditTypePicker value={editType} onChange={(value) => dispatch(changeEditType(value))} />
       </Box>
-      <VStack
-        spacing={2}
-        alignItems={'flex-end'}
+      <Box
         position="absolute"
         top="6"
         right="6"
         style={{ isolation: 'isolate' }}
+        rounded={'md'}
+        bg={useColorModeValue('gray.100', 'gray.900')}
+        boxShadow={'md'}
+        p={3}
       >
-        <HStack spacing={4} alignItems={'center'}>
-          <Text>Zoom:</Text>
-          <Slider
-            aria-label="slider-zoom"
-            colorScheme={'green'}
-            w={48}
-            defaultValue={50}
-            min={10}
-            max={100}
-            step={1}
-            value={cellSize}
-            onChange={(value) => dispatch(setCellSize(value))}
-          >
-            <SliderTrack>
-              <SliderFilledTrack />
-            </SliderTrack>
-            <SliderThumb />
-          </Slider>
-        </HStack>
-        <HStack spacing={4} alignItems={'center'}>
-          <Text>Wall/Cell ratio:</Text>
-          <Slider
-            aria-label="slider-ratio"
-            colorScheme={'green'}
-            w={48}
-            defaultValue={0.25}
-            min={0.1}
-            max={0.5}
-            step={0.01}
-            value={cellWallRation}
-            onChange={(value) => dispatch(setCellWallRation(value))}
-          >
-            <SliderTrack>
-              <SliderFilledTrack />
-            </SliderTrack>
-            <SliderThumb />
-          </Slider>
-        </HStack>
-      </VStack>
+        <VStack spacing={2} alignItems={'flex-end'}>
+          <HStack spacing={4} alignItems={'center'}>
+            <Text>Zoom:</Text>
+            <Slider
+              aria-label="slider-zoom"
+              colorScheme={'green'}
+              w={48}
+              defaultValue={50}
+              min={10}
+              max={100}
+              step={1}
+              value={cellSize}
+              onChange={(value) => dispatch(setCellSize(value))}
+            >
+              <SliderTrack>
+                <SliderFilledTrack />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+          </HStack>
+          <HStack spacing={4} alignItems={'center'}>
+            <Text>Wall/Cell ratio:</Text>
+            <Slider
+              aria-label="slider-ratio"
+              colorScheme={'green'}
+              w={48}
+              defaultValue={0.25}
+              min={0.1}
+              max={0.5}
+              step={0.01}
+              value={cellWallRation}
+              onChange={(value) => dispatch(setCellWallRation(value))}
+            >
+              <SliderTrack>
+                <SliderFilledTrack />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+          </HStack>
+        </VStack>
+      </Box>
     </>
   )
 }
