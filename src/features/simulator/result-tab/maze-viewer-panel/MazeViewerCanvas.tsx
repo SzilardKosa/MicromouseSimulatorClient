@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
-import { MazeViewerInput, selectCellSize, selectCellWallRation } from '../resultSlice'
+import { MazeViewerInput } from '../resultSlice'
 
 const wallColor = 'rgb(200, 0, 0)'
 const unobservedWallColor = 'rgb(70, 0, 0)'
@@ -25,8 +24,8 @@ const MazeViewerCanvas = ({
 }: MazeViewerInput) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  const cellSize = useSelector(selectCellSize)
-  const cellWallRation = useSelector(selectCellWallRation)
+  const cellSize = 500
+  const cellWallRation = 0.1
   const wallWidth = Math.floor(cellSize * cellWallRation)
   const rows = mazeSnapshot.height
   const cols = mazeSnapshot.width
