@@ -118,25 +118,6 @@ const MazeViewerCanvas = ({
       context.fillRect(cols * cellSize, r * cellSize + wallWidth, wallWidth, cellSize - wallWidth)
     }
 
-    // draw labels
-    context.save()
-    context.translate(0, mazeHeight)
-    context.scale(1, -1)
-    context.fillStyle = textColor
-    context.font = `${Math.ceil((cellSize * 1) / 3)}px sans-serif`
-    context.textAlign = 'center'
-    context.textBaseline = 'middle'
-    cellLabels.forEach((row, r) => {
-      row.forEach((text, c) => {
-        context.fillText(
-          text,
-          c * cellSize + (cellSize + wallWidth) / 2,
-          mazeHeight - (r * cellSize + (cellSize + wallWidth) / 2)
-        )
-      })
-    })
-    context.restore()
-
     // draw mouse
     context.save()
     context.translate(
@@ -167,6 +148,25 @@ const MazeViewerCanvas = ({
       cellSize / 16,
       (cellSize * 1.25) / 8
     )
+    context.restore()
+
+    // draw labels
+    context.save()
+    context.translate(0, mazeHeight)
+    context.scale(1, -1)
+    context.fillStyle = textColor
+    context.font = `${Math.ceil((cellSize * 1) / 3)}px sans-serif`
+    context.textAlign = 'center'
+    context.textBaseline = 'middle'
+    cellLabels.forEach((row, r) => {
+      row.forEach((text, c) => {
+        context.fillText(
+          text,
+          c * cellSize + (cellSize + wallWidth) / 2,
+          mazeHeight - (r * cellSize + (cellSize + wallWidth) / 2)
+        )
+      })
+    })
     context.restore()
 
     context.restore()
