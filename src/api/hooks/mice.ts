@@ -1,12 +1,11 @@
 import { MouseApi, MouseDTO } from './../gen/api'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { AxiosError } from 'axios'
 
 const api = new MouseApi()
 
-type Error = { message: string }
-
 export function useMice() {
-  return useQuery<MouseDTO[], Error>('mice', async () => {
+  return useQuery<MouseDTO[], AxiosError>('mice', async () => {
     const result = await api.miceGet()
     return result.data
   })
@@ -15,7 +14,7 @@ export function useMice() {
 type useMouseInputs = { id: string; onSuccess?: (mouse: MouseDTO) => void }
 
 export function useMouse({ id, onSuccess }: useMouseInputs) {
-  return useQuery<MouseDTO, Error>(
+  return useQuery<MouseDTO, AxiosError>(
     ['mice', id],
     async () => {
       const result = await api.miceIdGet(id)

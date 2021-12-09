@@ -180,7 +180,7 @@ const MazeCanvas = ({ maze }: MazeCanvasProps) => {
     }
   }
 
-  const handleMouseUP = async (event: React.MouseEvent<HTMLElement>) => {
+  const handleMouseUp = async (event: React.MouseEvent<HTMLElement>) => {
     setIsMouseDown(false)
     if (editType !== 'editGoal') {
       await onUpdateWalls(walls)
@@ -259,7 +259,7 @@ const MazeCanvas = ({ maze }: MazeCanvasProps) => {
   return (
     <canvas
       onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUP}
+      onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
       ref={canvasRef}
     />

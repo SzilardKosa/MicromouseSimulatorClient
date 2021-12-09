@@ -1,19 +1,18 @@
 import { SimulationApi, SimulationExpandedDTO, SimulationDTO } from './../gen/api'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { AxiosError } from 'axios'
 
 const api = new SimulationApi()
 
-type Error = { message: string }
-
 export function useSimulations() {
-  return useQuery<SimulationExpandedDTO[], Error>('simulations', async () => {
+  return useQuery<SimulationExpandedDTO[], AxiosError>('simulations', async () => {
     const result = await api.simulationsGet()
     return result.data
   })
 }
 
 export function useSimulation(id: string) {
-  return useQuery<SimulationExpandedDTO, Error>(['simulations', id], async () => {
+  return useQuery<SimulationExpandedDTO, AxiosError>(['simulations', id], async () => {
     const result = await api.simulationsIdGet(id)
     return result.data
   })

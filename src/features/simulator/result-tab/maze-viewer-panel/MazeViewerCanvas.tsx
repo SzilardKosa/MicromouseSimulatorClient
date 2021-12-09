@@ -24,7 +24,7 @@ const MazeViewerCanvas = ({
 }: MazeViewerInput) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  const cellSize = 500
+  const cellSize = 100
   const cellWallRation = 0.1
   const wallWidth = Math.floor(cellSize * cellWallRation)
   const rows = mazeSnapshot.height

@@ -23,7 +23,7 @@ interface MazeEditorState {
 
 const initialState: MazeEditorState = {
   editType: 'insertWall',
-  cellSize: 50,
+  cellSize: 40,
   cellWallRation: 0.25,
   walls: [...Array(10)].map((e) => Array(12).fill({ bottom: false, left: false })),
   goalArea: [
