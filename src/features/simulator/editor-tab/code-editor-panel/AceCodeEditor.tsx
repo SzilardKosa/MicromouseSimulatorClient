@@ -37,17 +37,14 @@ type AceCodeEditorProps = {
 
 const AceCodeEditor = ({ algorithm }: AceCodeEditorProps) => {
   const fontSize = useSelector(selectFontSize)
-  const { mutateAsync: updateAlgorithm } = useUpdateAlgorithm()
   const theme = useColorModeValue('xcode', 'monokai')
+  const { mutateAsync: updateAlgorithm } = useUpdateAlgorithm()
 
   async function onUpdateAlgorithm(newValue: string) {
-    console.log('change', newValue)
     try {
       const newAlgorithm: AlgorithmDTO = {
-        id: algorithm.id,
+        ...algorithm,
         codeText: newValue,
-        language: algorithm.language,
-        name: algorithm.name,
       }
       await updateAlgorithm(newAlgorithm)
     } catch (error) {
