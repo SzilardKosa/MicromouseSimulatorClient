@@ -84,7 +84,7 @@ const Navbar = () => {
           <Box display={{ base: 'inherit', md: 'none' }} pb={4}>
             <Stack as={'nav'} spacing={4}>
               <NavLink to={`${url}/simulations`}>Simulations</NavLink>
-              <NavLink to={`${url}/help`}>Help</NavLink>
+              {/* <NavLink to={`${url}/help`}>Help</NavLink> */}
             </Stack>
           </Box>
         )}
