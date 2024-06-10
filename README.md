@@ -1,8 +1,8 @@
 # Final year project of MSc: Micromouse Simulator
 
-This is the front end project.
+This is the front-end project.
 
-The backend project can be found [here](https://github.com/SzilardKosa/MicromouseSimulatorProject).
+The back-end project can be found [here](https://github.com/SzilardKosa/MicromouseSimulatorProject).
 
 The simulation runner Docker files can be found [here](https://github.com/SzilardKosa/MicromouseSimulatorDocker).
 
