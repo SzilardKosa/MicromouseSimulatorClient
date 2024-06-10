@@ -1,4 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# Final year project of MSc: Micromouse Simulator
+
+This is the front end project.
+
+The backend project can be found [here](https://github.com/SzilardKosa/MicromouseSimulatorProject).
+
+The simulation runner Docker files can be found [here](https://github.com/SzilardKosa/MicromouseSimulatorDocker).
+
 
 ## Available Scripts
 
